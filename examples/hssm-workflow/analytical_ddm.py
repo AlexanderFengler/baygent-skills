@@ -80,11 +80,16 @@ def _(mo):
 
 
 @app.cell
-def _(hssm, mo, np, os, pd, run_workflow, version):
+def generate_teaching_data(
+    hssm, mo, np, os, pd, result_directory, run_workflow, version
+):
     _run_explicitly = run_workflow.value or os.environ.get("BAYGENT_RUN_HSSM") == "1"
     mo.stop(
         not _run_explicitly, mo.md("Preview only: no data or fit has been generated.")
     )
+    # Starting an explicitly requested run invalidates any earlier success
+    # report before simulation can fail. Default preview never reaches here.
+    output_dir = result_directory("analytical-ddm")
     RANDOM_SEED = sum(map(ord, "analytical-ddm"))
     source_baseline = "fefed57d2142637af503b0e92cefe799715c0f46"
     runtime_versions = {
@@ -130,10 +135,12 @@ def _(hssm, mo, np, os, pd, run_workflow, version):
         )
     # Reaction times are in seconds because the simulator uses seconds.
     t_upper = min(0.5, 0.95 * float(data.rt.min()))
+    data.to_csv(output_dir / "data.csv", index=False)
     return (
         RANDOM_SEED,
         data,
         generating_parameters,
+        output_dir,
         runtime_versions,
         source_baseline,
         t_upper,
@@ -201,7 +208,7 @@ def _(data, hssm, mo, np, output_dir, t_upper):
 
 
 @app.cell
-def _(data, np, pd, response_components):
+def define_domain_checks(data, np, pd, response_components):
     def choice_rt_checks(tree, group):
         """Compare replicate choice rates and conditional RT quantiles without flattening axes."""
         # The installed adapter validates labeled component coordinates [0,1]
@@ -218,6 +225,10 @@ def _(data, np, pd, response_components):
         rows = []
         for choice in [-1, 1]:
             observed_rt = data.loc[data.response == choice, "rt"].to_numpy()
+            if observed_rt.size == 0:
+                raise ValueError(
+                    f"No observed trials contain choice {choice}; conditional RT checks are unavailable."
+                )
             proportions = (replicate_choices == choice).mean(axis=1)
             low, high = np.quantile(proportions, [0.03, 0.97])
             rows.append(
@@ -268,7 +279,9 @@ def _(data, np, pd, response_components):
 
 
 @app.cell
-def _(RANDOM_SEED, choice_rt_checks, data, hssm, mo, model, np, plt):
+def prepare_prior_predictions(
+    RANDOM_SEED, choice_rt_checks, data, hssm, mo, model, np, plt
+):
     prior = model.sample_prior_predictive(
         draws=200, random_seed=np.random.default_rng(RANDOM_SEED + 1)
     )
@@ -320,15 +333,7 @@ def _(RANDOM_SEED, choice_rt_checks, data, hssm, mo, model, np, plt):
 
 
 @app.cell
-def _(data, result_directory):
-    # This cell is downstream of the run gate, so previewing does not create files.
-    output_dir = result_directory("analytical-ddm")
-    data.to_csv(output_dir / "data.csv", index=False)
-    return (output_dir,)
-
-
-@app.cell
-def _(RANDOM_SEED, mo, model, os, output_dir, prior_review):
+def fit_ddm(RANDOM_SEED, mo, model, os, output_dir, prior_review):
     mo.stop(
         not (prior_review.value or os.environ.get("BAYGENT_RUN_HSSM") == "1"),
         mo.md(
@@ -357,7 +362,7 @@ def _(RANDOM_SEED, mo, model, os, output_dir, prior_review):
 
 
 @app.cell
-def _(
+def prepare_posterior_evidence(
     choice_rt_checks,
     idata,
     model,
@@ -368,6 +373,18 @@ def _(
     prior_checks,
     t_upper,
 ):
+    # These native release APIs index samples by position or rebuild their
+    # labels. Refuse arbitrary labels before recomputation; scalar adapter
+    # views independently preserve arbitrary valid labels without this limit.
+    for _dim in ("chain", "draw"):
+        _samples = idata["posterior"]
+        if _dim not in _samples.coords or not np.array_equal(
+            _samples[_dim].values, np.arange(_samples.sizes[_dim])
+        ):
+            raise ValueError(
+                "HSSM 0.5.0 / PyMC 6.1 native density recomputation requires "
+                f"zero-based consecutive {_dim} coordinates; the artifact was not relabeled."
+            )
     posterior = model.sample_posterior_predictive(
         dt=idata, kind="response", draws=None, inplace=False, safe_mode=True
     )
