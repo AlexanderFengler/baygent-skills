@@ -1,0 +1,28 @@
+{
+  "source_response": "rt,response",
+  "component_order": [
+    "rt_seconds",
+    "response"
+  ],
+  "choices": [
+    -1,
+    1
+  ],
+  "n_observations": 300,
+  "views": {
+    "rt": {
+      "artifact": "rt/inference_data.nc",
+      "quantity": "Marginal RT in seconds"
+    },
+    "choice": {
+      "artifact": "choice/inference_data.nc",
+      "quantity": "Marginal event response == +1"
+    }
+  },
+  "limitations": [
+    "Fitted-data PPC-PIT reuses observations; it is not held-out validation.",
+    "Two calibrated marginals do not establish the joint RT/choice distribution.",
+    "Use choice proportions and conditional RT quantiles as additional domain checks.",
+    "No marginal log-likelihood is supplied; do not run LOO-PIT on these views."
+  ]
+}

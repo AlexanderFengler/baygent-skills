@@ -1,0 +1,216 @@
+Model string is in SupportedModels. Ignoring choices arguments.
+Model initialized successfully.
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+Sampling: [a, rt,response, t, v, z]
+Using default initvals.
+
+The model has already been sampled. Overwriting the previous inference object. Any previous reference to the inference object will still point to the old object.
+Initializing NUTS using adapt_diag...
+Sequential sampling (2 chains in 1 job)
+NUTS: [z, t, a, v]
+Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 5 seconds.
+We recommend running at least 4 chains for robust computation of convergence diagnostics
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/pytensor/link/numba/dispatch/basic.py:234: UserWarning: Numba will use object mode to run ddm_RV_rv{"(),(),(),()->(2)"}'s perform method. Set `pytensor.config.compiler_verbose = True` to see more details.
+  warnings.warn(
+Replacing existing log_likelihood group in dt.
+/var/folders/rg/_j_2xg8n0qgbf0dvg2dyq1_r0000gn/T/marimo_38113/__marimo__cell_RGSE_.py:37: DeprecationWarning: `pymc.compute_log_prior` was moved out of the root namespace and will be removed in the first PyMC release of 2027. Use `pymc.stats.compute_log_prior` instead.
+  pm.compute_log_prior(posterior, model=model.pymc_model, progressbar=False)

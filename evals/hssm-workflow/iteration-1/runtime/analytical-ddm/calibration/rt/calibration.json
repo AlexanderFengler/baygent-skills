@@ -1,0 +1,24 @@
+{
+  "variable": "rt",
+  "n_observations": 300,
+  "pit_method": "ppc_pit",
+  "uniformity_method": "pot_c",
+  "coverage_transform": "2 * abs(PIT - 0.5), applied once",
+  "assessment": {
+    "uniformity_method": "pot_c",
+    "significance_level": 0.010000000000000009,
+    "pit_p_value": 0.10761100299219578,
+    "coverage_p_value": 3.164135620181696e-15,
+    "pit_uniformity_passed": true,
+    "coverage_uniformity_passed": false,
+    "pit_ecdf_inside_bands": null,
+    "coverage_ecdf_inside_bands": null,
+    "well_calibrated": false,
+    "mean_coverage_deviation": -0.0079,
+    "calibration_diagnosis": "non-uniform predictive PIT; no dominant mean coverage direction"
+  },
+  "plots": {
+    "pit_ecdf": "pit_ecdf.png",
+    "coverage": "pit_coverage.png"
+  }
+}

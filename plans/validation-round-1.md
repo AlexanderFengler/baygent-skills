@@ -194,6 +194,16 @@ the current axes. A native literal-draw regression verifies the actual saved
 figure's points. A documented retry with the same model, seed and sampler budget
 then exported successfully; failed attempts remain in the evidence record.
 
+**Executed finding:** figure review exposed shared PIT assessment/plot method
+disagreement, duplicate coverage transformation and native ECDF coordinate
+rescaling. The shared helper now prepares one PIT array for assessment and
+plots, uses matching tests, and retains the raw PIT coordinate scale. Independent
+literal-array checks, both upstream reporting harnesses, and a strict common-method
+PyMC 5/6 comparison passed. The final HSSM export retains **fair RT calibration**
+because the coverage-transformed PIT test rejects uniformity. Bambi's saved
+full reports were reassessed using the corrected shared pipeline. See the
+[calibration evidence](../evals/calibration-method-consistency/README.md).
+
 ## 5. Evaluate skill behavior in isolated agent runs
 
 Proceed after local runtime gates pass. This phase makes fresh model-service

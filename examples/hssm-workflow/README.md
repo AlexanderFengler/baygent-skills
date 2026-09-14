@@ -11,6 +11,8 @@ passed on the recorded HSSM 0.5 stack. See the [runtime evidence](../../evals/hs
 for commands, resolved dependencies, figures and actual assessments. This is
 one synthetic teaching dataset, not a parameter-recovery experiment or a
 joint-calibration guarantee. Paired agent and trigger evaluations have not run.
+The corrected report retains an RT marginal calibration flag; passing the
+software checks does not make every scientific diagnostic pass.
 
 ## Open without running
 

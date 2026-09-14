@@ -1,0 +1,234 @@
+{
+  "started_at": "2026-09-14T03:56:13.378147+00:00",
+  "command": [
+    "<spine>/_local/venvs/baygent-hssm-m2/bin/marimo",
+    "export",
+    "html",
+    "examples/hssm-workflow/analytical_ddm.py",
+    "-o",
+    "examples/hssm-workflow/results/round-1/analytical_ddm.html"
+  ],
+  "source_commit": "986a9dbd94f2c3e7e1e522732a0031962a11a597",
+  "source_sha256": {
+    "examples/hssm-workflow/analytical_ddm.py": "ec794e33efec06ecd4d7a2c02b6727ae283c444729bd2143781e5c3bce5cfaff",
+    "examples/hssm-workflow/hssm_example_support.py": "66a15e780a5d6c9812017a265986c60c8ad7473a2cd1c68a71801ef56a38e2f6",
+    "hssm-workflow/scripts/prepare_rt_choice.py": "c54294525e4c3ffbb170dac63ef1ad3b12b65fe41c8a1f646075b6fe2e8ae4a9",
+    "bayesian-workflow/scripts/diagnose_model.py": "41743cbda2c791d735092812e884a8f4fe4acac083f9a7b76fcb64aa75d3c8df",
+    "bayesian-workflow/scripts/calibration_check.py": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d",
+    "bayesian-workflow/scripts/check_diagnostics.py": "f413d440d08c97266ebfdaf4b0eed123fce3ded2f80306794160ab82c1c7c670",
+    "bayesian-workflow/references/reporting.md": "703ab1cf2ab4cfb1c927fcd85e8c180f0dcb6dc44bd02b6e82730a97a745cde0"
+  },
+  "environment_overrides": {
+    "BAYGENT_RUN_HSSM": "1",
+    "BAYGENT_OUTPUT_ROOT": "examples/hssm-workflow/results/round-1",
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "/tmp/baygent-hssm-mpl",
+    "XDG_CACHE_HOME": "/tmp/baygent-hssm-cache",
+    "PYTENSOR_FLAGS": "base_compiledir=/tmp/baygent-hssm-numerics"
+  },
+  "budget": {
+    "trials": 300,
+    "chains": 2,
+    "tune": 1000,
+    "draws_per_chain": 1000,
+    "prior_draws": 200
+  },
+  "status": "completed",
+  "returncode": 0,
+  "elapsed_seconds": 40.54761208302807,
+  "ended_at": "2026-09-14T03:56:53.938015+00:00",
+  "local_netcdf_sha256": {
+    "calibration/choice/inference_data.nc": "0b6a8c850923524e65d1a3573beac9508e47a9904758402fdcc1dfd47e43180a",
+    "calibration/rt/inference_data.nc": "d1ebd5f0d78668cd0cd1e1b5f35480b91e5dc4c018c373c1855f916566a96c31",
+    "checkpoint/traces.nc": "4c8e82ae324362392592a18677c8afacef399f2a654dccfbb7ceeac1f70eba9e",
+    "inference_data.nc": "627c6cf0036f0871237e3c48672f208c34e50eeb02dfbd2ccd40fb90193355c7",
+    "posterior.nc": "4c8e82ae324362392592a18677c8afacef399f2a654dccfbb7ceeac1f70eba9e",
+    "posterior_predictive.nc": "627c6cf0036f0871237e3c48672f208c34e50eeb02dfbd2ccd40fb90193355c7",
+    "prior_data.nc": "cbb01202397bef80bbbae0eaae5e84c46bcfd9cbb4b49df75f4b8502907e063a"
+  },
+  "retained_attempts": [
+    {
+      "started_at": "2026-09-14T03:07:00.015509+00:00",
+      "command": [
+        "../../_local/venvs/baygent-hssm-m2/bin/marimo",
+        "export",
+        "html",
+        "examples/hssm-workflow/analytical_ddm.py",
+        "-o",
+        "examples/hssm-workflow/results/round-1/analytical_ddm.html"
+      ],
+      "source_commit": "f625198b6a3d2a8101ad56c07a3a3034a8cec68a",
+      "source_sha256": {
+        "examples/hssm-workflow/analytical_ddm.py": "4931aa7eb08d71aee29c0f33897cf5145d093df7044adf8f05ca4673afe9306c",
+        "examples/hssm-workflow/hssm_example_support.py": "f9e502d4b0df2f07f9e79597eb2164fa88cf5c5b50844c0b08022fff7ee5cb23",
+        "hssm-workflow/scripts/prepare_rt_choice.py": "c54294525e4c3ffbb170dac63ef1ad3b12b65fe41c8a1f646075b6fe2e8ae4a9"
+      },
+      "environment_overrides": {
+        "BAYGENT_RUN_HSSM": "1",
+        "BAYGENT_OUTPUT_ROOT": "examples/hssm-workflow/results/round-1"
+      },
+      "budget": {
+        "trials": 300,
+        "chains": 2,
+        "tune": 1000,
+        "draws_per_chain": 1000,
+        "prior_draws": 200
+      },
+      "status": "failed",
+      "returncode": 1,
+      "elapsed_seconds": 0.2951049589901231,
+      "ended_at": "2026-09-14T03:07:00.320895+00:00",
+      "record_file": "attempt-1-execution.json",
+      "log_sha256": "ec5aabdf22fda4e7a31e4ea326421915425689d9f0ad5cf79296653d71e6e71f",
+      "reason_superseded": "Marimo local IPC socket blocked before computation; no simulation or fit."
+    },
+    {
+      "started_at": "2026-09-14T03:07:54.699735+00:00",
+      "command": [
+        "<spine>/_local/venvs/baygent-hssm-m2/bin/marimo",
+        "export",
+        "html",
+        "examples/hssm-workflow/analytical_ddm.py",
+        "-o",
+        "examples/hssm-workflow/results/round-1/analytical_ddm.html"
+      ],
+      "source_commit": "f625198b6a3d2a8101ad56c07a3a3034a8cec68a",
+      "source_sha256": {
+        "examples/hssm-workflow/analytical_ddm.py": "4931aa7eb08d71aee29c0f33897cf5145d093df7044adf8f05ca4673afe9306c",
+        "examples/hssm-workflow/hssm_example_support.py": "f9e502d4b0df2f07f9e79597eb2164fa88cf5c5b50844c0b08022fff7ee5cb23",
+        "hssm-workflow/scripts/prepare_rt_choice.py": "c54294525e4c3ffbb170dac63ef1ad3b12b65fe41c8a1f646075b6fe2e8ae4a9"
+      },
+      "environment_overrides": {
+        "BAYGENT_RUN_HSSM": "1",
+        "BAYGENT_OUTPUT_ROOT": "examples/hssm-workflow/results/round-1",
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/tmp/baygent-hssm-mpl",
+        "XDG_CACHE_HOME": "/tmp/baygent-hssm-cache",
+        "PYTENSOR_FLAGS": "base_compiledir=/tmp/baygent-hssm-numerics"
+      },
+      "budget": {
+        "trials": 300,
+        "chains": 2,
+        "tune": 1000,
+        "draws_per_chain": 1000,
+        "prior_draws": 200
+      },
+      "status": "failed",
+      "returncode": 1,
+      "elapsed_seconds": 40.49179904197808,
+      "ended_at": "2026-09-14T03:08:35.205350+00:00",
+      "record_file": "attempt-2-execution.json",
+      "log_sha256": "92cd6f5c9ac53c56e079eb84f4830126bd04051da2627f3e209bec04d26f8e41",
+      "reason_superseded": "Native HSSM quantile plot duplicated the response column; saved-data probe also exposed duplicate explicit ax forwarding. Fit checkpoint retained.",
+      "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86",
+      "posterior_checkpoint_sha256": "e0e88e8b8f0f9bd79177d980859203745e1191a6d64e0a9225e995fcb50bba8b"
+    },
+    {
+      "started_at": "2026-09-14T03:19:24.071231+00:00",
+      "command": [
+        "<spine>/_local/venvs/baygent-hssm-m2/bin/marimo",
+        "export",
+        "html",
+        "examples/hssm-workflow/analytical_ddm.py",
+        "-o",
+        "examples/hssm-workflow/results/round-1/analytical_ddm.html"
+      ],
+      "source_commit": "0bbc31e130099ba9c886538ae4e905879cee0e0c",
+      "source_sha256": {
+        "examples/hssm-workflow/analytical_ddm.py": "57c0950e8adad72b3a182dab7baf68c776815d2368ead641e1278f810f4924a0",
+        "examples/hssm-workflow/hssm_example_support.py": "c374f925c51d17bffd4ddc1442a7f6ef570c8a047b1118a73acec6bbf1619ca7",
+        "hssm-workflow/scripts/prepare_rt_choice.py": "c54294525e4c3ffbb170dac63ef1ad3b12b65fe41c8a1f646075b6fe2e8ae4a9"
+      },
+      "environment_overrides": {
+        "BAYGENT_RUN_HSSM": "1",
+        "BAYGENT_OUTPUT_ROOT": "examples/hssm-workflow/results/round-1",
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/tmp/baygent-hssm-mpl",
+        "XDG_CACHE_HOME": "/tmp/baygent-hssm-cache",
+        "PYTENSOR_FLAGS": "base_compiledir=/tmp/baygent-hssm-numerics"
+      },
+      "budget": {
+        "trials": 300,
+        "chains": 2,
+        "tune": 1000,
+        "draws_per_chain": 1000,
+        "prior_draws": 200
+      },
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 41.609238040982746,
+      "ended_at": "2026-09-14T03:20:05.692298+00:00",
+      "record_file": "attempt-3-execution.json",
+      "log_sha256": "bbbb2d8de18b714d7b8c1ea2549fb900f2dec7eaae3b02781a2b8d0b5093213d",
+      "reason_superseded": "Export exited zero but posterior/QP figures were omitted from its visible cell output because a flag assignment followed mo.vstack. Regression now checks visible embedded images. Report prose also needed DDM-specific corrections.",
+      "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86",
+      "posterior_checkpoint_sha256": "e3526661690a2fb0cc89ceea2531520b53697658dae8f0aab1ab5c0dece98565"
+    },
+    {
+      "started_at": "2026-09-14T03:27:52.659670+00:00",
+      "command": [
+        "<spine>/_local/venvs/baygent-hssm-m2/bin/marimo",
+        "export",
+        "html",
+        "examples/hssm-workflow/analytical_ddm.py",
+        "-o",
+        "examples/hssm-workflow/results/round-1/analytical_ddm.html"
+      ],
+      "source_commit": "ba3ad0ed38dcd726e2dcfc988df71be33b44beed",
+      "source_sha256": {
+        "examples/hssm-workflow/analytical_ddm.py": "ec794e33efec06ecd4d7a2c02b6727ae283c444729bd2143781e5c3bce5cfaff",
+        "examples/hssm-workflow/hssm_example_support.py": "a2211f6883ec5b84ab33d5cc859a41768d52cb10a46709a8e4f491a9a7543181",
+        "hssm-workflow/scripts/prepare_rt_choice.py": "c54294525e4c3ffbb170dac63ef1ad3b12b65fe41c8a1f646075b6fe2e8ae4a9"
+      },
+      "environment_overrides": {
+        "BAYGENT_RUN_HSSM": "1",
+        "BAYGENT_OUTPUT_ROOT": "examples/hssm-workflow/results/round-1",
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/tmp/baygent-hssm-mpl",
+        "XDG_CACHE_HOME": "/tmp/baygent-hssm-cache",
+        "PYTENSOR_FLAGS": "base_compiledir=/tmp/baygent-hssm-numerics"
+      },
+      "budget": {
+        "trials": 300,
+        "chains": 2,
+        "tune": 1000,
+        "draws_per_chain": 1000,
+        "prior_draws": 200
+      },
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 41.98279354197439,
+      "ended_at": "2026-09-14T03:28:34.654874+00:00",
+      "local_netcdf_sha256": {
+        "calibration/choice/inference_data.nc": "78c443d8857b124de9fa99b85f4af6d168c7de3883550b66c0d06f22e1008978",
+        "calibration/rt/inference_data.nc": "7d57962216e3a816abcc7eaa23f603f3daf40c0143a3440db2d0695f44dbcde8",
+        "checkpoint/traces.nc": "c56d4d3fccdb447c0a8e5038a6b28df117bdb871263b40677e1a4efa6f3d6152",
+        "inference_data.nc": "1a5672b8e405118e9ada136eb916fc42f56e78fd2ecf038774d45a8d056539b2",
+        "posterior.nc": "c56d4d3fccdb447c0a8e5038a6b28df117bdb871263b40677e1a4efa6f3d6152",
+        "posterior_predictive.nc": "1a5672b8e405118e9ada136eb916fc42f56e78fd2ecf038774d45a8d056539b2",
+        "prior_data.nc": "036793de4133a3957c196f3c242cdfe319971fa36e9562e6b5b77ba1a0eb4a13"
+      },
+      "successful_export_log_sha256": "1980cd28b67a0ecd05d9a3ed9f5741ec3c77f14e273efc9ab789e4cee0b059e5",
+      "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86",
+      "record_file": "attempt-4-execution.json",
+      "reason_superseded": "Runtime and visible notebook plots passed, but independent review exposed mismatched PIT assessment/plot methods, duplicate coverage transformation and native ECDF coordinate rescaling. Final export uses the corrected shared pipeline with unchanged data, model and sampling budget."
+    }
+  ],
+  "successful_export_log_sha256": "00b91cb47cbcde0231c89882fe204e8583db041e52d90d6ade3320fa2bca963b",
+  "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86",
+  "same_data_and_settings_across_fits": true,
+  "review_scope": "All 11 final PNGs and the complete report reviewed; HTML serialized outputs verified, including both posterior plots and completed shared assessment. Browser layout inspection blocked by local-file URL policy; no workaround attempted.",
+  "portable_log_sha256": {
+    "logs/attempt-1-execution.log.txt": "60e980f191e33dccc4a3cbb2d6c2e92e2e4eec5313034450e2e1f90d840b941c",
+    "logs/attempt-2-execution.log.txt": "1adbcaa9fcffc375818d9e20a85766f72a9de8aa367ed9ef0a3d74bfa161beeb",
+    "logs/attempt-3-execution.log.txt": "534901d03cdc4876219c96ecbbe6e95d3a1dca30784433bb515eb5e0a582b201",
+    "logs/attempt-4-execution.log.txt": "e0441e562457b242c1371b5fe9b9174d6cbef01edb5c5eab2d42dbd2bbf48636",
+    "logs/execution.log.txt": "041d398994fb068dea5b0a61538978340f158013313daa578ef9d678c90797bd"
+  },
+  "log_note": "Portable logs replace absolute workspace/user prefixes and trim trailing whitespace; original-byte log hashes are retained separately.",
+  "notebook_export": {
+    "original_sha256": "9a7b2c16ba9cd9b44794257d91e3015536db4cef67a488f1437db0eb33a36cb1",
+    "published_transformation": "Removed exporter-generated whitespace on otherwise empty HTML lines; serialized session, plots and code unchanged.",
+    "published_sha256": "7bb8153779a3867ad90929d8056472e74db5cfbd9cee7dc3e818ae48e9b6f932"
+  }
+}

@@ -1,0 +1,63 @@
+Traceback (most recent call last):
+  File "../../_local/venvs/baygent-hssm-m2/bin/marimo", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/click/core.py", line 1631, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/click/core.py", line 1552, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/click/core.py", line 2032, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/click/core.py", line 2032, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/click/core.py", line 1415, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/click/core.py", line 910, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_cli/export/commands.py", line 321, in html
+    return watch_and_export(
+           ^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_cli/export/commands.py", line 172, in watch_and_export
+    result = export_callback(marimo_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_cli/export/commands.py", line 304, in export_callback
+    return asyncio_run(
+           ^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_server/utils.py", line 74, in asyncio_run
+    return asyncio.run(coro, **kwargs)  # type: ignore[arg-type]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user>/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "<user>/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user>/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_export/file.py", line 359, in export_html
+    session_view, did_error = await run_notebook(
+                              ^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_export/file.py", line 655, in run_notebook
+    session = SessionImpl.create(
+              ^^^^^^^^^^^^^^^^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_session/session.py", line 207, in create
+    return cls(
+           ^^^^
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_session/session.py", line 244, in __init__
+    self._kernel_manager.start_kernel()
+  File "<spine>/_local/venvs/baygent-hssm-m2/lib/python3.12/site-packages/marimo/_session/managers/kernel.py", line 76, in start_kernel
+    listener = connection.Listener(family="AF_INET")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user>/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 464, in __init__
+    self._listener = SocketListener(address, family, backlog)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user>/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 608, in __init__
+    self._socket.bind(address)
+PermissionError: [Errno 1] Operation not permitted

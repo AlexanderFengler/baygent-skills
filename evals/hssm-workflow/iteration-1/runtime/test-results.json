@@ -1,0 +1,1264 @@
+{
+  "totals": {
+    "passed": 171,
+    "xfail": 4,
+    "skipped": 1
+  },
+  "elapsed_seconds": 7.369,
+  "tests": [
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_domain_quantities_match_hand_calculated_replicates",
+      "seconds": 0.169,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_domain_summary_preserves_named_axes_and_group_identity",
+      "seconds": 0.033,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_one_replicate_keeps_literal_quantiles_and_degenerate_interval",
+      "seconds": 0.049,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_all_absent_predictive_choice_fails_explicitly[-1]",
+      "seconds": 0.029,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_all_absent_predictive_choice_fails_explicitly[1]",
+      "seconds": 0.023,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_missing_observed_choice_has_an_explicit_failure[-1]",
+      "seconds": 0.026,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_missing_observed_choice_has_an_explicit_failure[1]",
+      "seconds": 0.026,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_predictive_trial_count_must_match_data",
+      "seconds": 0.025,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_domain_summary_cannot_hide_invalid_rt[0.0]",
+      "seconds": 0.024,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_domain_summary_cannot_hide_invalid_rt[-999.0]",
+      "seconds": 0.024,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_domain_summary_cannot_hide_invalid_rt[nan]",
+      "seconds": 0.053,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_nondefault_sample_labels_fail_before_native_recomputation[chain]",
+      "seconds": 0.024,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_nondefault_sample_labels_fail_before_native_recomputation[draw]",
+      "seconds": 0.023,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_default_preview_runs_no_modeling_and_creates_no_results[None]",
+      "seconds": 0.189,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_default_preview_runs_no_modeling_and_creates_no_results[0]",
+      "seconds": 0.037,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_default_preview_runs_no_modeling_and_creates_no_results[true]",
+      "seconds": 0.026,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_starting_an_opted_in_run_initializes_outputs_before_simulation",
+      "seconds": 0.022,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_prior_only_activation_still_blocks_fit",
+      "seconds": 0.057,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_sampling_requires_its_own_explicit_activation[True-None]",
+      "seconds": 0.024,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_sampling_requires_its_own_explicit_activation[False-1]",
+      "seconds": 0.022,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_notebook_contracts",
+      "name": "test_native_quantile_plot_saves_actual_replicate_points",
+      "seconds": 0.912,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_priors_have_declared_natural_density_and_effective_support[data-limited-t]",
+      "seconds": 0.253,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_model_joint_log_likelihood_matches_independent_wiener[data-limited-t]",
+      "seconds": 0.081,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_prior_export_preserves_noncanonical_sample_coordinates[data-limited-t]",
+      "seconds": 0.058,
+      "outcome": "xfail",
+      "reason": "PyMC 6.1 compute_log_prior resets noncanonical chain/draw coordinates."
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_likelihood_accepts_noncanonical_sample_coordinates[data-limited-t]",
+      "seconds": 0.073,
+      "outcome": "xfail",
+      "reason": "HSSM 0.5 log_likelihood uses sample coordinate labels as array positions."
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_priors_have_declared_natural_density_and_effective_support[capped-t]",
+      "seconds": 0.075,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_model_joint_log_likelihood_matches_independent_wiener[capped-t]",
+      "seconds": 0.148,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_prior_export_preserves_noncanonical_sample_coordinates[capped-t]",
+      "seconds": 0.041,
+      "outcome": "xfail",
+      "reason": "PyMC 6.1 compute_log_prior resets noncanonical chain/draw coordinates."
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_likelihood_accepts_noncanonical_sample_coordinates[capped-t]",
+      "seconds": 0.07,
+      "outcome": "xfail",
+      "reason": "HSSM 0.5 log_likelihood uses sample coordinate labels as array positions."
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_both_density_implementations_obey_choice_reflection[0.0-0.8-0.5]",
+      "seconds": 0.072,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_both_density_implementations_obey_choice_reflection[0.0-1.1-0.27]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_both_density_implementations_obey_choice_reflection[0.8-0.7-0.67]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_both_density_implementations_obey_choice_reflection[-0.9-1.2-0.31]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_choice_masses_match_closed_form_with_bounded_tail[0.0-0.8-0.5]",
+      "seconds": 0.009,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_choice_masses_match_closed_form_with_bounded_tail[0.0-1.1-0.27]",
+      "seconds": 0.01,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_choice_masses_match_closed_form_with_bounded_tail[0.8-0.7-0.67]",
+      "seconds": 0.009,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_choice_masses_match_closed_form_with_bounded_tail[-0.9-1.2-0.31]",
+      "seconds": 0.01,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_impossible_rt_uses_native_floor_but_has_zero_reference_mass[-1]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_impossible_rt_uses_native_floor_but_has_zero_reference_mass[1]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_convergence_uses_real_shared_rating_and_ddm_actions[excellent]",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_convergence_uses_real_shared_rating_and_ddm_actions[good]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_convergence_uses_real_shared_rating_and_ddm_actions[fair]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_convergence_uses_real_shared_rating_and_ddm_actions[poor]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_joint_loo_failures_and_unavailability_remain_visible[excellent]",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_joint_loo_failures_and_unavailability_remain_visible[fair]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_joint_loo_failures_and_unavailability_remain_visible[poor]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_joint_loo_failures_and_unavailability_remain_visible[not computed]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_one_failing_margin_cannot_be_hidden_by_the_other[fair-rt]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_one_failing_margin_cannot_be_hidden_by_the_other[fair-choice]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_one_failing_margin_cannot_be_hidden_by_the_other[poor-rt]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_one_failing_margin_cannot_be_hidden_by_the_other[poor-choice]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_one_failing_margin_cannot_be_hidden_by_the_other[not computed-rt]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_one_failing_margin_cannot_be_hidden_by_the_other[not computed-choice]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_strong_sensitivity_preserves_parameter_and_support_caveat",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_report_retains_canonical_structure_and_both_marginal_figures",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_missing_native_diagnostic_numbers_use_summary_and_preserve_flags[excellent-absent]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_missing_native_diagnostic_numbers_use_summary_and_preserve_flags[excellent-null]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_missing_native_diagnostic_numbers_use_summary_and_preserve_flags[fair-absent]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_missing_native_diagnostic_numbers_use_summary_and_preserve_flags[fair-null]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_report_explains_data_informed_prior_and_parameter_reference_values",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_report_calibration_and_quantile_captions_match_the_saved_plot_conventions",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[no_convergence]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[missing_rhat]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[contradictory]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[no_loo_reason]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[missing_margin]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[missing_rating]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[bad_summaries]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_evidence_cannot_render_a_success_report[missing_domain]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_failed_write_invalidates_old_report_but_preserves_checkpoint[missing_figure]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_failed_write_invalidates_old_report_but_preserves_checkpoint[unverified_density]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_failed_write_invalidates_old_report_but_preserves_checkpoint[incomplete_density]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_failed_write_invalidates_old_report_but_preserves_checkpoint[nonfinite_density]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_failed_write_invalidates_old_report_but_preserves_checkpoint[wrong_likelihood_shape]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_failed_write_invalidates_old_report_but_preserves_checkpoint[nonfinite_likelihood]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_new_run_invalidates_report_before_any_computation",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_missing_late_figure_cannot_publish_or_reuse_report",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_helper_failure_or_missing_output_cannot_reuse_stale_evidence[raise SystemExit(7)]",
+      "seconds": 0.018,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_helper_failure_or_missing_output_cannot_reuse_stale_evidence[pass]",
+      "seconds": 0.015,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_helper_failure_or_missing_output_cannot_reuse_stale_evidence[print('no output file')]",
+      "seconds": 0.016,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_helper_failure_or_missing_output_cannot_reuse_stale_evidence[from pathlib import Path\\nPath('evidence.json').write_text('not JSON')]",
+      "seconds": 0.018,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_helper_failure_or_missing_output_cannot_reuse_stale_evidence[from pathlib import Path\\nPath('evidence.json').write_text('[]')]",
+      "seconds": 0.018,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_helper_failure_or_missing_output_cannot_reuse_stale_evidence[from pathlib import Path\\nPath('evidence.json').write_text('{\"error\": \"missing samples\"}')]",
+      "seconds": 0.019,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_real_shared_cli_accepts_each_margin_with_joint_diagnostics",
+      "seconds": 0.047,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_margin_cannot_receive_a_default_healthy_rating[missing_assessment]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_margin_cannot_receive_a_default_healthy_rating[missing_deviation]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_margin_cannot_receive_a_default_healthy_rating[nonfinite]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_margin_cannot_receive_a_default_healthy_rating[wrong_quantity]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_reporting",
+      "name": "test_malformed_margin_cannot_receive_a_default_healthy_rating[joint_loo_pit]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_export_contains_displayed_joint_plots_and_completed_assessment",
+      "seconds": 0.156,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_saved_checkpoint_and_joint_samples_preserve_original_data",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_saved_joint_likelihood_matches_compiled_wiener_reference",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_saved_priors_match_scipy_and_observed_time_support",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_scalar_artifacts_are_exact_margins_without_joint_densities",
+      "seconds": 0.007,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_saved_domain_summaries_use_replicate_choice_and_conditional_rt",
+      "seconds": 0.204,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_saved_report_preserves_shared_assessments_and_real_figure_links",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_saved_artifacts",
+      "name": "test_report_tables_match_saved_numbers_and_underlying_samples",
+      "seconds": 0.004,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_scalar_views_preserve_exact_values_axes_and_source",
+      "seconds": 0.004,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_component_selection_uses_labels_and_restores_named_axis_order[False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_component_selection_uses_labels_and_restores_named_axis_order[True]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[unknown-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[unknown-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[reversed-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[reversed-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[short-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[short-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[unlabeled-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[unlabeled-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[duplicate-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_ambiguous_or_malformed_component_axis[duplicate-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0-nan-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0-nan-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0-inf-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0-inf-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0-0.0-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0-0.0-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0--999.0-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[0--999.0-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-0.0-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-0.0-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-2.0-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-2.0-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-0.5-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-0.5-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-nan-False]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_invalid_rt_or_choice_at_any_sample[1-nan-True]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_empty_sample_or_trial_axes[chain]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_empty_sample_or_trial_axes[draw]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_empty_sample_or_trial_axes[__obs__]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_missing_or_ambiguous_sample_coordinates[missing_draw]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_missing_or_ambiguous_sample_coordinates[unlabeled_trials]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_missing_or_ambiguous_sample_coordinates[duplicate_draws]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_prediction_rows_that_do_not_match_observations[labels0]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_prediction_rows_that_do_not_match_observations[labels1]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_prediction_rows_that_do_not_match_observations[labels2]",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_missing_paired_evidence[group-observed_data]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_missing_paired_evidence[group-posterior_predictive]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_missing_paired_evidence[variable-observed_data]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_rejects_missing_paired_evidence[variable-posterior_predictive]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_saved_scalar_artifacts_match_values_and_document_scope",
+      "seconds": 0.012,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_installed_cli_preserves_data_and_rejects_invalid_input[False]",
+      "seconds": 0.377,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_installed_cli_preserves_data_and_rejects_invalid_input[True]",
+      "seconds": 0.379,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_cli_entrypoint_uses_explicit_paths",
+      "seconds": 0.018,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_authorized_ddm_notebook_preserves_joint_and_marginal_evidence",
+      "seconds": 0.0,
+      "outcome": "skipped",
+      "reason": "HSSM simulation and full notebook integration require explicit opt-in; execution is deferred."
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_default_method_is_capability_explicit",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_unavailable_modern_method_fails_visibly",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_legacy_discrete_pit_matches_native_tie_convention",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_modern_native_pit_is_used_without_coverage_transform",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_nonfinite_input_cannot_become_a_finite_pit[envelope-observed_data]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_nonfinite_input_cannot_become_a_finite_pit[envelope-posterior_predictive]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_nonfinite_input_cannot_become_a_finite_pit[auto-observed_data]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_nonfinite_input_cannot_become_a_finite_pit[auto-posterior_predictive]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_empty_predictive_draws_rejected[envelope]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_empty_predictive_draws_rejected[auto]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_row_coordinate_mismatch_rejected[envelope]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_row_coordinate_mismatch_rejected[auto]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_envelope_preserves_native_interior_test_and_reports_real_zero_atom",
+      "seconds": 0.436,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_modern_shape_failure_is_not_called_well_calibrated",
+      "seconds": 0.002,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_plot_curve_matches_tested_values_without_axis_rescaling[envelope-False]",
+      "seconds": 0.247,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_plot_curve_matches_tested_values_without_axis_rescaling[envelope-True]",
+      "seconds": 0.241,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_plot_curve_matches_tested_values_without_axis_rescaling[auto-False]",
+      "seconds": 0.026,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_plot_curve_matches_tested_values_without_axis_rescaling[auto-True]",
+      "seconds": 0.028,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_invalid_precomputed_pit_rejected[nan]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_invalid_precomputed_pit_rejected[inf]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_invalid_precomputed_pit_rejected[-0.1]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_invalid_precomputed_pit_rejected[1.1]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_invalid_significance_rejected[0]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_invalid_significance_rejected[1]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_invalid_significance_rejected[nan]",
+      "seconds": 0.0,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_cli_records_explicit_method_and_plots",
+      "seconds": 1.353,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_binary_storage_dtype_does_not_change_randomized_pit[bool]",
+      "seconds": 0.004,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_binary_storage_dtype_does_not_change_randomized_pit[uint8]",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_binary_storage_dtype_does_not_change_randomized_pit[int8]",
+      "seconds": 0.003,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_known_probability_grid_is_not_normalized_by_maximum_pit[envelope]",
+      "seconds": 0.006,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_known_probability_grid_is_not_normalized_by_maximum_pit[auto]",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    },
+    {
+      "module": "evals.smoke.test_calibration_consistency",
+      "name": "test_native_uniformity_failure_is_not_replaced_with_a_passing_method",
+      "seconds": 0.001,
+      "outcome": "passed",
+      "reason": null
+    }
+  ],
+  "adapter_line_coverage": {
+    "covered": 65,
+    "statements": 66,
+    "uncovered": [
+      141
+    ]
+  },
+  "source_sha256": {
+    "evals/smoke/hssm_numerical_reference.py": "eae473fe2f1d47ac575a952f08bbd8ff3a15575e5af0d14eb41cedeec7d3dae7",
+    "evals/smoke/test_calibration_consistency.py": "3a660f30784fdedb42de559c0eaa2dc6b03d9474bc1cff14742a063ec611013c",
+    "evals/smoke/test_hssm_notebook_contracts.py": "7de3bf22c424c996b4381d1f2719da1ae1443c3ecd719d03977837805cc74003",
+    "evals/smoke/test_hssm_numerics.py": "5e44ad9bd845741b3e2e8e3eb1ec66da2935032fd336218998a63431833a8b37",
+    "evals/smoke/test_hssm_reporting.py": "59f9e75bd9990bdea8800d683ee07aaf3ced5275c0dc401c6556cf7ff6b0f1d4",
+    "evals/smoke/test_hssm_saved_artifacts.py": "c3d68272d3cdfca6a0c1b0dea251136e474aef5ba6f11dc4bfcc047c321fcc85",
+    "evals/smoke/test_hssm_workflow.py": "b6b98f210ce63c8d1a2e288ce0699d6af528dc5e13c20b4080fa5e1bba76611c"
+  },
+  "warnings": [
+    "PyMC root compute_log_prior deprecation: use pymc.stats.compute_log_prior before the first 2027 release.",
+    "netCDF4 import ndarray-size RuntimeWarning; serialization roundtrip and saved artifacts pass."
+  ],
+  "command": "env -u BAYGENT_TEST_HSSM -u BAYGENT_RUN_HSSM BAYGENT_HSSM_ARTIFACT_DIR=examples/hssm-workflow/results/round-1/analytical-ddm MPLBACKEND=Agg MPLCONFIGDIR=/tmp/baygent-hssm-mpl XDG_CACHE_HOME=/tmp/baygent-hssm-cache PYTENSOR_FLAGS=base_compiledir=/tmp/baygent-hssm-numerics python -m pytest -q evals/smoke/test_hssm*.py evals/smoke/test_calibration_consistency.py -o junit_family=xunit1 --junitxml=/tmp/baygent-hssm-final-tests.xml",
+  "scope": "139 HSSM checks plus 32 shared calibration regressions passed; one duplicate opt-in fit skipped, four strict expected upstream coordinate failures."
+}

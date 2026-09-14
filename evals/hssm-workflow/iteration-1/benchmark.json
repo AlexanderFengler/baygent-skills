@@ -9,23 +9,26 @@
     "status": "validated",
     "evidence": "runtime/README.md",
     "tests": {
-      "passed": 139,
+      "passed": 171,
       "skipped": 1,
-      "strict_xfailed": 4
+      "strict_xfailed": 4,
+      "scope": "139 HSSM checks plus 32 shared calibration regressions"
     },
     "scope": "One flat analytical DDM teaching workflow on Python 3.12.13/macOS arm64; uv-installed HSSM 0.5.0, Bambi 0.19.0, PyMC 6.1.0, ArviZ 1.2.0 and NumPy 2.4.6 with system Graphviz.",
     "checks": [
       "deterministic adapter and installed CLI contracts",
       "domain summaries, execution gates and report failure handling",
       "independent numerical prior and joint-likelihood verification",
-      "full notebook export and saved-artifact checks"
+      "full notebook export and saved-artifact checks",
+      "shared assessment/plot consistency and actual legacy/modern reporting harnesses; strict cross-environment common-method comparison"
     ],
     "limitations": [
       "The conda environment recipe itself was not executed.",
-      "The RT coverage plot and shared JSON assessment currently disagree; the reported excellent RT rating is not an accepted calibration conclusion while this is investigated.",
+      "Corrected RT calibration is fair: the coverage-transformed PIT test rejects uniformity (p=3.1641e-15); ordinary RT PIT and both choice tests pass. The flag remains in the report.",
       "Native density recomputation is guarded to require default sample coordinates; known defects remain strict expected failures.",
       "One teaching dataset does not establish parameter recovery or joint, conditional or held-out calibration.",
-      "Posterior-predictive draws have no public HSSM random-seed argument."
+      "Posterior-predictive draws have no public HSSM random-seed argument.",
+      "ArviZ-stats 1.2 can raise for sufficiently uniform LOO-PIT values; errors are propagated, and scalar HSSM views use PPC-PIT only."
     ]
   },
   "reason": "Local runtime validation is recorded separately from agent performance. Paired model-service and trigger scenarios are prepared but have not executed; no benchmark grades or improvement claims are available."

@@ -1,0 +1,22 @@
+{
+  "v": {
+    "prior": 0.006,
+    "likelihood": 0.094,
+    "diagnosis": "\u2713"
+  },
+  "a": {
+    "prior": 0.011,
+    "likelihood": 0.092,
+    "diagnosis": "\u2713"
+  },
+  "z": {
+    "prior": 0.004,
+    "likelihood": 0.111,
+    "diagnosis": "\u2713"
+  },
+  "t": {
+    "prior": 0.007,
+    "likelihood": 0.117,
+    "diagnosis": "\u2713"
+  }
+}

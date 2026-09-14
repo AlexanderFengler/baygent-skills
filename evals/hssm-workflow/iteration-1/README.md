@@ -6,9 +6,10 @@ numerical density checks and a full synthetic notebook/report run. See the
 [runtime evidence](runtime/README.md) for exact commands, source hashes,
 resolved requirements, test results, figures and raw assessments. Paired agent
 and trigger evaluations have not executed; their benchmark fields remain null.
-The final combined suite recorded **139 passed, one intentionally skipped and
+The final combined suite recorded **171 passed, one intentionally skipped and
 four strict expected failures**. The corrected canonical HTML export succeeded
 with the original model, seed and sampling budget.
+The total includes 139 HSSM checks and 32 shared calibration regressions.
 
 The [skill](../../../hssm-workflow/SKILL.md), installed RT/choice adapter and
 [marimo notebook](../../../examples/hssm-workflow/analytical_ddm.py) target HSSM
@@ -54,12 +55,17 @@ The example generated 300 teaching trials and used 200 prior draws, two chains,
 post-processing and completed native predictions, independent density guards,
 shared convergence/joint-trial LOO/sensitivity checks, and a canonical report.
 The shared checks rated convergence and LOO **excellent**, prior sensitivity
-**low**, and each fitted-data RT/choice marginal PPC-PIT assessment **excellent**.
-However, review found that the final RT coverage plot reports a discrepancy
-while the shared JSON marks its coverage as inside the bands. That disagreement
-is under investigation: the JSON's RT rating cannot currently support a claim
-of adequate RT marginal calibration. The linked report retains the actual
-parameter and domain summaries, and the runtime record preserves both outputs.
+**low**, the fitted-data RT marginal assessment **fair**, and choice calibration
+**excellent**. The RT coverage-transformed PIT test rejects uniformity
+(`p=3.1641e-15`); ordinary RT PIT and both choice tests pass at significance
+level 0.01. This discrepancy remains explicit in the report and its next steps.
+
+Review exposed shared assessment/plot method disagreement, duplicate coverage
+transformation, and native plot coordinate rescaling. The
+[shared correction and compatibility evidence](../../calibration-method-consistency/README.md)
+show that the final figures and JSON use one PIT preparation and the same
+statistical test. The old excellent RT assessment is superseded, with earlier
+attempts preserved. Bambi's saved full reports were reassessed as well.
 
 These ratings apply to this dataset and specification. They do not establish
 multi-dataset parameter recovery, joint/conditional/held-out calibration,
