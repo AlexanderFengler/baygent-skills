@@ -131,10 +131,10 @@ this during preparation. Never copy authentication material into task payloads.
 ## Freeze and approve the actual payload
 
 Per-file SHA256 values record the currently observed source bytes. The payload
-was refreshed at `986a9db`, after the shared calibration fix `29175ee` and report
-template correction `27fed63`. The JSON records full commit identifiers; hashes
-also bind runtime evidence files that may not yet be committed. Both environment
-exports, all listed source/input files and materialized JSON hashes were checked.
+was refreshed at `b64cd55`, after the shared calibration fix `29175ee`, report
+template correction `27fed63` and skill guidance correction `b64cd55`. The JSON
+records full commit identifiers. All listed source/input/environment files are
+tracked at that commit; their hashes and materialized JSON hashes were checked.
 The six task texts and model settings are unchanged.
 
 Recheck hashes before copying the payload, reject mismatches, and update this
