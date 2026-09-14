@@ -368,6 +368,10 @@ def assemble_report(
             + checks["summary"]["convergence"]
             + " "
             + checks["summary"]["psense"]
+            + " RT margin: "
+            + margins["rt"]["summary"]["calibration"]
+            + " Choice margin: "
+            + margins["choice"]["summary"]["calibration"]
             + " This is a synthetic teaching analysis, not a real-data conclusion.",
             None,
         ),
