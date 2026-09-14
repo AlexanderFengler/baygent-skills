@@ -1,4 +1,4 @@
-# PyMC 6 / ArviZ 1.0 environment for the bayesian-workflow (and amortized-workflow) skills.
+# PyMC 6 / ArviZ 1.0 environment for the Bayesian, Bambi and amortized workflow skills.
 #
 # Companion to environment.yml (PyMC 5). The two-env setup is how we guarantee
 # dual-compatibility during the transition: the reporting-harness smoke test and the
@@ -18,6 +18,7 @@ dependencies:
   - nutpie
   - preliz
   - networkx
+  - graphviz  # Bambi example model graphs (dot executable)
   # ArviZ 1.x reads/writes .nc via xarray's open_datatree, which needs a
   # group-aware netcdf engine. A pip-only arviz-1 install does NOT pull one,
   # so without this the diagnose/calibration scripts can't load a saved .nc.
@@ -25,6 +26,8 @@ dependencies:
   - h5netcdf
   - pip
   - pip:
+    - bambi==0.21.0
+    - marimo>=0.24.2,<0.25  # interactive Bambi examples
     # Cap below the next major: ArviZ 1.x reorganized its API once already
     # (0.23 -> 1.0), so an unbounded floor could pull a future 2.0 that breaks
     # the scripts. Re-test and lift the cap when 2.0 is vetted.
