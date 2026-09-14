@@ -71,7 +71,8 @@ The runtime and two review prompts come unchanged from
 ## Model, tools and resource budget
 
 - **CLI:** the inspected installation is `codex-cli 0.153.4`; its binary hash is
-  recorded. The inspection used help/version/feature-list commands only. No
+  recorded. The inspection used help/version/feature-list commands only; the options
+  and observed model defaults were rechecked during the payload refresh. No
   model catalog request, prompt-input rendering or agent command ran.
 - **Model:** explicitly `gpt-6-astra`, reasoning effort `ultra`, matching the
   selected nonsecret local configuration fields. These are identifiers, not an
@@ -129,13 +130,17 @@ this during preparation. Never copy authentication material into task payloads.
 
 ## Freeze and approve the actual payload
 
-Per-file SHA256 values record the currently observed source bytes.
-`git_head_at_preparation` records provenance. The shared calibration helper and
-reporting correction is in progress, so this is a **draft snapshot requiring a
-hash refresh** after the fix and final runtime review. Both environments now
-have hashed resolved-requirements exports; recheck these with the final source
-freeze. Materialize JSON exactly as specified and verify its recorded hash.
-Verify the scenario environment against its export before execution.
+Per-file SHA256 values record the currently observed source bytes. The payload
+was refreshed at `986a9db`, after the shared calibration fix `29175ee` and report
+template correction `27fed63`. The JSON records full commit identifiers; hashes
+also bind runtime evidence files that may not yet be committed. Both environment
+exports, all listed source/input files and materialized JSON hashes were checked.
+The six task texts and model settings are unchanged.
+
+Recheck hashes before copying the payload, reject mismatches, and update this
+manifest if any source or input changes. Materialize JSON exactly as specified
+and verify its recorded hash. Verify each scenario environment against its
+resolved-requirements export before execution.
 
 After local runtime review, fixture extraction and source/environment freezing,
 present the exact final task texts, intended file allowlist, model/tool settings,

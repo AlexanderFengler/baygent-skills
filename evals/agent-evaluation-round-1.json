@@ -3,7 +3,7 @@
   "launch_ready": false,
   "service_calls_made": false,
   "git_head_at_preparation": "27fed63923e1baa3b12ccc86cfcb009378fa2c7b",
-  "source_hash_policy": "Draft snapshot of per-file SHA256 values. Shared calibration helper/reporting corrections are in progress: refresh all payload hashes and review the final source/runtime evidence before launch. Git HEAD is provenance, not proof that all payload files are committed. Reject mismatches.",
+  "source_hash_policy": "Per-file SHA256 values bind the currently observed payload bytes, refreshed after the shared calibration helper and reporting correction. Git HEAD records provenance; hashes also cover runtime evidence files that may be uncommitted. Recheck before launch, reject mismatches, and refresh review if bytes change.",
   "pilot": {
     "scenarios": 6,
     "arms_per_scenario": 2,
@@ -18,7 +18,7 @@
     "provider": "OpenAI Codex service, intended transport; verify isolated authentication/provider before launch",
     "id": "gpt-6-astra",
     "reasoning_effort": "ultra",
-    "selection_source": "Only the nonsecret model and model_reasoning_effort fields from the local user config were used; both are explicit CLI overrides",
+    "selection_source": "The nonsecret model and model_reasoning_effort fields from local user config were rechecked during payload refresh: gpt-6-astra and ultra. Both remain explicit CLI overrides; no model access request was made.",
     "immutable_model_revision_available": false,
     "access_verified_by_new_request": false
   },
@@ -136,7 +136,9 @@
     ],
     "catalog_isolation_verified": false,
     "tool_inventory_verified": false,
-    "filesystem_read_isolation_verified": false
+    "filesystem_read_isolation_verified": false,
+    "option_availability_rechecked": true,
+    "candidate_execution_tested": false
   },
   "shared_prompt_prefix": "Work on this standalone analysis task inside the supplied workspace. Available skills are installed under .agents/skills; the analysis environment is described in environment.json. Use the supplied data and installed Python packages, and save new work under results/. Do not inspect parent directories or unrelated user configuration, install packages, make network requests, contact other agents or model services, or read another run's outputs. Respect the scenario's computation limits. If a required step cannot complete, preserve its failure evidence and explain the limitation instead of changing the task or silently increasing its budget.",
   "pilot_settings_text_rule": "Use each scenario's concrete pilot_settings_text verbatim. It is included in stdin_sha256.",
@@ -185,7 +187,7 @@
       {
         "source": "bayesian-workflow/scripts/calibration_check.py",
         "destination": ".agents/skills/bayesian-workflow/scripts/calibration_check.py",
-        "sha256": "ed02b29d74f750d5ee7c224e1260d7fef5f3d63b6a717a7e95ecd361651b9bd1"
+        "sha256": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d"
       },
       {
         "source": "bayesian-workflow/scripts/check_diagnostics.py",
@@ -680,7 +682,7 @@
   "remaining_launch_gates": [
     "Review final local runtime validation, including the shared calibration correction; this manifest does not assert that new skill behavior has been evaluated.",
     "Extract the two Bambi input CSVs and the exact generation metadata above into standalone fixtures. Verify their generation-only recipes if needed; do not run notebooks or refit models. Preserve the original eval metadata and use the adapted prompts here.",
-    "Refresh every payload and environment-requirements hash after the shared calibration helper/reporting correction and final runtime evidence are committed; the current hashes are a draft snapshot.",
+    "Recheck all refreshed payload and environment-requirements hashes immediately before materialization. Reject changed bytes and update the reviewed manifest; no ongoing calibration correction remains in this snapshot.",
     "Prepare fresh temporary workspaces outside Spine with only the intended per-arm files. Preserve execution-policy rules. Record native CLI catalog/tool/host-read isolation limits; a new OS account or container is not required by this preparation manifest.",
     "If a local-only initial prompt/catalog rendering command can be established from local help or source, inspect its output before launch. Current debug prompt-input help does not establish offline behavior or parity with exec --ignore-user-config, so it has not been run. Do not call it merely to test whether it contacts a service.",
     "Review optional feature settings and any observable extra global skills, user/project instructions, MCP or account tools. Describe unresolved contamination risks explicitly; feature flags and prompt instructions are not a verified hard isolation boundary.",
@@ -703,5 +705,11 @@
     "per_run_cache_paths": "Set MPLCONFIGDIR, XDG_CACHE_HOME and PYTENSOR_FLAGS base_compiledir to distinct evaluator-created cache directories for this run, outside other run workspaces.",
     "PATH": "Prepend the provisioned scenario environment bin directory; retain required system/CLI tool paths only. Record the resolved Python and Codex executable paths before launch.",
     "inheritance": "Do not pass unrelated service tokens or task variables to analysis child commands. Keep HOME and CODEX_HOME unchanged and preserve execution rules; native CLI authentication remains managed by the existing supported setup and is not copied into payload files."
+  },
+  "git_head_at_payload_refresh": "986a9dbd94f2c3e7e1e522732a0031962a11a597",
+  "source_refresh": {
+    "shared_calibration_commit": "29175ee83be0c0e3fa2574107600fbc7c574f1dc",
+    "shared_reporting_commit": "27fed63923e1baa3b12ccc86cfcb009378fa2c7b",
+    "source_and_input_hashes_verified": true
   }
 }
