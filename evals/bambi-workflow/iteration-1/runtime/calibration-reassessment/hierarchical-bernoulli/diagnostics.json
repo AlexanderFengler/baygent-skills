@@ -1,0 +1,60 @@
+{
+  "convergence": {
+    "all_ok": true,
+    "method": "arviz_stats.diagnose",
+    "rhat": {
+      "ok": true,
+      "max": null,
+      "problematic_params": []
+    },
+    "ess_bulk": {
+      "ok": true,
+      "problematic_params": []
+    },
+    "ess_tail": {
+      "ok": true,
+      "problematic_params": []
+    },
+    "divergences": {
+      "count": 0,
+      "pct": 0.0,
+      "ok": true
+    },
+    "treedepth": {
+      "ok": true,
+      "n_max": 0,
+      "pct": 0.0
+    },
+    "bfmi": {
+      "ok": true,
+      "failed_chains": []
+    }
+  },
+  "loo": {
+    "elpd": -292.763146927923,
+    "se": 5.320396305086424,
+    "p_loo": 9.15243020572982,
+    "pareto_k": {
+      "max": 0.1883244737663738,
+      "n_bad": 0,
+      "n_marginal": 0,
+      "n_nonfinite": 0,
+      "ok": true
+    },
+    "computed": true
+  },
+  "posterior_predictive": {
+    "available": true,
+    "variables": [
+      "support"
+    ],
+    "observed_variables": [
+      "support"
+    ]
+  },
+  "overall": {
+    "ok": true,
+    "issues": [],
+    "recommendation": "Model is ready for interpretation."
+  }
+}

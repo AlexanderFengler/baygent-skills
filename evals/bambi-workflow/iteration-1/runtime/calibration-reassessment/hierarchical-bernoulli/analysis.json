@@ -1,0 +1,26 @@
+{
+  "title": "Hierarchical Bernoulli regression",
+  "formula": "support ~ age_scaled + income_bracket + urban + (1|region)",
+  "family": "bernoulli",
+  "link": "logit",
+  "seed": 2264,
+  "smoke": false,
+  "sampling": {
+    "draws": 1000,
+    "tune": 1000,
+    "chains": 4,
+    "retained_draws_per_chain": 1000,
+    "backend": "nutpie",
+    "omit_offsets": false,
+    "center_predictors": false
+  },
+  "question": "What is support probability at age 40, medium income, urban=1 in the known north region?",
+  "generative_story": "Conditionally independent Bernoulli outcomes with common age, income and urban effects and partially pooled region intercepts.",
+  "prior_rationale": "Log-odds intercept Normal(0,1), common slopes Normal(0,0.5), zero-mean Normal group deviations with HalfNormal(0.6) scale.",
+  "encoding": "Support and urban are exactly 0/1; age_scaled=(age-40)/10. Ordered low/medium/high income treatment design is checked: low=[0,0], medium=[1,0], high=[0,1]. Eight regions have varying intercepts.",
+  "prediction_target": "Conditional support probability at age 40, medium income, urban=1 in known north, with a 94% HDI; new-group sampling is not requested.",
+  "interpretation": "Region-specific probabilities describe modeled associations; they do not marginalize over unseen regions or identify a causal effect.",
+  "prior_assessment": "The pooled 94% interval for prior-predictive support rates is [0.14, 0.89]. The prior permits substantial uncertainty without assuming all regions are identical. This pooled check must be complemented by domain judgments about regional variation.",
+  "ppc_assessment": "Observed support proportion 0.56; replicated pooled 94% interval [0.50, 0.62]. Compare regional observed and predicted proportions as well: pooled agreement can hide a region-specific failure. A binary histogram alone is not a calibration check.",
+  "limitations": "Synthetic unequal region samples; no survey weighting or poststratification. This known-region conditional probability is not an overall population estimate or a causal effect."
+}

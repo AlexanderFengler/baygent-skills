@@ -1,0 +1,36 @@
+{
+  "convergence": {
+    "rating": "excellent",
+    "problematic_params": []
+  },
+  "loo": {
+    "rating": "excellent",
+    "pareto_k": {
+      "max": 0.19705064004548895,
+      "n_bad": 0,
+      "n_marginal": 0,
+      "n_nonfinite": 0,
+      "ok": true
+    }
+  },
+  "posterior_predictive": {
+    "available": true
+  },
+  "calibration": {
+    "rating": "excellent",
+    "diagnosis": "well-calibrated"
+  },
+  "psense": {
+    "rating": "low sensitivity",
+    "flagged_params": []
+  },
+  "summary": {
+    "convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences).",
+    "loo": "LOO Pareto-k: excellent.",
+    "calibration": "Calibration is excellent \u2014 well-calibrated.",
+    "psense": "Prior sensitivity: low sensitivity (flagged: none)."
+  },
+  "next_steps": [
+    "All diagnostics are within acceptable bounds \u2014 proceed to interpretation. Translate posteriors into decision-relevant terms and document the model assumptions in the report."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "Intercept": {
+    "prior": 0.092,
+    "likelihood": 0.103,
+    "diagnosis": "potential prior-data conflict"
+  },
+  "age_scaled": {
+    "prior": 0.012,
+    "likelihood": 0.09,
+    "diagnosis": "\u2713"
+  },
+  "income_bracket[medium]": {
+    "prior": 0.055,
+    "likelihood": 0.107,
+    "diagnosis": "potential prior-data conflict"
+  },
+  "income_bracket[high]": {
+    "prior": 0.087,
+    "likelihood": 0.108,
+    "diagnosis": "potential prior-data conflict"
+  },
+  "urban": {
+    "prior": 0.082,
+    "likelihood": 0.134,
+    "diagnosis": "potential prior-data conflict"
+  },
+  "1|region_sigma": {
+    "prior": 0.119,
+    "likelihood": 0.164,
+    "diagnosis": "potential prior-data conflict"
+  }
+}
