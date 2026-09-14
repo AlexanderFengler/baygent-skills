@@ -159,6 +159,9 @@ def evidence(checker):
                 "mean": [0.7, 1.2, 0.5, 0.25],
                 "hdi_3%": [0.1, 0.8, 0.3, 0.1],
                 "hdi_97%": [1.3, 1.6, 0.7, 0.3],
+                "r_hat": [1.001, 1.007, 1.003, 1.004],
+                "ess_bulk": [830.5, 645.25, 900.0, 780.0],
+                "ess_tail": [750.0, 690.0, 511.5, 799.0],
             },
             index=parameters,
         ),
@@ -291,6 +294,80 @@ def test_report_retains_canonical_structure_and_both_marginal_figures(
     } <= figures
     assert "| v | 0.7 | 0.1 | 1.3 |" in report
     assert evidence["details"]["prior_assessment"] in report
+
+
+@pytest.mark.parametrize("missing", ["absent", "null"])
+@pytest.mark.parametrize("rating", ["excellent", "fair"])
+def test_missing_native_diagnostic_numbers_use_summary_and_preserve_flags(
+    reporting, checker, evidence, missing, rating
+):
+    diagnostics = diagnostics_fixture(convergence=rating)
+    if rating == "fair":
+        evidence["summary"].loc["z", "r_hat"] = 1.02
+    checks = checker.check_diagnostics(
+        diagnostics, psense=evidence["psense"].to_dict(orient="index")
+    )
+    for name, field in (("rhat", "max"), ("ess_bulk", "min"), ("ess_tail", "min")):
+        if missing == "absent":
+            diagnostics["convergence"][name].pop(field)
+        else:
+            diagnostics["convergence"][name][field] = None
+    evidence["diagnostics"], evidence["checks"] = diagnostics, checks
+    original_diagnostics, original_checks = copy.deepcopy((diagnostics, checks))
+    report, _ = reporting.assemble_report(**evidence)
+    rhat_row = (
+        "| Max R-hat | 1.02 | flag |"
+        if rating == "fair"
+        else "| Max R-hat | 1.007 | pass |"
+    )
+    assert rhat_row in report
+    assert "| Min ESS (bulk) | 645.2 | pass |" in report
+    assert "| Min ESS (tail) | 511.5 | pass |" in report
+    assert "| Divergences | 0 | pass |" in report
+    assert diagnostics == original_diagnostics
+    assert checks == original_checks
+    assert checks["convergence"]["rating"] == rating
+    assert checks["summary"]["convergence"] in report
+
+
+def test_report_explains_data_informed_prior_and_parameter_reference_values(
+    reporting, evidence
+):
+    report, _ = reporting.assemble_report(**evidence)
+    prior_section = report.split("## Prior Predictive Check\n")[1].split("\n## ")[0]
+    assert "before seeing any observations" not in prior_section
+    assert "observed minimum RT" in prior_section
+    assert "not independent of the observations" in prior_section
+    posterior_section = report.split("## Posterior\n")[1].split("\n## ")[0]
+    assert "posterior medians (points) and 50% and 94% HDIs" in posterior_section
+    assert "drift v relative to 0" in posterior_section
+    assert "starting point z relative to 0.5" in posterior_section
+    assert (
+        "For a and t, excluding zero reflects their positive support"
+        in posterior_section
+    )
+    assert (
+        "narrow intervals concentrated away from zero indicate strong evidence"
+        not in report
+    )
+
+
+def test_report_calibration_and_quantile_captions_match_the_saved_plot_conventions(
+    reporting, evidence
+):
+    report, _ = reporting.assemble_report(**evidence)
+    calibration = report.split("## Calibration\n")[1].split("\n## ")[0]
+    assert "ΔECDF" in calibration and "horizontal zero line" in calibration
+    assert "p-value annotation" in calibration
+    assert "nominal central predictive coverage in percent" in calibration
+    assert "simultaneous confidence bands" not in calibration
+    assert "diagonal" not in calibration
+    assert "left cluster represents response -1" in report
+    assert "right cluster response +1" in report
+    assert "Crosses joined by lines show observed quantiles" in report
+    assert "dots show quantiles from predictive replicates" in report
+    for assessment in evidence["margins"].values():
+        assert assessment["summary"]["calibration"] in calibration
 
 
 @pytest.mark.parametrize(

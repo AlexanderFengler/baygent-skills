@@ -225,8 +225,20 @@ def _canonical_report(sections: dict[str, tuple[str, str | None]], title: str) -
         "Trace plots show parameter draws in sampling order for each chain. Well-mixed chains explore similar ranges without persistent drift or sticking.",
     )
     template = template.replace(
-        "Lines outside the bands above the diagonal indicate under-confident predictions (intervals wider than they should be); lines below indicate over-confident predictions (intervals too narrow).",
-        "Departures from uniform PIT values can reflect location bias or dispersion errors; their shape matters. Use the separate coverage curve to assess interval coverage. These are fitted-data PPC-PIT checks, not held-out validation.",
+        "The prior predictive distribution shows the data the model would generate before seeing any observations, using only the priors.",
+        "The prior predictive samples come from the specified priors before posterior fitting. Here the upper bound for t is set from the observed minimum RT, so this check uses a data-informed prior and is not independent of the observations.",
+    )
+    template = template.replace(
+        "The forest plot shows posterior medians (points) and credible intervals (lines) for the parameters of interest. Wide intervals indicate parameters the data are only weakly informative for; narrow intervals concentrated away from zero indicate strong evidence in a direction.",
+        "The forest plot shows posterior medians (points) and 50% and 94% HDIs (lines). Interval width describes posterior uncertainty on each parameter's own scale; compare priors and posteriors before attributing precision to the data. Interpret drift v relative to 0 and normalized starting point z relative to 0.5. For a and t, excluding zero reflects their positive support and is not itself evidence of a directional effect.",
+    )
+    template = template.replace(
+        "The PIT-ECDF plot tests whether the model's predictive distribution is calibrated — that is, whether stated credible levels match empirical coverage. The empirical CDF of probability integral transform values should fall within the simultaneous confidence bands. Lines outside the bands above the diagonal indicate under-confident predictions (intervals wider than they should be); lines below indicate over-confident predictions (intervals too narrow).",
+        "The PIT plot shows the empirical CDF of predictive PIT values minus the uniform CDF (ΔECDF). The dashed horizontal zero line is the uniform reference. Departures can reflect location bias or dispersion errors; their shape matters. The p-value annotation reports a test against that reference at the displayed significance level. These are fitted-data marginal PPC-PIT checks, not held-out validation.",
+    )
+    template = template.replace(
+        "The coverage plot tests the same idea in coverage units: it asks whether nominal central credible intervals (50%, 80%, 95%) actually contain the stated fraction of the observed data. A well-calibrated model lies on the diagonal.",
+        "The coverage plot applies the same ΔECDF display to coverage-transformed PIT values. Its x-axis gives nominal central predictive coverage in percent; its y-axis gives the ECDF difference, with agreement represented by the horizontal zero line. Use its p-value annotation alongside the PIT check; passing both checks does not establish joint or held-out calibration.",
     )
     parts = re.split(r"(?m)^## (.+)\n", template)
     output = [f"# {title} — Bayesian Analysis Report\n"]
@@ -320,10 +332,20 @@ def assemble_report(
         for name, parameter in model.params.items()
     ]
     conv = diagnostics["convergence"]
+    # Modern shared diagnose output may retain only flags, with no extrema.
+    # Display extrema from the already computed unrounded parameter summary;
+    # the original shared evidence remains the sole source of statuses/ratings.
+    summary_extrema = {
+        "rhat": summary["r_hat"].max(skipna=False),
+        "ess_bulk": summary["ess_bulk"].min(skipna=False),
+        "ess_tail": summary["ess_tail"].min(skipna=False),
+    }
     diagnostic_rows = [
         {
             "Diagnostic": label,
-            "Value": conv[key].get(value, "Not returned by shared helper"),
+            "Value": conv[key][value]
+            if conv[key].get(value) is not None
+            else summary_extrema.get(key, "Not returned by shared helper"),
             "Status": "pass" if conv[key]["ok"] else "flag",
         }
         for label, key, value in [
@@ -391,7 +413,7 @@ def assemble_report(
             checks["summary"]["convergence"]
             + " Settings: `"
             + str(details["sampler_settings"])
-            + "`.",
+            + "`. Missing extrema in the shared diagnostic output are taken from summary.csv; pass/flag statuses retain the shared assessment.",
             _table(pd.DataFrame(diagnostic_rows)),
         ),
         "Posterior": (
@@ -402,7 +424,8 @@ def assemble_report(
         "Posterior Predictive Check": (
             "Compare both choices and their conditional RT distributions. The following are replicated-statistic intervals, not parameter HDIs.\n\n"
             + _table(domain_checks.loc[domain_checks.stage == "posterior_predictive"])
-            + "\n\n![RT quantiles by choice](quantile_probability.png)",
+            + "\n\n![RT quantiles by choice](quantile_probability.png)"
+            + "\n\nIn this quantile-probability plot, the left cluster represents response -1 and the right cluster response +1. Crosses joined by lines show observed quantiles; dots show quantiles from predictive replicates. Colors identify the 0.1, 0.5 and 0.9 RT quantiles, and the horizontal position shows each choice's proportion.",
             None,
         ),
         "Calibration": (calibration_text, None),
@@ -488,7 +511,11 @@ def write_report(
     model.data.to_csv(output_dir / "data.csv", index=False)
     domain_checks.to_csv(output_dir / "domain_checks.csv", index=False)
     summary = az.summary(
-        posterior, var_names=["v", "a", "z", "t"], ci_prob=0.94, ci_kind="hdi"
+        posterior,
+        var_names=["v", "a", "z", "t"],
+        ci_prob=0.94,
+        ci_kind="hdi",
+        round_to="none",
     )
     summary.to_csv(output_dir / "summary.csv")
     psense = azs.psense_summary(posterior, var_names=["v", "a", "z", "t"])
