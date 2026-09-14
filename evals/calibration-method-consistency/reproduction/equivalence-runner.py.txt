@@ -1,0 +1,56 @@
+"""Use upstream worker and comparison functions with uv interpreters, never fitting."""
+from pathlib import Path
+import hashlib
+import importlib.util
+import json
+import os
+import subprocess
+import sys
+import time
+
+root = Path('<SPINE>')
+repo = root / 'repos/baygent-skills'
+out = Path('<COMPAT_WORKDIR>')
+worker = repo / 'evals/smoke/cross_env_equivalence.py'
+spec = importlib.util.spec_from_file_location('upstream_equivalence', worker)
+upstream = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(upstream)
+interpreters = {
+    'legacy': root / '_local/venvs/baygent-arviz10-compat/bin/python',
+    'modern': root / '_local/venvs/baygent-hssm-m2/bin/python',
+}
+report = {'method':'Unchanged upstream --emit-payload and _diff with explicit uv interpreters, on frozen deterministic fixtures; no --build-fixture or conda orchestrator.',
+          'source_sha256':{str(p.relative_to(repo)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [worker,repo/'bayesian-workflow/scripts/calibration_check.py',repo/'bayesian-workflow/scripts/diagnose_model.py',repo/'bayesian-workflow/scripts/check_diagnostics.py']},
+          'cases':{}}
+previous=json.loads((out/'attempt-1/equivalence.json').read_text())
+assert previous['source_sha256']==report['source_sha256'], 'Cannot reuse modern payload after a source change'
+report['reuse']='Modern payloads reused from first run; source hashes identical.'
+failures=[]
+for kind in ['healthy','pathological']:
+    payloads={}
+    for name, interpreter in interpreters.items():
+        if name == 'modern':
+            payloads[name]=json.loads((out/f'{kind}-{name}.json').read_text())
+            print(f'{kind}/{name}: reused unchanged-source payload',flush=True)
+            continue
+        command=[str(interpreter),str(worker),'--emit-payload','--idata',str(out/f'{kind}.nc')]
+        env={**os.environ,'MPLBACKEND':'Agg','MPLCONFIGDIR':f'<TEMP>/baygent-{name}-mpl','XDG_CACHE_HOME':f'<TEMP>/baygent-{name}-cache','PYTENSOR_FLAGS':f'base_compiledir=<TEMP>/baygent-{name}-pytensor'}
+        started=time.monotonic()
+        result=subprocess.run(command,capture_output=True,text=True,env=env,timeout=300)
+        (out/f'{kind}-{name}.stdout.log').write_text(result.stdout)
+        (out/f'{kind}-{name}.stderr.log').write_text(result.stderr)
+        if result.returncode:
+            failures.append(f'{kind}/{name}: worker failed with exit{result.returncode}')
+            print(failures[-1],flush=True)
+            continue
+        payloads[name]=upstream._last_json(result.stdout)
+        (out/f'{kind}-{name}.json').write_text(json.dumps(payloads[name],indent=2)+'\n')
+        print(f'{kind}/{name}: {time.monotonic()-started:.2f}s; {payloads[name]["strict"]}',flush=True)
+    differences=upstream._diff(payloads['legacy'],payloads['modern'],'legacy','modern') if len(payloads)==2 else ['Worker did not complete.']
+    failures.extend(f'{kind}: {d}' for d in differences)
+    report['cases'][kind]={'differences':differences,'payloads':payloads}
+report['failures']=failures
+report['passed']=not failures
+(out/'equivalence.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({'passed':not failures,'failures':failures},indent=2))
+raise SystemExit(int(bool(failures)))

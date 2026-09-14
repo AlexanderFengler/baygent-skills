@@ -1,0 +1,13 @@
+healthy/legacy: worker failed with exit1
+healthy/modern: 9.31s; {'calibration_diagnosis': 'well-calibrated', 'calibration_well_calibrated': True, 'convergence_all_ok': True, 'convergence_method': 'arviz_stats.diagnose', 'loo_computed': True, 'next_steps_non_loo': ['All diagnostics are within acceptable bounds — proceed to interpretation. Translate posteriors into decision-relevant terms and document the model assumptions in the report.'], 'overall_ok': True, 'ppc_available': True, 'rating_calibration': 'excellent', 'rating_convergence': 'excellent', 'summary_calibration': 'Calibration is excellent — well-calibrated.', 'summary_convergence': 'All convergence diagnostics passed (R-hat ≤ 1.01, ESS adequate, no divergences).'}
+pathological/legacy: worker failed with exit1
+pathological/modern: 1.45s; {'calibration_diagnosis': 'over-confident (predictions too certain)', 'calibration_well_calibrated': False, 'convergence_all_ok': False, 'convergence_method': 'arviz_stats.diagnose', 'loo_computed': True, 'next_steps_non_loo': ['Divergences detected — reparameterize the affected component (non-centered for hierarchical scales; replace HalfCauchy with Gamma(2, ...) for scale priors) and increase target_accept to 0.95–0.99.', 'R-hat or ESS flags on mu — run more draws, try init="adapt_diag_grad", or warm-start with `pmx.fit(method="pathfinder")`. Check for multimodality with az.plot_rank(idata) (runs on both ArviZ stacks).', 'Calibration is over-confident — likelihood is too narrow for the data. Consider StudentT for continuous outcomes with heavy tails, NegBinomial for overdispersed counts, or hierarchical structure if groups have distinct variance.'], 'overall_ok': False, 'ppc_available': True, 'rating_calibration': 'poor', 'rating_convergence': 'poor', 'summary_calibration': 'Calibration is poor — over-confident (predictions too certain).', 'summary_convergence': 'Poor convergence on mu, divergences=100. Posterior should not be interpreted until resolved.'}
+{
+  "passed": false,
+  "failures": [
+    "healthy/legacy: worker failed with exit1",
+    "healthy: Worker did not complete.",
+    "pathological/legacy: worker failed with exit1",
+    "pathological: Worker did not complete."
+  ]
+}

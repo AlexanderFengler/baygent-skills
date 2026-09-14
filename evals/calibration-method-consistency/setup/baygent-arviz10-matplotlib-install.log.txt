@@ -1,0 +1,9 @@
+Using Python 3.12.13 environment at: _local/venvs/baygent-arviz10-compat
+Resolved 11 packages in 123ms
+Downloading matplotlib (7.8MiB)
+ Downloaded matplotlib
+Prepared 1 package in 232ms
+Uninstalled 1 package in 31ms
+Installed 1 package in 6ms
+ - matplotlib==3.11.2
+ + matplotlib==3.10.8

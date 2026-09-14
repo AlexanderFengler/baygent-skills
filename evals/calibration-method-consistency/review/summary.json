@@ -1,0 +1,388 @@
+{
+  "review_kind": "Independent local software/scientific correctness review; no agent-performance evaluation",
+  "scope": "bayesian-workflow/scripts/calibration_check.py and calibration consistency regressions",
+  "scoped_fix_status": "passed",
+  "revision": "986a9dbd94f2c3e7e1e522732a0031962a11a597",
+  "final_source_hashes": [
+    {
+      "path": "<REPO>/bayesian-workflow/scripts/calibration_check.py",
+      "sha256": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d"
+    },
+    {
+      "path": "<REPO>/evals/smoke/test_calibration_consistency.py",
+      "sha256": "3a660f30784fdedb42de559c0eaa2dc6b03d9474bc1cff14742a063ec611013c"
+    }
+  ],
+  "checks": {
+    "maximum_normalization_counterexample": {
+      "input": [
+        0.1,
+        0.2,
+        0.3,
+        0.4
+      ],
+      "displayed_x": [
+        0.25,
+        0.5,
+        0.7500000000000001,
+        1.0
+      ],
+      "native_delta": [
+        0.0,
+        0.0,
+        -1.1102230246251565e-16,
+        0.0
+      ],
+      "actual_delta_at_displayed_x": [
+        0.25,
+        0.5,
+        0.2499999999999999,
+        0.0
+      ],
+      "maximum_disagreement": 0.5,
+      "interpretation": "Native output does not equal ECDF(x)-x on its displayed probability coordinates."
+    },
+    "double_coverage_source_proof": {
+      "get_ppc_pit": [
+        145
+      ],
+      "plot_ecdf_pit": [
+        251
+      ],
+      "wrapper_passes_coverage_into_getter": true,
+      "wrapper_forwards_coverage_to_plot": true
+    },
+    "source_proof_interpretation": "Both wrappers explicitly apply 2*abs(PIT-.5); direct shared raw PIT and one explicit coverage transformation avoids composition. Native uniformity statistics are unchanged.",
+    "plot_value_agreement": {
+      "curves_checked": 10,
+      "maximum_absolute_error": 0.0,
+      "method": "Intercept actual saved axes, compare each curve against independent searchsorted counts at displayed x, and compare p-value annotations with direct public uniformity_test calls. Raw and coverage methods tested in modern1.2, modern1.3, legacy1.0."
+    },
+    "envelope_endpoints": "Legacy verdict uses native interior grid/bands. Actual ECDF atoms at zero are drawn; synthetic padded endpoint bands are excluded. Signed-integer randomization convention preserved.",
+    "dtype_invariance": {
+      "status": "fixed and verified",
+      "prior_limitation": "Legacy signed-integer detection omitted boolean and unsigned integer ties.",
+      "final_outputs": {
+        "envelope": {
+          "int8": [
+            0.45274721307192006,
+            0.7894191604138414
+          ],
+          "uint8": [
+            0.45274721307192006,
+            0.7894191604138414
+          ],
+          "bool": [
+            0.45274721307192006,
+            0.7894191604138414
+          ]
+        },
+        "pot_c": {
+          "int8": [
+            0.04725278692807994,
+            0.7105808395861586
+          ],
+          "uint8": [
+            0.04725278692807994,
+            0.7105808395861586
+          ],
+          "bool": [
+            0.04725278692807994,
+            0.7105808395861586
+          ]
+        }
+      }
+    },
+    "mean_coverage_direction": {
+      "central_pit": {
+        "assessment": {
+          "uniformity_method": "pot_c",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": 0.0,
+          "coverage_p_value": 0.0,
+          "pit_uniformity_passed": false,
+          "coverage_uniformity_passed": false,
+          "pit_ecdf_inside_bands": null,
+          "coverage_ecdf_inside_bands": null,
+          "well_calibrated": false,
+          "mean_coverage_deviation": 0.4477,
+          "calibration_diagnosis": "under-confident (predictions too uncertain)"
+        },
+        "exact_integrated_deviation": 0.44974874371859297
+      },
+      "extreme_pit": {
+        "assessment": {
+          "uniformity_method": "pot_c",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": 0.0,
+          "coverage_p_value": 0.0,
+          "pit_uniformity_passed": false,
+          "coverage_uniformity_passed": false,
+          "pit_ecdf_inside_bands": null,
+          "coverage_ecdf_inside_bands": null,
+          "well_calibrated": false,
+          "mean_coverage_deviation": -0.4468,
+          "calibration_diagnosis": "over-confident (predictions too certain)"
+        },
+        "exact_integrated_deviation": -0.44900000000000007
+      }
+    },
+    "malformed_inputs": {
+      "status": "passed",
+      "cases": [
+        "NaN predictive",
+        "NaN observed",
+        "empty predictive draws",
+        "mismatched observation labels"
+      ],
+      "methods": [
+        "pot_c",
+        "envelope"
+      ],
+      "outcome": "All eight cases rejected before creating a finite PIT or passing assessment."
+    },
+    "saved_hssm_results": {
+      "rt": {
+        "assessment": {
+          "uniformity_method": "pot_c",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": 0.10677315601103432,
+          "coverage_p_value": 3.0531133177191805e-15,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": false,
+          "pit_ecdf_inside_bands": null,
+          "coverage_ecdf_inside_bands": null,
+          "well_calibrated": false,
+          "mean_coverage_deviation": -0.0102,
+          "calibration_diagnosis": "non-uniform predictive PIT; no dominant mean coverage direction"
+        },
+        "input": {
+          "path": "<REPO>/examples/hssm-workflow/results/round-1/analytical-ddm/calibration/rt/inference_data.nc",
+          "sha256": "7d57962216e3a816abcc7eaa23f603f3daf40c0143a3440db2d0695f44dbcde8"
+        }
+      },
+      "choice": {
+        "assessment": {
+          "uniformity_method": "pot_c",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": 0.2530173974628206,
+          "coverage_p_value": 0.18510557066706596,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": true,
+          "pit_ecdf_inside_bands": null,
+          "coverage_ecdf_inside_bands": null,
+          "well_calibrated": true,
+          "mean_coverage_deviation": -0.0113,
+          "calibration_diagnosis": "well-calibrated"
+        },
+        "input": {
+          "path": "<REPO>/examples/hssm-workflow/results/round-1/analytical-ddm/calibration/choice/inference_data.nc",
+          "sha256": "78c443d8857b124de9fa99b85f4af6d168c7de3883550b66c0d06f22e1008978"
+        }
+      }
+    },
+    "loo_api": {
+      "hssm": {
+        "envelope": {
+          "status": "passed",
+          "assessment": {
+            "uniformity_method": "envelope",
+            "significance_level": 0.010000000000000009,
+            "pit_p_value": null,
+            "coverage_p_value": null,
+            "pit_uniformity_passed": true,
+            "coverage_uniformity_passed": true,
+            "pit_ecdf_inside_bands": true,
+            "coverage_ecdf_inside_bands": true,
+            "well_calibrated": true,
+            "mean_coverage_deviation": 0.0011,
+            "calibration_diagnosis": "well-calibrated"
+          }
+        },
+        "auto": {
+          "status": "native 1.2 uniformity limitation",
+          "error": "Cannot compute truncated Cauchy combination test. No p-values below 0.5 found.",
+          "prepared_pit_identical_to_public_api": true,
+          "failure_propagates_without_false_passing_verdict": true
+        }
+      },
+      "bambi": {
+        "envelope": {
+          "uniformity_method": "envelope",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": null,
+          "coverage_p_value": null,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": true,
+          "pit_ecdf_inside_bands": true,
+          "coverage_ecdf_inside_bands": true,
+          "well_calibrated": true,
+          "mean_coverage_deviation": 0.0011,
+          "calibration_diagnosis": "well-calibrated"
+        },
+        "auto": {
+          "uniformity_method": "pot_c",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": 0.5,
+          "coverage_p_value": 0.5,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": true,
+          "pit_ecdf_inside_bands": null,
+          "coverage_ecdf_inside_bands": null,
+          "well_calibrated": true,
+          "mean_coverage_deviation": 0.0012,
+          "calibration_diagnosis": "well-calibrated"
+        }
+      },
+      "legacy": {
+        "envelope": {
+          "uniformity_method": "envelope",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": null,
+          "coverage_p_value": null,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": true,
+          "pit_ecdf_inside_bands": true,
+          "coverage_ecdf_inside_bands": true,
+          "well_calibrated": true,
+          "mean_coverage_deviation": 0.0011,
+          "calibration_diagnosis": "well-calibrated"
+        },
+        "auto": {
+          "uniformity_method": "envelope",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": null,
+          "coverage_p_value": null,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": true,
+          "pit_ecdf_inside_bands": true,
+          "coverage_ecdf_inside_bands": true,
+          "well_calibrated": true,
+          "mean_coverage_deviation": 0.0011,
+          "calibration_diagnosis": "well-calibrated"
+        }
+      }
+    }
+  },
+  "test_runs": [
+    {
+      "environment": "baygent-hssm-m2",
+      "cwd": "<REPO>",
+      "initial_command": "../../_local/venvs/baygent-hssm-m2/bin/python -m pytest -q evals/smoke/test_calibration_consistency.py",
+      "initial_outcome": "29 passed, 1 warning",
+      "followup_command": "../../_local/venvs/baygent-hssm-m2/bin/python -m pytest -q evals/smoke/test_calibration_consistency.py -k 'known_probability_grid or native_uniformity_failure'",
+      "followup_outcome": "3 passed, 29 deselected",
+      "purpose": "Follow-up runs only the three newly added regressions after initial29 tests; combined current coverage32 cases."
+    },
+    {
+      "environment": "baygent-bambi-m1",
+      "cwd": "<REPO>",
+      "initial_command": "../../_local/venvs/baygent-bambi-m1/bin/python -m pytest -q evals/smoke/test_calibration_consistency.py",
+      "initial_outcome": "29 passed, 1 warning",
+      "followup_command": "../../_local/venvs/baygent-bambi-m1/bin/python -m pytest -q evals/smoke/test_calibration_consistency.py -k 'known_probability_grid or native_uniformity_failure'",
+      "followup_outcome": "3 passed, 29 deselected",
+      "purpose": "Follow-up runs only the three newly added regressions after initial29 tests; combined current coverage32 cases."
+    },
+    {
+      "environment": "baygent-arviz10-compat",
+      "cwd": "<REPO>",
+      "initial_command": "../../_local/venvs/baygent-arviz10-compat/bin/python -m pytest -q evals/smoke/test_calibration_consistency.py",
+      "initial_outcome": "27 passed, 2 skipped",
+      "followup_command": "../../_local/venvs/baygent-arviz10-compat/bin/python -m pytest -q evals/smoke/test_calibration_consistency.py -k 'known_probability_grid or native_uniformity_failure'",
+      "followup_outcome": "2 passed, 1 skipped, 29 deselected",
+      "purpose": "Follow-up runs only the three newly added regressions after initial29 tests; combined current coverage32 cases."
+    }
+  ],
+  "limits": [
+    "ArviZ-stats1.2 pot_c raises on sufficiently uniform PIT when no pointwise p-values fall below0.5. Reproduced on deterministic healthy LOO fixture; exact same native error propagates with no false passing verdict or fallback. ArviZ-stats1.3.2 accepts this fixture.",
+    "Default auto chooses pot_c on modern APIs and envelope on legacy APIs; defaults are not claimed equivalent. Common-method cross-environment gate is owned/run separately.",
+    "The reported mean coverage deviation is a mean over an explicit probability grid, not the exact continuous integral; sign checked against the exact integral on directional fixtures.",
+    "PPC checks are in-sample marginal diagnostics, not held-out or joint-calibration guarantees. No fit, dependency install, repository edit, or external model-service evaluation was performed by this reviewer.",
+    "RuntimeWarning from netCDF4/NumPy and Bambi NumPy reshape deprecation were visible during CLI regression tests; tests passed."
+  ],
+  "detailed_probe_artifacts": {
+    "hssm": {
+      "path": "<TEMP>/baygent-calibration-review-hssm.json",
+      "sha256": "668a9711239c292cc05db9530404dd32a278f7f7aa3b3951513a3b9e1a6cd93e"
+    },
+    "bambi": {
+      "path": "<TEMP>/baygent-calibration-review-bambi.json",
+      "sha256": "dbd9e7b16c8ee6839bde67382dce6abe0e08fe9d3edbbea47bd28af83db79533"
+    },
+    "legacy": {
+      "path": "<TEMP>/baygent-calibration-review-legacy.json",
+      "sha256": "a1024988671fa13fd4341d2ec8bf7735ee8ec048140d15d4a28aea510019ea8d"
+    }
+  },
+  "reproduction_script": {
+    "path": "<TEMP>/baygent_calibration_independent_review.py",
+    "sha256": "513a6144af50a2042bc70c919c1b07048b1b8e282df6fd90b0ff3b5827c6189e"
+  },
+  "environment_versions": {
+    "hssm": {
+      "arviz-stats": "1.2.0",
+      "arviz-plots": "1.2.0",
+      "arviz-base": "1.2.0",
+      "numpy": "2.4.6",
+      "xarray": "2026.7.0"
+    },
+    "bambi": {
+      "arviz-stats": "1.3.2",
+      "arviz-plots": "1.3.1",
+      "arviz-base": "1.3.0",
+      "numpy": "2.5.3",
+      "xarray": "2026.7.0"
+    },
+    "legacy": {
+      "arviz-stats": "1.0.0",
+      "arviz-plots": "1.0.0",
+      "arviz-base": "1.0.0",
+      "numpy": "2.4.6",
+      "xarray": "2026.7.0"
+    }
+  },
+  "native_source_hashes": {
+    "hssm": [
+      {
+        "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_stats/base/density.py",
+        "sha256": "e23e2321297ecbf287e74dcede5bc794ceb37084ec485ad40e0218ab53dfcc3e"
+      },
+      {
+        "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_plots/plots/utils_ppc.py",
+        "sha256": "e1f3a15e8f2b7132823c169a80062f46d8b3431598d3cc49b5248544c91676de"
+      },
+      {
+        "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_plots/plots/ppc_pit_plot.py",
+        "sha256": "1e94209e02152791b9b979f1c596e825b06edb74f3f05e60a74aba8a59c74157"
+      },
+      {
+        "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_plots/plots/ecdf_plot.py",
+        "sha256": "486f22b2ed5bfe43c7bd96765fcb44bb7383a2d179ecc8ef0bc4939c17573008"
+      }
+    ],
+    "bambi": [
+      {
+        "path": "<ENVS>/baygent-bambi-m1/lib/python3.12/site-packages/arviz_stats/base/density.py",
+        "sha256": "ac2e2c351ac1c473c5a4f4480a81181118fe1ed30d90ee6fe035080d312c6f3a"
+      },
+      {
+        "path": "<ENVS>/baygent-bambi-m1/lib/python3.12/site-packages/arviz_plots/plots/utils_ppc.py",
+        "sha256": "b959b200aeac600a47cb394515ed6d6bda5a064540e93ec27f7cacce14613d31"
+      },
+      {
+        "path": "<ENVS>/baygent-bambi-m1/lib/python3.12/site-packages/arviz_plots/plots/ppc_pit_plot.py",
+        "sha256": "148ae11a94b11f68e2b9d2d4952174bb9612d26525b8bc18409fa1866beb7a78"
+      },
+      {
+        "path": "<ENVS>/baygent-bambi-m1/lib/python3.12/site-packages/arviz_plots/plots/ecdf_plot.py",
+        "sha256": "354ee4e8a2969bf845cceb1984a696f78a8e3c2a55517eba07fc37fa00964208"
+      }
+    ],
+    "legacy": [
+      {
+        "path": "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/arviz_stats/base/density.py",
+        "sha256": "2d36723f0c78a4df62a233ce1b2a4adcf586c1ac8d47b916cd89023b507d5063"
+      }
+    ]
+  }
+}

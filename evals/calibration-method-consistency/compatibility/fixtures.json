@@ -1,0 +1,13 @@
+{
+  "method": "Deterministic Gaussian quantile grids and explicit literal pathology injections; no model construction or sampling.",
+  "counts": {
+    "chains": 4,
+    "draws": 400,
+    "observations": 80
+  },
+  "pathological": "Shifted posterior chain locations; 100 diverging flags; predictive location shifted +8. Likelihood kept common for isolated convergence/PPC comparison. Not a coherent fitted posterior.",
+  "sha256": {
+    "healthy.nc": "f55fa7832eb61bdb1f517bbdcea31c7bb534b4ee137d59ce43646bc0f4301379",
+    "pathological.nc": "faf49d325fdeb09ca1e2b64dd07f32402752903ab9bf0bde5720a28114662c6a"
+  }
+}

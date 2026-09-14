@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "<REPO>/evals/smoke/cross_env_equivalence.py", line 379, in <module>
+    main()
+  File "<REPO>/evals/smoke/cross_env_equivalence.py", line 370, in main
+    emit_payload(Path(args.idata)), indent=2, sort_keys=True, default=str
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/evals/smoke/cross_env_equivalence.py", line 142, in emit_payload
+    idata = az.from_netcdf(str(idata_path))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/arviz/data/io_netcdf.py", line 36, in from_netcdf
+    return InferenceData.from_netcdf(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/arviz/data/inference_data.py", line 411, in from_netcdf
+    h5netcdf.File(filename, mode="r")
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/h5netcdf/core.py", line 1892, in __init__
+    self._backend = _parse_backend(path, mode, backend, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/h5netcdf/core.py", line 174, in _parse_backend
+    raise ImportError(
+ImportError: No module named 'h5py', backend not available. Please install 'h5py' into your Python environment.

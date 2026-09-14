@@ -1,0 +1,164 @@
+{
+  "method": "Existing upstream --emit-payload with explicit common-envelope calibration, plus unchanged _diff and tolerances using uv interpreters on frozen deterministic fixtures; no --build-fixture or conda orchestrator.",
+  "source_sha256": {
+    "evals/smoke/cross_env_equivalence.py": "26ea57ba362cc48b91dd2ab3b4d5f0a27b12242ec1d0ace6091bf9c14d65c427",
+    "bayesian-workflow/scripts/calibration_check.py": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d",
+    "bayesian-workflow/scripts/diagnose_model.py": "41743cbda2c791d735092812e884a8f4fe4acac083f9a7b76fcb64aa75d3c8df",
+    "bayesian-workflow/scripts/check_diagnostics.py": "f413d440d08c97266ebfdaf4b0eed123fce3ded2f80306794160ab82c1c7c670"
+  },
+  "cases": {
+    "healthy": {
+      "differences": [],
+      "payloads": {
+        "legacy": {
+          "arviz": "0.23.0",
+          "info": {
+            "calibration_method": "envelope",
+            "pareto_k_n_bad": 0,
+            "pareto_k_ok": true,
+            "rating_loo": "excellent"
+          },
+          "numeric": {
+            "elpd": -113.22083272279986,
+            "mean_coverage_deviation": 0.0034,
+            "p_loo": 0.3282172529644072,
+            "pareto_k_max": 0.3350473879665721,
+            "rhat_max": null,
+            "se": 5.955171199524521
+          },
+          "pymc": "5.28.0",
+          "strict": {
+            "calibration_diagnosis": "well-calibrated",
+            "calibration_well_calibrated": true,
+            "convergence_all_ok": true,
+            "convergence_method": "arviz_stats.diagnose",
+            "loo_computed": true,
+            "next_steps_non_loo": [
+              "All diagnostics are within acceptable bounds \u2014 proceed to interpretation. Translate posteriors into decision-relevant terms and document the model assumptions in the report."
+            ],
+            "overall_ok": true,
+            "ppc_available": true,
+            "rating_calibration": "excellent",
+            "rating_convergence": "excellent",
+            "summary_calibration": "Calibration is excellent \u2014 well-calibrated.",
+            "summary_convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences)."
+          }
+        },
+        "modern": {
+          "arviz": "1.2.0",
+          "info": {
+            "calibration_method": "envelope",
+            "pareto_k_n_bad": 0,
+            "pareto_k_ok": true,
+            "rating_loo": "excellent"
+          },
+          "numeric": {
+            "elpd": -113.22082029680666,
+            "mean_coverage_deviation": 0.0034,
+            "p_loo": 0.328204826971226,
+            "pareto_k_max": 0.34579371060509584,
+            "rhat_max": null,
+            "se": 5.955168400674845
+          },
+          "pymc": "6.1.0",
+          "strict": {
+            "calibration_diagnosis": "well-calibrated",
+            "calibration_well_calibrated": true,
+            "convergence_all_ok": true,
+            "convergence_method": "arviz_stats.diagnose",
+            "loo_computed": true,
+            "next_steps_non_loo": [
+              "All diagnostics are within acceptable bounds \u2014 proceed to interpretation. Translate posteriors into decision-relevant terms and document the model assumptions in the report."
+            ],
+            "overall_ok": true,
+            "ppc_available": true,
+            "rating_calibration": "excellent",
+            "rating_convergence": "excellent",
+            "summary_calibration": "Calibration is excellent \u2014 well-calibrated.",
+            "summary_convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences)."
+          }
+        }
+      }
+    },
+    "pathological": {
+      "differences": [],
+      "payloads": {
+        "legacy": {
+          "arviz": "0.23.0",
+          "info": {
+            "calibration_method": "envelope",
+            "pareto_k_n_bad": 0,
+            "pareto_k_ok": true,
+            "rating_loo": "excellent"
+          },
+          "numeric": {
+            "elpd": -113.22086173576221,
+            "mean_coverage_deviation": -0.4877,
+            "p_loo": 0.3282462659267651,
+            "pareto_k_max": 0.10364855103266428,
+            "rhat_max": 2.843093773300879,
+            "se": 5.955162466976342
+          },
+          "pymc": "5.28.0",
+          "strict": {
+            "calibration_diagnosis": "over-confident (predictions too certain)",
+            "calibration_well_calibrated": false,
+            "convergence_all_ok": false,
+            "convergence_method": "arviz_stats.diagnose",
+            "loo_computed": true,
+            "next_steps_non_loo": [
+              "Divergences detected \u2014 reparameterize the affected component (non-centered for hierarchical scales; replace HalfCauchy with Gamma(2, ...) for scale priors) and increase target_accept to 0.95\u20130.99.",
+              "R-hat or ESS flags on mu \u2014 run more draws, try init=\"adapt_diag_grad\", or warm-start with `pmx.fit(method=\"pathfinder\")`. Check for multimodality with az.plot_rank(idata) (runs on both ArviZ stacks).",
+              "Calibration is over-confident \u2014 likelihood is too narrow for the data. Consider StudentT for continuous outcomes with heavy tails, NegBinomial for overdispersed counts, or hierarchical structure if groups have distinct variance."
+            ],
+            "overall_ok": false,
+            "ppc_available": true,
+            "rating_calibration": "poor",
+            "rating_convergence": "poor",
+            "summary_calibration": "Calibration is poor \u2014 over-confident (predictions too certain).",
+            "summary_convergence": "Poor convergence on mu, divergences=100. Posterior should not be interpreted until resolved."
+          }
+        },
+        "modern": {
+          "arviz": "1.2.0",
+          "info": {
+            "calibration_method": "envelope",
+            "pareto_k_n_bad": 0,
+            "pareto_k_ok": true,
+            "rating_loo": "excellent"
+          },
+          "numeric": {
+            "elpd": -113.22086424877394,
+            "mean_coverage_deviation": -0.4877,
+            "p_loo": 0.3282487789384837,
+            "pareto_k_max": 0.10904616215414245,
+            "rhat_max": 2.843093773300879,
+            "se": 5.955164235633868
+          },
+          "pymc": "6.1.0",
+          "strict": {
+            "calibration_diagnosis": "over-confident (predictions too certain)",
+            "calibration_well_calibrated": false,
+            "convergence_all_ok": false,
+            "convergence_method": "arviz_stats.diagnose",
+            "loo_computed": true,
+            "next_steps_non_loo": [
+              "Divergences detected \u2014 reparameterize the affected component (non-centered for hierarchical scales; replace HalfCauchy with Gamma(2, ...) for scale priors) and increase target_accept to 0.95\u20130.99.",
+              "R-hat or ESS flags on mu \u2014 run more draws, try init=\"adapt_diag_grad\", or warm-start with `pmx.fit(method=\"pathfinder\")`. Check for multimodality with az.plot_rank(idata) (runs on both ArviZ stacks).",
+              "Calibration is over-confident \u2014 likelihood is too narrow for the data. Consider StudentT for continuous outcomes with heavy tails, NegBinomial for overdispersed counts, or hierarchical structure if groups have distinct variance."
+            ],
+            "overall_ok": false,
+            "ppc_available": true,
+            "rating_calibration": "poor",
+            "rating_convergence": "poor",
+            "summary_calibration": "Calibration is poor \u2014 over-confident (predictions too certain).",
+            "summary_convergence": "Poor convergence on mu, divergences=100. Posterior should not be interpreted until resolved."
+          }
+        }
+      }
+    }
+  },
+  "reuse": "Modern payloads reused from first run; source hashes identical.",
+  "failures": [],
+  "passed": true
+}

@@ -1,0 +1,7 @@
+Using Python 3.12.13 environment at: _local/venvs/baygent-arviz10-compat
+Resolved 2 packages in 235ms
+Downloading h5py (2.9MiB)
+ Downloaded h5py
+Prepared 1 package in 164ms
+Installed 1 package in 3ms
+ + h5py==3.16.0

@@ -1,0 +1,66 @@
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (2 chains in 2 jobs)
+NUTS: [mu, sigma]
+
+== bayesian-workflow diagnostics pipeline ==
+Sampling 2 chains for 400 tune and 400 draw iterations (800 + 800 draws total) took 0 seconds.
+We recommend running at least 4 chains for robust computation of convergence diagnostics
+Sampling: [obs]
+Traceback (most recent call last):
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/file_manager.py", line 219, in _acquire_with_cache_info
+    file = self._cache[self._key]
+           ~~~~~~~~~~~^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+            ~~~~~~~~~~~^^^^^
+KeyError: [<class 'h5netcdf.core.File'>, ('<TEMP>/tmptdwnkxe7/inference_data.nc',), 'a', (('decode_vlen_strings', True), ('driver', None), ('format', 'NETCDF4'), ('invalid_netcdf', None)), 'ddc51b7e-08d9-4290-b5bc-831504891539']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<REPO>/evals/smoke/test_reporting_harness.py", line 198, in <module>
+    main()
+  File "<REPO>/evals/smoke/test_reporting_harness.py", line 185, in main
+    test_bayesian_pipeline(workdir)
+  File "<REPO>/evals/smoke/test_reporting_harness.py", line 97, in test_bayesian_pipeline
+    build_idata(idata_path)
+  File "<REPO>/evals/smoke/test_reporting_harness.py", line 91, in build_idata
+    idata.to_netcdf(str(path))
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/arviz/data/inference_data.py", line 520, in to_netcdf
+    data.to_netcdf(filename, mode=mode, group=f"{base_group}/{group}", **kwargs)
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/core/dataset.py", line 2187, in to_netcdf
+    return to_netcdf(  # type: ignore[return-value]  # mypy cannot resolve the overloads:(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/writers.py", line 422, in to_netcdf
+    store = get_writable_netcdf_store(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/writers.py", line 78, in get_writable_netcdf_store
+    return store_open(target, mode=mode, format=format, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/h5netcdf_.py", line 258, in open
+    return cls(
+           ^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/h5netcdf_.py", line 152, in __init__
+    self._filename = find_root_and_group(self.ds)[0].filename
+                                         ^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/h5netcdf_.py", line 276, in ds
+    return self._acquire()
+           ^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/h5netcdf_.py", line 268, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<UV_PYTHON>/cpython-3.12.13-macos-aarch64-none/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/file_manager.py", line 207, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/backends/file_manager.py", line 225, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/h5netcdf/core.py", line 1892, in __init__
+    self._backend = _parse_backend(path, mode, backend, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/h5netcdf/core.py", line 174, in _parse_backend
+    raise ImportError(
+ImportError: No module named 'h5py', backend not available. Please install 'h5py' into your Python environment.

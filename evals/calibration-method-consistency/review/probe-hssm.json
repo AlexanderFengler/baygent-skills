@@ -1,0 +1,256 @@
+{
+  "python": "3.12.13 (main, Jun 11 2026, 03:55:21) [Clang 22.1.3 ]",
+  "environment": "<ENVS>/baygent-hssm-m2",
+  "versions": {
+    "arviz-stats": "1.2.0",
+    "arviz-plots": "1.2.0",
+    "arviz-base": "1.2.0",
+    "numpy": "2.4.6",
+    "xarray": "2026.7.0"
+  },
+  "source_files": [
+    {
+      "path": "<REPO>/bayesian-workflow/scripts/calibration_check.py",
+      "sha256": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d"
+    },
+    {
+      "path": "<REPO>/evals/smoke/test_calibration_consistency.py",
+      "sha256": "eaebf527854e8f7096c7ca4ce1239133a3b20e9deaf09a0bba0e25c77c4e8497"
+    },
+    {
+      "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_stats/base/density.py",
+      "sha256": "e23e2321297ecbf287e74dcede5bc794ceb37084ec485ad40e0218ab53dfcc3e"
+    },
+    {
+      "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_plots/plots/utils_ppc.py",
+      "sha256": "e1f3a15e8f2b7132823c169a80062f46d8b3431598d3cc49b5248544c91676de"
+    },
+    {
+      "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_plots/plots/ppc_pit_plot.py",
+      "sha256": "1e94209e02152791b9b979f1c596e825b06edb74f3f05e60a74aba8a59c74157"
+    },
+    {
+      "path": "<ENVS>/baygent-hssm-m2/lib/python3.12/site-packages/arviz_plots/plots/ecdf_plot.py",
+      "sha256": "486f22b2ed5bfe43c7bd96765fcb44bb7383a2d179ecc8ef0bc4939c17573008"
+    }
+  ],
+  "native_maximum_normalization_proof": {
+    "input": [
+      0.1,
+      0.2,
+      0.3,
+      0.4
+    ],
+    "displayed_x": [
+      0.25,
+      0.5,
+      0.7500000000000001,
+      1.0
+    ],
+    "native_delta": [
+      0.0,
+      0.0,
+      -1.1102230246251565e-16,
+      0.0
+    ],
+    "actual_delta_at_displayed_x": [
+      0.25,
+      0.5,
+      0.2499999999999999,
+      0.0
+    ],
+    "maximum_disagreement": 0.5,
+    "interpretation": "Native output does not equal ECDF(x)-x on its displayed probability coordinates."
+  },
+  "double_coverage_source_proof": {
+    "get_ppc_pit": [
+      145
+    ],
+    "plot_ecdf_pit": [
+      251
+    ],
+    "wrapper_passes_coverage_into_getter": true,
+    "wrapper_forwards_coverage_to_plot": true
+  },
+  "dtype_invariance": {
+    "envelope": {
+      "int8": [
+        0.45274721307192006,
+        0.7894191604138414
+      ],
+      "uint8": [
+        0.45274721307192006,
+        0.7894191604138414
+      ],
+      "bool": [
+        0.45274721307192006,
+        0.7894191604138414
+      ]
+    },
+    "pot_c": {
+      "int8": [
+        0.04725278692807994,
+        0.7105808395861586
+      ],
+      "uint8": [
+        0.04725278692807994,
+        0.7105808395861586
+      ],
+      "bool": [
+        0.04725278692807994,
+        0.7105808395861586
+      ]
+    }
+  },
+  "coverage_direction": {
+    "central_pit": {
+      "assessment": {
+        "uniformity_method": "pot_c",
+        "significance_level": 0.010000000000000009,
+        "pit_p_value": 0.0,
+        "coverage_p_value": 0.0,
+        "pit_uniformity_passed": false,
+        "coverage_uniformity_passed": false,
+        "pit_ecdf_inside_bands": null,
+        "coverage_ecdf_inside_bands": null,
+        "well_calibrated": false,
+        "mean_coverage_deviation": 0.4477,
+        "calibration_diagnosis": "under-confident (predictions too uncertain)"
+      },
+      "exact_integrated_deviation": 0.44974874371859297
+    },
+    "extreme_pit": {
+      "assessment": {
+        "uniformity_method": "pot_c",
+        "significance_level": 0.010000000000000009,
+        "pit_p_value": 0.0,
+        "coverage_p_value": 0.0,
+        "pit_uniformity_passed": false,
+        "coverage_uniformity_passed": false,
+        "pit_ecdf_inside_bands": null,
+        "coverage_ecdf_inside_bands": null,
+        "well_calibrated": false,
+        "mean_coverage_deviation": -0.4468,
+        "calibration_diagnosis": "over-confident (predictions too certain)"
+      },
+      "exact_integrated_deviation": -0.44900000000000007
+    }
+  },
+  "loo_public_api_equality": {
+    "envelope": {
+      "status": "passed",
+      "assessment": {
+        "uniformity_method": "envelope",
+        "significance_level": 0.010000000000000009,
+        "pit_p_value": null,
+        "coverage_p_value": null,
+        "pit_uniformity_passed": true,
+        "coverage_uniformity_passed": true,
+        "pit_ecdf_inside_bands": true,
+        "coverage_ecdf_inside_bands": true,
+        "well_calibrated": true,
+        "mean_coverage_deviation": 0.0011,
+        "calibration_diagnosis": "well-calibrated"
+      }
+    },
+    "auto": {
+      "status": "native 1.2 uniformity limitation",
+      "error": "Cannot compute truncated Cauchy combination test. No p-values below 0.5 found.",
+      "prepared_pit_identical_to_public_api": true,
+      "failure_propagates_without_false_passing_verdict": true
+    }
+  },
+  "independent_plot_checks": [
+    {
+      "method": "envelope",
+      "coverage": false,
+      "maximum_curve_error": 0.0,
+      "annotation": [
+        "envelope: pass"
+      ],
+      "figure": {
+        "path": "<TEMP>/calibration-review-1.2.0-envelope-False.png",
+        "sha256": "4efb8de777187c5c76804d0593968cb102fe49d3e1482e3726e97943a2bdedf3"
+      }
+    },
+    {
+      "method": "envelope",
+      "coverage": true,
+      "maximum_curve_error": 0.0,
+      "annotation": [
+        "envelope: pass"
+      ],
+      "figure": {
+        "path": "<TEMP>/calibration-review-1.2.0-envelope-True.png",
+        "sha256": "a1c99fd63c88c0bb754ce0575762e6f01e3ce32c0bfbbe3646c7173ef2175deb"
+      }
+    },
+    {
+      "method": "pot_c",
+      "coverage": false,
+      "maximum_curve_error": 0.0,
+      "annotation": [
+        "pot_c: p=0.0591, \u03b1=0.01"
+      ],
+      "figure": {
+        "path": "<TEMP>/calibration-review-1.2.0-pot_c-False.png",
+        "sha256": "267aa3566b0d729e30413fe425852feb65b43f7a366623feb7868be4c62482c1"
+      },
+      "native_p_value": 0.05911184443150419
+    },
+    {
+      "method": "pot_c",
+      "coverage": true,
+      "maximum_curve_error": 0.0,
+      "annotation": [
+        "pot_c: p=0, \u03b1=0.01"
+      ],
+      "figure": {
+        "path": "<TEMP>/calibration-review-1.2.0-pot_c-True.png",
+        "sha256": "cb5b27df4aa8748771b54329fbdb8bcc3158cc55c76108dcf1f406c3724680ad"
+      },
+      "native_p_value": 0.0
+    }
+  ],
+  "saved_hssm_evidence": {
+    "rt": {
+      "assessment": {
+        "uniformity_method": "pot_c",
+        "significance_level": 0.010000000000000009,
+        "pit_p_value": 0.10677315601103432,
+        "coverage_p_value": 3.0531133177191805e-15,
+        "pit_uniformity_passed": true,
+        "coverage_uniformity_passed": false,
+        "pit_ecdf_inside_bands": null,
+        "coverage_ecdf_inside_bands": null,
+        "well_calibrated": false,
+        "mean_coverage_deviation": -0.0102,
+        "calibration_diagnosis": "non-uniform predictive PIT; no dominant mean coverage direction"
+      },
+      "input": {
+        "path": "<REPO>/examples/hssm-workflow/results/round-1/analytical-ddm/calibration/rt/inference_data.nc",
+        "sha256": "7d57962216e3a816abcc7eaa23f603f3daf40c0143a3440db2d0695f44dbcde8"
+      }
+    },
+    "choice": {
+      "assessment": {
+        "uniformity_method": "pot_c",
+        "significance_level": 0.010000000000000009,
+        "pit_p_value": 0.2530173974628206,
+        "coverage_p_value": 0.18510557066706596,
+        "pit_uniformity_passed": true,
+        "coverage_uniformity_passed": true,
+        "pit_ecdf_inside_bands": null,
+        "coverage_ecdf_inside_bands": null,
+        "well_calibrated": true,
+        "mean_coverage_deviation": -0.0113,
+        "calibration_diagnosis": "well-calibrated"
+      },
+      "input": {
+        "path": "<REPO>/examples/hssm-workflow/results/round-1/analytical-ddm/calibration/choice/inference_data.nc",
+        "sha256": "78c443d8857b124de9fa99b85f4af6d168c7de3883550b66c0d06f22e1008978"
+      }
+    }
+  },
+  "status": "passed"
+}

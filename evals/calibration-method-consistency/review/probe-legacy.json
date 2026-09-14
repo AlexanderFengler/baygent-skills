@@ -1,0 +1,158 @@
+{
+  "python": "3.12.13 (main, Jun 11 2026, 03:55:21) [Clang 22.1.3 ]",
+  "environment": "<ENVS>/baygent-arviz10-compat",
+  "versions": {
+    "arviz-stats": "1.0.0",
+    "arviz-plots": "1.0.0",
+    "arviz-base": "1.0.0",
+    "numpy": "2.4.6",
+    "xarray": "2026.7.0"
+  },
+  "source_files": [
+    {
+      "path": "<REPO>/bayesian-workflow/scripts/calibration_check.py",
+      "sha256": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d"
+    },
+    {
+      "path": "<REPO>/evals/smoke/test_calibration_consistency.py",
+      "sha256": "1875eadbaa70b7dabdc95b042ac839bee4218e09eaff7af89fb6cdee74f56e60"
+    },
+    {
+      "path": "<ENVS>/baygent-arviz10-compat/lib/python3.12/site-packages/arviz_stats/base/density.py",
+      "sha256": "2d36723f0c78a4df62a233ce1b2a4adcf586c1ac8d47b916cd89023b507d5063"
+    }
+  ],
+  "native_maximum_normalization_proof": {
+    "input": [
+      0.1,
+      0.2,
+      0.3,
+      0.4
+    ],
+    "displayed_x": [
+      0.25,
+      0.5,
+      0.7500000000000001,
+      1.0
+    ],
+    "native_delta": [
+      0.0,
+      0.0,
+      -1.1102230246251565e-16,
+      0.0
+    ],
+    "actual_delta_at_displayed_x": [
+      0.25,
+      0.5,
+      0.2499999999999999,
+      0.0
+    ],
+    "maximum_disagreement": 0.5,
+    "interpretation": "Native output does not equal ECDF(x)-x on its displayed probability coordinates."
+  },
+  "dtype_invariance": {
+    "envelope": {
+      "int8": [
+        0.45274721307192006,
+        0.7894191604138414
+      ],
+      "uint8": [
+        0.45274721307192006,
+        0.7894191604138414
+      ],
+      "bool": [
+        0.45274721307192006,
+        0.7894191604138414
+      ]
+    }
+  },
+  "coverage_direction": {
+    "central_pit": {
+      "assessment": {
+        "uniformity_method": "envelope",
+        "significance_level": 0.010000000000000009,
+        "pit_p_value": null,
+        "coverage_p_value": null,
+        "pit_uniformity_passed": false,
+        "coverage_uniformity_passed": false,
+        "pit_ecdf_inside_bands": false,
+        "coverage_ecdf_inside_bands": false,
+        "well_calibrated": false,
+        "mean_coverage_deviation": 0.4477,
+        "calibration_diagnosis": "under-confident (predictions too uncertain)"
+      },
+      "exact_integrated_deviation": 0.44974874371859297
+    },
+    "extreme_pit": {
+      "assessment": {
+        "uniformity_method": "envelope",
+        "significance_level": 0.010000000000000009,
+        "pit_p_value": null,
+        "coverage_p_value": null,
+        "pit_uniformity_passed": false,
+        "coverage_uniformity_passed": false,
+        "pit_ecdf_inside_bands": false,
+        "coverage_ecdf_inside_bands": false,
+        "well_calibrated": false,
+        "mean_coverage_deviation": -0.4468,
+        "calibration_diagnosis": "over-confident (predictions too certain)"
+      },
+      "exact_integrated_deviation": -0.44900000000000007
+    }
+  },
+  "loo_public_api_equality": {
+    "envelope": {
+      "uniformity_method": "envelope",
+      "significance_level": 0.010000000000000009,
+      "pit_p_value": null,
+      "coverage_p_value": null,
+      "pit_uniformity_passed": true,
+      "coverage_uniformity_passed": true,
+      "pit_ecdf_inside_bands": true,
+      "coverage_ecdf_inside_bands": true,
+      "well_calibrated": true,
+      "mean_coverage_deviation": 0.0011,
+      "calibration_diagnosis": "well-calibrated"
+    },
+    "auto": {
+      "uniformity_method": "envelope",
+      "significance_level": 0.010000000000000009,
+      "pit_p_value": null,
+      "coverage_p_value": null,
+      "pit_uniformity_passed": true,
+      "coverage_uniformity_passed": true,
+      "pit_ecdf_inside_bands": true,
+      "coverage_ecdf_inside_bands": true,
+      "well_calibrated": true,
+      "mean_coverage_deviation": 0.0011,
+      "calibration_diagnosis": "well-calibrated"
+    }
+  },
+  "independent_plot_checks": [
+    {
+      "method": "envelope",
+      "coverage": false,
+      "maximum_curve_error": 0.0,
+      "annotation": [
+        "envelope: pass"
+      ],
+      "figure": {
+        "path": "<TEMP>/calibration-review-1.0.0-envelope-False.png",
+        "sha256": "a4179ddb1a6a0441e4499c06939790306043e3299f1c87a65a871237223592e2"
+      }
+    },
+    {
+      "method": "envelope",
+      "coverage": true,
+      "maximum_curve_error": 0.0,
+      "annotation": [
+        "envelope: pass"
+      ],
+      "figure": {
+        "path": "<TEMP>/calibration-review-1.0.0-envelope-True.png",
+        "sha256": "c12a9a579bad730208723e45d0b8ca61ab6d7fffd0a5a9a76f7ae5bf3d3b9fbd"
+      }
+    }
+  ],
+  "status": "passed"
+}

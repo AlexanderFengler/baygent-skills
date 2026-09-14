@@ -1,0 +1,96 @@
+...s......FF.s...............                                            [100%]
+=================================== FAILURES ===================================
+_______________ test_row_coordinate_mismatch_rejected[envelope] ________________
+
+calibration = <module 'calibration_under_test' from '<REPO>/bayesian-workflow/scripts/calibration_check.py'>
+predictive = <xarray.DataTree>
+Group: /
+├── Group: /observed_data
+│       Dimensions:  (trial: 6)
+│       Coordinates:
+│         * ... 23 29
+        Data variables:
+            y        (chain, draw, trial) int64 288B 0 0 1 1 0 0 1 1 ... 0 1 0 1 0 1 1 0
+method = 'envelope'
+
+    @pytest.mark.parametrize("method", ["envelope", "auto"])
+    def test_row_coordinate_mismatch_rejected(calibration, predictive, method):
+>       predictive["observed_data"] = predictive["observed_data"].assign_coords(
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            trial=np.arange(6)
+        )
+
+repos/baygent-skills/evals/smoke/test_calibration_consistency.py:134:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <xarray.DataTree 'observed_data'>
+Group: /observed_data
+    Dimensions:  (trial: 6)
+    Coordinates:
+      * trial    (trial) int64 48B 11 13 17 19 23 29
+    Data variables:
+        y        (trial) int64 48B 0 1 0 1 1 0
+name = 'assign_coords'
+
+    def __getattr__(self, name: str) -> Any:
+        if name not in {"__dict__", "__setstate__"}:
+            # this avoids an infinite loop when pickle looks for the
+            # __setstate__ attribute before the xarray object is initialized
+            for source in self._attr_sources:
+                with suppress(KeyError):
+                    return source[name]
+>       raise AttributeError(
+            f"{type(self).__name__!r} object has no attribute {name!r}"
+        )
+E       AttributeError: 'DataTree' object has no attribute 'assign_coords'
+
+_local/venvs/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/core/common.py:306: AttributeError
+_________________ test_row_coordinate_mismatch_rejected[auto] __________________
+
+calibration = <module 'calibration_under_test' from '<REPO>/bayesian-workflow/scripts/calibration_check.py'>
+predictive = <xarray.DataTree>
+Group: /
+├── Group: /observed_data
+│       Dimensions:  (trial: 6)
+│       Coordinates:
+│         * ... 23 29
+        Data variables:
+            y        (chain, draw, trial) int64 288B 0 0 1 1 0 0 1 1 ... 0 1 0 1 0 1 1 0
+method = 'auto'
+
+    @pytest.mark.parametrize("method", ["envelope", "auto"])
+    def test_row_coordinate_mismatch_rejected(calibration, predictive, method):
+>       predictive["observed_data"] = predictive["observed_data"].assign_coords(
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            trial=np.arange(6)
+        )
+
+repos/baygent-skills/evals/smoke/test_calibration_consistency.py:134:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <xarray.DataTree 'observed_data'>
+Group: /observed_data
+    Dimensions:  (trial: 6)
+    Coordinates:
+      * trial    (trial) int64 48B 11 13 17 19 23 29
+    Data variables:
+        y        (trial) int64 48B 0 1 0 1 1 0
+name = 'assign_coords'
+
+    def __getattr__(self, name: str) -> Any:
+        if name not in {"__dict__", "__setstate__"}:
+            # this avoids an infinite loop when pickle looks for the
+            # __setstate__ attribute before the xarray object is initialized
+            for source in self._attr_sources:
+                with suppress(KeyError):
+                    return source[name]
+>       raise AttributeError(
+            f"{type(self).__name__!r} object has no attribute {name!r}"
+        )
+E       AttributeError: 'DataTree' object has no attribute 'assign_coords'
+
+_local/venvs/baygent-arviz10-compat/lib/python3.12/site-packages/xarray/core/common.py:306: AttributeError
+=========================== short test summary info ============================
+FAILED repos/baygent-skills/evals/smoke/test_calibration_consistency.py::test_row_coordinate_mismatch_rejected[envelope]
+FAILED repos/baygent-skills/evals/smoke/test_calibration_consistency.py::test_row_coordinate_mismatch_rejected[auto]
+2 failed, 25 passed, 2 skipped in 10.96s

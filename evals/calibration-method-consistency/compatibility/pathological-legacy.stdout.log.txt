@@ -1,0 +1,36 @@
+{
+  "arviz": "0.23.0",
+  "info": {
+    "calibration_method": "envelope",
+    "pareto_k_n_bad": 0,
+    "pareto_k_ok": true,
+    "rating_loo": "excellent"
+  },
+  "numeric": {
+    "elpd": -113.22086173576221,
+    "mean_coverage_deviation": -0.4877,
+    "p_loo": 0.3282462659267651,
+    "pareto_k_max": 0.10364855103266428,
+    "rhat_max": 2.843093773300879,
+    "se": 5.955162466976342
+  },
+  "pymc": "5.28.0",
+  "strict": {
+    "calibration_diagnosis": "over-confident (predictions too certain)",
+    "calibration_well_calibrated": false,
+    "convergence_all_ok": false,
+    "convergence_method": "arviz_stats.diagnose",
+    "loo_computed": true,
+    "next_steps_non_loo": [
+      "Divergences detected \u2014 reparameterize the affected component (non-centered for hierarchical scales; replace HalfCauchy with Gamma(2, ...) for scale priors) and increase target_accept to 0.95\u20130.99.",
+      "R-hat or ESS flags on mu \u2014 run more draws, try init=\"adapt_diag_grad\", or warm-start with `pmx.fit(method=\"pathfinder\")`. Check for multimodality with az.plot_rank(idata) (runs on both ArviZ stacks).",
+      "Calibration is over-confident \u2014 likelihood is too narrow for the data. Consider StudentT for continuous outcomes with heavy tails, NegBinomial for overdispersed counts, or hierarchical structure if groups have distinct variance."
+    ],
+    "overall_ok": false,
+    "ppc_available": true,
+    "rating_calibration": "poor",
+    "rating_convergence": "poor",
+    "summary_calibration": "Calibration is poor \u2014 over-confident (predictions too certain).",
+    "summary_convergence": "Poor convergence on mu, divergences=100. Posterior should not be interpreted until resolved."
+  }
+}

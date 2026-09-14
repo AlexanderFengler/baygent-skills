@@ -1,0 +1,153 @@
+"""Read-only local scientific/API review; writes only /tmp evidence."""
+from pathlib import Path
+import hashlib
+import importlib.metadata
+import inspect
+import json
+import sys
+
+import matplotlib.figure
+import numpy as np
+import xarray as xr
+
+ROOT = Path('<SPINE>')
+REPO = ROOT / 'repos/baygent-skills'
+sys.path.insert(0, str(REPO / 'bayesian-workflow/scripts'))
+import calibration_check as c
+from arviz_stats.base.array import array_stats
+
+
+def hashed(path):
+    path = Path(path)
+    return {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+result = {'python': sys.version, 'environment': str(Path(sys.executable).parent.parent),
+          'versions': {n: importlib.metadata.version(n) for n in ['arviz-stats','arviz-plots','arviz-base','numpy','xarray']}}
+result['source_files'] = [hashed(REPO / 'bayesian-workflow/scripts/calibration_check.py'),
+                          hashed(REPO / 'evals/smoke/test_calibration_consistency.py')]
+source_root = Path(inspect.getfile(array_stats.__class__)).parent
+result['source_files'].append(hashed(source_root / 'density.py'))
+values = np.array([.1,.2,.3,.4])
+x,y = array_stats.ecdf(values, axis=0, npoints=4, pit=True)
+true = np.searchsorted(values,x,side='right')/len(values)-x
+result['native_maximum_normalization_proof'] = {
+    'input': values.tolist(), 'displayed_x': x.tolist(), 'native_delta': y.tolist(),
+    'actual_delta_at_displayed_x': true.tolist(), 'maximum_disagreement': float(np.max(abs(y-true))),
+    'interpretation': 'Native output does not equal ECDF(x)-x on its displayed probability coordinates.'}
+assert np.max(abs(y-true)) > .49
+
+modern = c._has_modern_pit()
+if modern:
+    utils = Path(inspect.getfile(c.get_ppc_pit))
+    wrapper = utils.parent / 'ppc_pit_plot.py'
+    plot = utils.parent / 'ecdf_plot.py'
+    result['source_files'].extend(map(hashed,[utils,wrapper,plot]))
+    result['double_coverage_source_proof'] = {
+       'get_ppc_pit': [n for n,l in enumerate(utils.read_text().splitlines(),1) if '2 * np.abs(vals - 0.5)' in l],
+       'plot_ecdf_pit': [n for n,l in enumerate(plot.read_text().splitlines(),1) if '2 * np.abs(distribution - 0.5)' in l],
+       'wrapper_passes_coverage_into_getter': 'get_ppc_pit(predictive_dist, observed_dist, sample_dims, coverage, method)' in wrapper.read_text(),
+       'wrapper_forwards_coverage_to_plot': 'coverage=coverage,' in wrapper.read_text()}
+    assert all(result['double_coverage_source_proof'].values())
+
+result['dtype_invariance'] = {}
+for method in (['envelope','pot_c'] if modern else ['envelope']):
+    by_dtype = {}
+    for dtype in ['int8','uint8','bool']:
+        p=xr.Dataset({'y':(('chain','draw','obs'),np.array([[[0,0],[1,1],[0,0],[1,1]]],dtype=dtype))})
+        o=xr.Dataset({'y':('obs',np.array([0,1],dtype=dtype))})
+        d=xr.DataTree.from_dict({'posterior_predictive':p,'observed_data':o})
+        by_dtype[dtype] = c.prepare_pit_values(d,'y',method=method).y.values.tolist()
+    assert by_dtype['int8'] == by_dtype['uint8'] == by_dtype['bool']
+    result['dtype_invariance'][method] = by_dtype
+
+result['coverage_direction'] = {}
+for name,values,expected in [
+   ('central_pit',np.linspace(.45,.55,200),'under-confident'),
+   ('extreme_pit',np.r_[np.linspace(.001,.05,100),np.linspace(.95,.999,100)],'over-confident')]:
+    pit=xr.Dataset({'y':('obs',values)})
+    assessment=c.assess_calibration(None,'y',False,method='auto',pit_values=pit)
+    assert expected in assessment['calibration_diagnosis']
+    assert not assessment['well_calibrated']
+    integral=.5-float((2*np.abs(pit-.5)).y.mean())
+    assert abs(integral-assessment['mean_coverage_deviation']) < .01
+    result['coverage_direction'][name]={'assessment':assessment,'exact_integrated_deviation':integral}
+
+result['loo_public_api_equality'] = {}
+with xr.open_datatree('<COMPAT_WORKDIR>/healthy.nc') as d:
+    original=d.copy(deep=True)
+    for method in ['envelope','auto']:
+        actual=c.prepare_pit_values(d,'y',True,method)
+        kwargs={'var_names':['y']}
+        if 'pareto_pit' in inspect.signature(c.azs.loo_pit).parameters:
+            kwargs['pareto_pit']=c._resolve_method(method)=='pot_c'
+        expected=c.azs.loo_pit(d,**kwargs)[['y']]
+        xr.testing.assert_identical(actual,expected)
+        try:
+            result['loo_public_api_equality'][method]={'status':'passed','assessment':c.assess_calibration(d,'y',True,method=method,pit_values=actual)}
+        except ValueError as error:
+            if 'No p-values below 0.5 found' not in str(error):
+                raise
+            try:
+                actual.azstats.uniformity_test(dim=list(actual.y.dims),method='pot_c')
+            except ValueError as native_error:
+                assert str(native_error)==str(error)
+                result['loo_public_api_equality'][method]={'status':'native 1.2 uniformity limitation','error':str(error),'prepared_pit_identical_to_public_api':True,'failure_propagates_without_false_passing_verdict':True}
+            else:
+                raise AssertionError('helper failure was not reproducible in native API')
+    xr.testing.assert_identical(d,original)
+
+result['independent_plot_checks'] = []
+raw=np.linspace(.003,.997,300)
+raw[0],raw[150]=.0001,.5
+pit=xr.Dataset({'y':('obs',raw)})
+original_save=matplotlib.figure.Figure.savefig
+for method in (['envelope','pot_c'] if modern else ['envelope']):
+    assessment=c.assess_calibration(None,'y',False,method=method,pit_values=pit)
+    for coverage in [False,True]:
+        capture={}
+        def save(self,path,*args,**kwargs):
+            ax=self.axes[0]
+            capture['x'],capture['delta']=ax.lines[1].get_data()
+            capture['annotation']=[t.get_text() for t in ax.texts]
+            capture['xlim']=ax.get_xlim()
+            capture['xlabel']=ax.get_xlabel()
+            return original_save(self,path,*args,**kwargs)
+        matplotlib.figure.Figure.savefig=save
+        dest=Path('/tmp')/f'calibration-review-{result["versions"]["arviz-stats"]}-{method}-{coverage}.png'
+        try:
+            c.save_pit_plot(None,'y',dest,method=method,pit_values=pit,coverage=coverage)
+        finally:
+            matplotlib.figure.Figure.savefig=original_save
+        tested=2*np.abs(raw-.5) if coverage else raw
+        expected=np.searchsorted(np.sort(tested),capture['x'],side='right')/len(tested)-capture['x']
+        np.testing.assert_array_equal(expected,capture['delta'])
+        assert capture['xlim'] == (0,1)
+        assert capture['delta'][0] == (1/300 if coverage else 0)
+        record={'method':method,'coverage':coverage,'maximum_curve_error':float(np.max(abs(expected-capture['delta']))),
+                'annotation':capture['annotation'],'figure':hashed(dest)}
+        if method=='pot_c':
+            ds=xr.Dataset({'y':('obs',tested)})
+            p=ds.azstats.uniformity_test(dim=['obs'],method='pot_c')[0].y.item()
+            key='coverage_p_value' if coverage else 'pit_p_value'
+            assert p == assessment[key]
+            assert capture['annotation'] == [f'pot_c: p={p:.3g}, α={1-.99:.3g}']
+            record['native_p_value']=p
+        result['independent_plot_checks'].append(record)
+
+if modern and result['versions']['arviz-stats']=='1.2.0':
+    result['saved_hssm_evidence']={}
+    for var in ['rt','choice']:
+        file=REPO / f'examples/hssm-workflow/results/round-1/analytical-ddm/calibration/{var}/inference_data.nc'
+        with xr.open_datatree(file) as d:
+            raw=c.prepare_pit_values(d,var,method='pot_c')
+            a=c.assess_calibration(d,var,False,method='pot_c',pit_values=raw)
+            for coverage in [False,True]:
+                ds=2*np.abs(raw-.5) if coverage else raw
+                p=ds.azstats.uniformity_test(dim=list(ds[var].dims),method='pot_c')[0][var].item()
+                assert p==a['coverage_p_value' if coverage else 'pit_p_value']
+            assert a['well_calibrated']==(var=='choice')
+            result['saved_hssm_evidence'][var]={'assessment':a,'input':hashed(file)}
+
+result['status']='passed'
+print(json.dumps(result,indent=2,allow_nan=False))
