@@ -63,6 +63,15 @@ that it contains one joint choice/RT log density per original trial, with
 matching coordinates, before using it for LOO. Do not treat RT and response as
 two independent likelihood factors merely because they occupy two columns.
 
+On the tested HSSM 0.5 / PyMC 6.1 stack, native density recomputation requires
+default zero-based consecutive `chain` and `draw` coordinates. HSSM's
+`log_likelihood` treats those labels as positional indices; nondefault labels
+can raise `IndexError`. PyMC's `compute_log_prior` can reset nondefault sample
+labels to `0..N`. Verify the original labels before recomputation and compare
+the density coordinates afterward. Do not silently relabel or align an artifact
+to hide a mismatch. The scalar PPC adapter can preserve arbitrary unique labels;
+this restriction belongs to the release's native density APIs.
+
 ## Posterior predictive evidence
 
 ```python

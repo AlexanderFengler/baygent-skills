@@ -47,12 +47,13 @@ def _():
 @app.cell
 def _(mo):
     mo.md(r"""
-    # Analytical DDM — implementation preview; execution validation deferred
+    # Analytical DDM — priors, choice/RT evidence and diagnostics
 
     This notebook implements a flat drift-diffusion workflow against the
-    HSSM 0.5.0 source baseline. **Its simulation, sampling, figures, diagnostic
-    outputs, and parameter recovery have not been execution-validated.**
-    No fitted result or completed milestone is implied by this preview.
+    HSSM 0.5.0 baseline. Run it to generate synthetic data, fit the model and
+    inspect the resulting evidence. Opening the preview does not imply that
+    a fit has run; the repository's validation record states which checks
+    have been completed on its recorded dependency stack.
 
     The teaching question is whether a constant-drift, constant-boundary DDM
     can describe the joint choices and reaction times of a simple two-choice
@@ -64,8 +65,8 @@ def _(mo):
     In an interactive session, a second button starts fitting after you
     review those predictions. Merely opening this notebook does not simulate or sample.
     For a later authorized command-line export, `BAYGENT_RUN_HSSM=1` is an
-    equivalent explicit opt-in. It is off by default. Execution validation
-    and agent evaluations are a later step.
+    equivalent explicit opt-in. It is off by default. A single teaching fit
+    does not establish general parameter recovery or skill-agent performance.
     """)
     return
 
@@ -106,7 +107,7 @@ def generate_teaching_data(
     }
     if runtime_versions["hssm"] != "0.5.0":
         raise RuntimeError(
-            "This unvalidated preview targets HSSM 0.5.0; review another version explicitly."
+            "This teaching example targets HSSM 0.5.0; review another version explicitly."
         )
     generating_parameters = {"v": 0.7, "a": 1.2, "z": 0.5, "t": 0.25}
     data = hssm.simulate_data(
@@ -399,7 +400,7 @@ def prepare_posterior_evidence(
         )
     # Flat parameters have no centered regression intercept or omitted offsets.
     # HSSM has no public log-prior wrapper; this PyMC bridge is source-checked
-    # for this case only and remains subject to the deferred execution check.
+    # for this case only and verified below against analytical prior densities.
     _free_names = {rv.name for rv in model.pymc_model.free_RVs}
     if _free_names != {"v", "a", "z", "t"}:
         raise ValueError(
@@ -572,7 +573,7 @@ def _(
                 "posterior_random_seed": "HSSM 0.5.0's public posterior predictive API has no random_seed argument; no seeded repeatability claim is made for those draws.",
             },
             "interpretation": "Inspect choice proportions and conditional RT quantiles together. Posterior parameters describe this DDM, not causal or model-free cognitive effects.",
-            "limitations": "This implementation preview has not been execution-validated. A future run cannot by itself establish parameter recovery. Fitted-data marginal RT/choice PPC-PIT does not establish joint, conditional, or held-out calibration. The PyMC log-prior bridge is source-checked only for this flat model; power sensitivity does not assess changes to the data-informed t support policy.",
+            "limitations": "This single synthetic teaching run cannot establish general parameter recovery. Fitted-data marginal RT/choice PPC-PIT does not establish joint, conditional, or held-out calibration. The PyMC log-prior bridge is verified here only for this flat model with default sample coordinates; power sensitivity does not assess changes to the data-informed t support policy.",
         },
     )
     mo.vstack(
