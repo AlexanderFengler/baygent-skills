@@ -21,6 +21,24 @@ RESPONSE = "rt,response"
 OBS = "__obs__"
 
 
+def test_export_contains_displayed_joint_plots_and_completed_assessment(saved):
+    """A successful CLI exit alone does not prove marimo displayed its figures."""
+    export = saved["directory"].parent / "analytical_ddm.html"
+    line = next(
+        line
+        for line in export.read_text().splitlines()
+        if line.lstrip().startswith('"session":')
+    )
+    session, _ = json.JSONDecoder().raw_decode(line.split(":", 1)[1].lstrip())
+    outputs = [output for cell in session["cells"] for output in cell["outputs"]]
+    assert all(output["type"] == "data" for output in outputs)
+    html = [output.get("data", {}).get("text/html", "") for output in outputs]
+    joint = [value for value in html if "Inspect joint predictions" in value]
+    assert len(joint) == 1
+    assert joint[0].count("image/png") == 2
+    assert any("Shared assessment and domain evidence" in value for value in html)
+
+
 @pytest.fixture(scope="module")
 def saved():
     folder = os.environ.get("BAYGENT_HSSM_ARTIFACT_DIR")

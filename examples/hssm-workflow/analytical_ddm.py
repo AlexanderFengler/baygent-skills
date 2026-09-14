@@ -509,6 +509,7 @@ def plot_posterior_evidence(
     quantile_figure.savefig(
         output_dir / "quantile_probability.png", dpi=160, bbox_inches="tight"
     )
+    figures_written = True
     mo.vstack(
         [
             mo.md(
@@ -519,7 +520,6 @@ def plot_posterior_evidence(
             posterior_checks,
         ]
     )
-    figures_written = True
     return figures_written, quantile_figure
 
 

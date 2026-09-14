@@ -419,7 +419,7 @@ def test_native_quantile_plot_saves_actual_replicate_points(
         sample_posterior_predictive=_forbidden("plot-triggered sampling"),
     )
     prior_figure, _ = plt.subplots()
-    _, definitions = notebook.plot_posterior_evidence.run(
+    output, definitions = notebook.plot_posterior_evidence.run(
         data=data,
         hssm=hssm,
         mo=mo,
@@ -430,6 +430,8 @@ def test_native_quantile_plot_saves_actual_replicate_points(
         posterior_checks=pd.DataFrame(),
         prior_figure=prior_figure,
     )
+    assert "Inspect joint predictions" in output.text
+    assert output.text.count("image/png") == 2
 
     figure = definitions["quantile_figure"]
     assert definitions["figures_written"] is True
