@@ -1,295 +1,142 @@
-# `bambi-workflow` — Skill Architecture Plan
+# `bambi-workflow` — Architecture
 
-**Status:** iteration 1 — architecture only. Reference, script, eval content
-is drafted in iteration 2; SKILL.md content is finalised in iteration 3.
+**Status:** refreshed planning baseline, 2026-09-14. No skill implementation.
+This replaces iteration 1 at `ee52405`; the original remains in Git history.
+See the [upstream assessment](README.md) and [M1 plan](bambi-workflow-skill-iter2.md).
 
-## Purpose
+## Purpose and first supported scope
 
-A workflow skill that takes the user from "I want to fit a GLM/GLMM" to
-"I have a fitted Bambi model with valid diagnostics, calibrated posteriors,
-and interpretable marginal effects." It does **not** re-derive PyMC mechanics
-— those are delegated upstream to `bayesian-workflow`.
+Help an agent turn a regression question into a Bambi model, check its priors
+and predictions, and answer the question on an appropriate outcome scale.
+`bayesian-workflow` continues to own general Bayesian diagnostics, calibration,
+prior sensitivity, and reporting.
 
-## Scope
+The first milestone supports Gaussian regression and Bernoulli regression with
+a varying intercept. Target released Bambi **0.21.0** at
+[`3f795e07`](https://github.com/bambinos/bambi/tree/3f795e07c8ec87d26f48e476b98e5579e0eb1a42),
+using Python 3.12 and the PyMC 6 / ArviZ 1.x stack. Its
+[dependency declarations](https://github.com/bambinos/bambi/blob/3f795e07c8ec87d26f48e476b98e5579e0eb1a42/pyproject.toml)
+include PyMC `>=6,<7`, PyTensor `>=3,<4`, and Formulae `>=0.6,<0.7`.
+Do not build released examples from a contributor's newer `dev` checkout.
 
-**In scope**
+Distributional regression, additional families, splines/HSGP, advanced new-group
+prediction, custom families, and extra inference backends are later increments.
+A count-regression request should be recognized as adjacent Bambi work without
+implying that its full workflow has already been validated. Explicit raw-PyMC,
+HSSM/SSM, causal-design, and BayesFlow-training requests keep their own tools.
 
-- Wilkinson-formula model specification (`y ~ x + (1|g)`, group-specific terms,
-  interactions, `C()`, offsets, `0 + x`).
-- Built-in families (29 univariate + Multinomial / DirichletMultinomial) and
-  custom families via `bmb.Family(name, likelihood, link_dict)`.
-- Auto-priors: when to trust them, when to inspect via `model.build()` →
-  `model.components[...].common_terms[...].prior`, when to override.
-- Distributional models (`Formula("y ~ x", "sigma ~ z")` etc.) — when needed
-  and the parameter-name-must-match-family gotcha.
-- HSGP and splines (`hsgp(x, m=20, c=1.5)`, `bs(x)`, `poly(x)`) — light
-  coverage, one reference file.
-- Inference backends: `inference_method="pymc"` (default), `"nutpie"`,
-  `"nuts_numpyro"`, `"nuts_blackjax"`, `"vi"`, `"laplace"`.
-- `predict(idata, kind="response_params"|"response")` — semantics and when
-  to use each.
-- `bmb.interpret.*` (`predictions`, `comparisons`, `slopes` + plotting
-  variants) as the canonical interpretation surface. (D2 — see "Decisions
-  carried in this skill".)
+## Match the existing skill architecture
 
-**Out of scope**
+The examples are the shipped
+[Bayesian](../bayesian-workflow/SKILL.md),
+[causal](../causal-inference/SKILL.md), and
+[amortized](../amortized-workflow/SKILL.md) workflows, not their incidental file
+counts. Follow [CLAUDE.md](../CLAUDE.md):
 
-- Causal interpretation — let `causal-inference` handle.
-- Time-series / state-space models — Bambi is not the right tool.
-- BART / mixtures / structured time-series priors — out of Bambi's scope.
+- A standalone `bambi-workflow/` folder, copied into an agent's skill directory.
+- `SKILL.md` frontmatter with `name`, a focused agent-neutral `description`,
+  `license`, and author/version metadata. Quote Markdown author strings and
+  keep the description within 1,024 characters.
+- A direct `## Dependencies` section, numbered workflow, a few evidence-based
+  rules, reference links where needed, and a short troubleshooting section.
+- Detailed examples in `references/`; small deterministic helpers in `scripts/`
+  only when they add value beyond native Bambi/shared Bayesian functions.
+- Scenario metadata and real evaluation results under root `evals/`.
+- A short skill README and root README listing/install guidance, as in the
+  existing repo. Do not add Codex-specific metadata or a new packaging layer.
 
-## Triggers (frontmatter `description:` keywords)
+Keep the entrypoint as short as the supported workflow permits. The target is
+roughly the existing Bayesian/causal entrypoint size, not a line-count gate.
+Installed skill instructions must work without the repository's `plans/`,
+`evals/`, environment files, or a particular agent's hardcoded installation path.
+Resolve the installed dependency's location before referring to its resources.
 
-Bambi, `bmb.Model`, Wilkinson formula, `y ~ x`, `(1|group)`, group-specific
-terms, GLM, GLMM, hierarchical regression, multilevel regression,
-mixed-effects, distributional model, location-scale model, HSGP, spline
-regression, `bs()`, `hsgp()`, marginal effects, average marginal effect,
-conditional effects, `bmb.interpret`, `predict`, prior auto-scaling, Bambi
-families, Bambi priors.
+## Composition and ownership
 
-## Composition with other skills
+Require `bayesian-workflow` directly, like `causal-inference` does. Its presence
+is checked before dependent analysis steps; install into the user's selected
+skill location when installation is authorized. Loading the dependency is not
+permission to replace an explicitly requested Bambi model with raw PyMC code.
 
-**Depends on `bayesian-workflow`** — declared in three places per repo
-convention:
+| Owner | Responsibility |
+|---|---|
+| `bambi-workflow` | Formula and outcome encoding; family/link choice; resolved Bambi priors; Bambi model construction, fit, prior/posterior predictions, and likelihood/prior computation; native interpretation. |
+| `bayesian-workflow` | Convergence and calibration interpretation; LOO/model comparison and sensitivity guidance; reusable diagnostic helpers; canonical report structure and assessment language. |
+| The analysis | Scientific question, predictor scales, intended contrasts, prior justification, and limitations supported by actual evidence. |
 
-1. `SKILL.md` `## Dependencies` block (with detection + install bash).
-2. Workflow cross-references where applicable — steps that produce/use
-   `InferenceData`, run diagnostics, run calibration, run sensitivity, write
-   the report are delegated upstream.
-3. `README.md` "depends on bayesian-workflow — install both" note.
+The handoff is a saved, xarray-backed sampling artifact with the groups and
+observed-variable names required by the selected shared helpers. It is not a
+promise that every package version or arbitrary likelihood can be processed
+without adaptation. Bambi 0.21 uses DataTree; shared helper compatibility must
+be exercised with a real Bambi output, not inferred from a raw PyMC example.
 
-**Ownership split**
+A future HSSM skill may consult a precise formula-syntax section. The Bambi
+prior reference is package-specific: its auto-scaling, components, and
+construction behavior are not a reusable HSSM prior policy.
 
-- `bayesian-workflow` continues to own: convergence diagnostics
-  (`azs.diagnose`), LOO + Pareto-k, calibration (`plot_ppc_pit` / LOO-PIT),
-  prior sensitivity (`psense_summary`), report template, descriptive-seed
-  convention, 94% HDI default, save-to-disk discipline, xarray-first idiom.
-- `bambi-workflow` adds: formula DSL, family selection, auto-prior inspection
-  + override, distributional models, splines / HSGP, marginal effects via
-  `interpret`.
+## Workflow
 
-**Internal structural choice (relevant to `hssm-workflow`):** this skill's
-`references/` is deliberately split into DSL-level files (reusable by
-downstream skills) vs Bambi-API-level files (not transferable):
+1. **Frame the question.** Identify outcome, observational unit, grouping, and
+   the prediction or contrast the user wants. Honor choices already supplied.
+2. **Check the data and formula.** Verify response event, category levels and
+   reference, predictor scales, group support, and the intended design matrix.
+3. **Select family/link and priors.** Specify the intended likelihood explicitly;
+   inspect resolved priors and justify any overrides on the relevant scale.
+4. **Build and check prior predictions.** Build the PyMC graph through Bambi,
+   call Bambi's prior-predictive API, and assess plausibility before fitting.
+5. **Fit and save.** Select an available supported backend, record resolved
+   versions/seeds, and save sampling output before downstream processing.
+6. **Generate predictions and diagnostic inputs.** Use Bambi's own prediction,
+   log-likelihood, and log-prior methods. Save the resulting artifact with
+   consistent observed/predictive names and observation coordinates.
+7. **Diagnose and criticize.** Follow the shared Bayesian workflow and helpers;
+   preserve failed/missing checks as limitations rather than inventing ratings.
+8. **Answer the question.** Use native `bmb.interpret`/prediction surfaces for
+   response-scale summaries and contrasts, with uncertainty and an explicit
+   conditioning/averaging target. Report coefficients too when useful.
+9. **Report.** Fill the shared `<slug>/report.md`, using shared assessments.
+   Add formula, family/link, priors, event/reference coding, and contrast/grid
+   information within the existing sections.
 
-- DSL-level (reusable): `formula-syntax.md`, `priors-in-bambi.md`.
-- Bambi-API-level (not reused): `families-and-links.md`,
-  `interpret-marginal-effects.md`, `splines-and-hsgp.md`.
+## Corrections to the original hard rules
 
-`hssm-workflow` is designed to consume only the DSL-level files. See
-[`hssm-workflow-skill.md`](./hssm-workflow-skill.md) for the scoped-reference
-pattern that exploits this split.
+These are source-based boundaries, not new universal modeling requirements.
 
-## Workflow overview (numbered, ~9 steps)
+| Retired draft claim | Current rule |
+|---|---|
+| Priors do not exist until `build()` | Bambi assembles/scales component priors in construction. Inspect before fit; build for graph inspection/prior predictive. |
+| Family is auto-detected from response dtype | The constructor defaults to Gaussian. Explicitly verify the intended family and response event. |
+| `C(x)`/`categorical=` ensures a meaningful baseline | Object columns are already converted to categorical. Verify levels/reference and encoded columns; the wrapper alone does not choose a scientific baseline. |
+| Every auxiliary parameter needs a formula | Constant auxiliary parameters are legitimate. Add a distributional formula when the scientific model calls for one; inspect its defaults either way. |
+| Every slope follows one 2.5×response-SD rule | Scaling depends on family, link, and predictors. Inspect resolved priors and prior predictions; do not rate them against generic raw-scale cutoffs. |
+| Use `nuts_numpyro` and raw PyMC log-prior computation | Verify release sampler names (`nutpie`, `numpyro`) and use Bambi's likelihood/prior bridge, including its omitted-offset handling. |
+| `comparisons(..., value=...)` | Use the released `contrast` interface; test the exact native call in M1. |
+| An artifact with the right API names proves correctness | Static agent evaluation and executed package smoke checks are different evidence; require both. |
 
-1. **Formulate** — Generative story; which family / link suits the outcome
-   (binary→Bernoulli, count→Poisson/NegBin, ordinal→Cumulative, etc.).
-2. **Specify the formula** — Plain `y ~ x`, group-specific `(x|g)`,
-   distributional (`Formula("y ~ x", "sigma ~ z")`), splines/HSGP if needed.
-   See `references/formula-syntax.md`.
-3. **Pick the family + link** — Built-in families and links; defaults vs
-   explicit override. See `references/families-and-links.md`.
-4. **Build + inspect auto-priors** — `model.build()` then inspect
-   `model.components` to see the auto-scaled priors. Decide whether to
-   override per-term via `priors={...}`. See `references/priors-in-bambi.md`.
-5. **Prior predictive check** — `model.prior_predictive()` — same mandatory
-   step as `bayesian-workflow`, different API surface.
-6. **Fit** — `model.fit(inference_method=...)`. Pick backend deliberately
-   (defaults to `"pymc"` NUTS; prefer `"nuts_numpyro"` or `"nutpie"` for
-   speed when JAX is available).
-7. **Diagnose** — Delegate to `bayesian-workflow` (`azs.diagnose`, posterior-
-   predictive, LOO, calibration, sensitivity).
-8. **Predict and interpret** — `model.predict(idata, kind=...)` for posterior-
-   predictive; `bmb.interpret.predictions/comparisons/slopes` for the
-   user-facing answer. See `references/interpret-marginal-effects.md`.
-9. **Report** — Delegate report template to `bayesian-workflow`, with a
-   Bambi-specific addendum table (formula, family/link, priors table,
-   `interpret`-derived contrasts).
+Source anchors: released
+[model implementation](https://github.com/bambinos/bambi/blob/3f795e07c8ec87d26f48e476b98e5579e0eb1a42/bambi/models.py),
+[log-prior handling](https://github.com/bambinos/bambi/blob/3f795e07c8ec87d26f48e476b98e5579e0eb1a42/bambi/models.py#L1191),
+and [comparison API](https://github.com/bambinos/bambi/blob/3f795e07c8ec87d26f48e476b98e5579e0eb1a42/bambi/interpret/effects.py#L592).
 
-## Hard rules (categories; iteration 2 fills in rationales + examples)
+Do not duplicate the upstream calibration implementation or old ArviZ plotting
+recipes. In particular, `plot_ppc_pit(..., loo_pit=True)` was fixed upstream;
+follow the current Bayesian calibration reference/helper. Report ELPD differences
+with their uncertainty and predictive evidence, not a new fixed cutoff.
 
-Style: `**MUST**` / `**NEVER**` prefixes (matches `amortized-workflow`; see
-D5).
+## Resource and helper boundaries
 
-- **MUST `model.build()` before inspecting priors.** Components / priors are
-  not populated until build runs.
-- **MUST inspect auto-priors before fit** and document any overrides.
-- **MUST run `model.prior_predictive()`** before fit.
-- **For distributional models, MUST explicitly model every auxiliary
-  parameter.** Auxiliary parameters with no formula silently fall back to
-  default flat priors.
-- **For categorical predictors, MUST use `C(x)` or pass `categorical=[...]`**
-  to the Model constructor; do not rely on auto-detection from string dtypes.
-- **For multinomial / categorical families, MUST set `family="categorical"`
-  or `family="multinomial"` explicitly**; do not let `family=` auto-detect.
-- **NEVER report posterior summaries alone for predictor effects on
-  non-Gaussian families.** Use `bmb.interpret.comparisons` or `slopes` so the
-  effect is reported on the response (probability / count / etc.) scale, not
-  the linear-predictor scale.
-- **NEVER mix `priors=` keys for `"common"` / `"group_specific"` aliases with
-  term-specific keys** without verifying the resolution order.
-- **MUST delegate** convergence / calibration / sensitivity / LOO to
-  `bayesian-workflow`.
+The initial references cover formula/encoding, supported families/links,
+Bambi priors, and prediction/interpretation. A short reporting section links to
+the shared canonical template instead of copying it. Detailed rationales live
+there rather than expanding every entrypoint rule into a tutorial.
 
-## References (5 files; one-liner each)
+Use native Bambi interpretation outputs initially. The original pickle-based
+model transport, general formula/CSV reconstruction CLI, and marginal-effects
+wrapper are deferred. An `inspect_priors(model)` exporter is justified only if
+M1 demonstrates repeated useful work; it should expose resolved priors without
+labeling them plausible/implausible using arbitrary thresholds.
 
-- `formula-syntax.md` — Wilkinson DSL: `y ~ x`, group-specific terms,
-  interactions, `C()`, intercept removal, `offset()`, distributional
-  formulas. DSL-level, reusable.
-- `families-and-links.md` — Full family table with the natural link, when to
-  use Hurdle vs ZeroInflated, ordinal families' multi-formula restriction.
-- `priors-in-bambi.md` — How `auto_scale` works (the 2.5×SD rule for slopes,
-  the y-centred intercept rule), how to inspect and override, group-level
-  scale priors. Mostly reusable.
-- `interpret-marginal-effects.md` — `predictions`, `comparisons`, `slopes`
-  and their `plot_*` variants; conditional vs marginal vs average effects.
-- `splines-and-hsgp.md` — `bs()`, `hsgp(x, m=..., c=...)`, prior on
-  marginal-σ, when each is appropriate.
-
-## Scripts (2 files; one-liner each)
-
-- `inspect_priors.py` — Loads a built model (`.pkl` or rebuilt from
-  formula + data), dumps the full auto-prior table (term → distribution +
-  params) to JSON, flags terms whose auto-priors look suspect by simple
-  heuristics (e.g. σ much larger than response SD).
-- `marginal_effects_report.py` — Wraps `interpret.predictions /
-  comparisons / slopes` calls into a structured JSON + markdown table for
-  the report, with 94% HDI by default and named contrasts.
-
-## Evals
-
-### Design notes — four-layer anatomy
-
-baygent-skills evals decompose into four checkable layers — *trigger*,
-*workflow*, *hard rules*, *scripts* — each measured separately. Applied
-to `bambi-workflow`:
-
-| Layer | Artifact | This skill's specifics |
-|---|---|---|
-| Trigger | `description:` keywords + `trigger_eval_set.json` | Fires on Wilkinson formulas / GLMM / `bmb.interpret` requests; does NOT fire on raw-PyMC custom-likelihood asks or HSSM RT models |
-| Workflow | Numbered steps + `references/` | Scenario assertions cite which workflow steps executed (`model.build()`, `model.prior_predictive()`, `fit`, `interpret`) |
-| Hard rules | `MUST` / `NEVER` bullets | One scenario assertion per rule, line-cited evidence in `grading.json` |
-| Scripts | `inspect_priors.py`, `marginal_effects_report.py` | Assertions check the script was *used*, not just present |
-
-`bambi-workflow` is primarily a **quality and ergonomics** layer (in
-contrast with `hssm-workflow`'s silent-failure prevention emphasis).
-Assertions therefore mostly check *idiomatic API use*: picking the right
-family, declaring distributional models explicitly, reporting marginal
-effects on the response scale via `interpret` rather than raw posterior
-summaries on the linear-predictor scale.
-
-### Runner / grader externality
-
-The eval runner and LLM grader live **outside this repo**. Only authored
-fixtures (`eval_metadata.json`, `trigger_eval_set.json`) and committed
-results (`grading.json`, `timing.json`, `outputs/`, `benchmark.json`) are
-versioned. Consequence: every assertion MUST be checkable from the static
-output artifact — code, comments, generated markdown — *without re-running
-the code*. Assertions like *"recovers parameters within 5%"* are out;
-assertions like *"Calls `model.prior_predictive(...)` before
-`model.fit(...)`"* are in.
-
-### Per-scenario file layout
-
-```text
-evals/bambi-workflow/iteration-N/<scenario>/
-  eval_metadata.json
-  with_skill/{grading.json, timing.json, outputs/}
-  without_skill/{grading.json, timing.json, outputs/}
-```
-
-### Benchmark schema target
-
-Match the **iteration-3** `benchmark.json` shape (the most recent in the
-repo, used by `review.html`):
-
-```jsonc
-{
-  "skill_name": "bambi-workflow",
-  "iteration": 1,
-  "configs": [
-    { "name": "with_skill", "evals": [ {
-        "eval_name": "...", "pass_rate": 0.93, "passed": 14, "total": 15,
-        "expectations": [
-          { "text": "...", "passed": true, "evidence": "Line N: ..." }
-        ]
-    } ] },
-    { "name": "without_skill", "evals": [ /* same shape */ ] }
-  ],
-  "run_summary": {
-    "with_skill":    { "pass_rate": { "mean": ..., "stddev": ..., "min": ..., "max": ... } },
-    "without_skill": { "pass_rate": { "mean": ..., "stddev": ..., "min": ..., "max": ... } }
-  },
-  "notes": [ "carry-over baseline caveats, executor permission artefact warnings, ..." ]
-}
-```
-
-### Scenario seeds (6; assertion lists drafted in iteration 2)
-
-Each scenario will carry **8–12 assertions** spread across the four-layer
-anatomy. Each scenario pressure-tests one or two hard rules.
-
-1. `glm-poisson-injuries` — Poisson regression with offset and one
-   covariate. *Tests family choice, `offset()` term, prior inspection
-   workflow.*
-2. `glmm-bernoulli-survey` — Hierarchical Bernoulli with `(1|region)`.
-   *Tests group-specific term, auto-prior on group-level scale,
-   non-Gaussian-family-requires-`interpret`-rule.*
-3. `distributional-gaussian-heteroskedastic` —
-   `Formula("y ~ x", "sigma ~ z")`. *Pressure-tests the "must model every
-   auxiliary parameter" rule.*
-4. `ordinal-cumulative-likert` — Cumulative family on Likert data.
-   *Tests ordinal-family-forbids-multi-formula handling and intercept
-   auto-removal.*
-5. `hsgp-time-trend` — `y ~ hsgp(t, m=15, c=1.5) + group`. *Tests
-   HSGP-prior-pred check and basis-size choice.*
-6. `marginal-effects-comparison` — Logistic GLMM where the user asks
-   for an effect. *Tests `interpret.comparisons` on probability scale,
-   not raw coefficient reporting.*
-
-### Trigger-eval seed queries (~10 true / ~15 false)
-
-**True triggers (samples)**
-
-- *"I have survey responses (yes/no) from 12 regions, want hierarchical
-  regression on age and income. Python."*
-- *"I'm fitting a heteroskedastic regression — predictors affect both the
-  mean and the standard deviation."*
-- *"What's the average treatment effect of `condition` on the probability
-  of conversion?"* (cue for `interpret.comparisons`)
-
-**False triggers — adjacent-domain adversaries**
-
-Drawn from carve-out boundaries so the `description:` keywords don't
-drift into neighbour skills' territory:
-
-- *"Write a custom PyMC model for a non-standard likelihood — I need
-  fine control of the log-prob and the gradient."* → `bayesian-workflow`,
-  not Bambi.
-- *"Fit a hierarchical drift-diffusion model on my RT data with subject
-  random effects."* → `hssm-workflow`, not Bambi (superficially looks
-  like a GLMM ask).
-- *"Train an amortized posterior estimator for my custom simulator."* →
-  `amortized-workflow`.
-- *"Build a Gaussian process regression on spatial data using sklearn's
-  `GaussianProcessRegressor`."* → out of scope (not Bayesian-stack).
-- (~10 more drafted in iteration 2 — must cover XGBoost, statsmodels
-  MixedLM, Prophet, sklearn pipelines, scipy.stats hypothesis tests)
-
-## Decisions carried in this skill
-
-- **D2 (resolved):** `interpret` (`predictions`, `comparisons`, `slopes` +
-  `plot_*` variants) is in-scope as a core feature. Splines / HSGP get one
-  reference file (light coverage).
-- **D5 (resolved):** Hard rules use `**MUST**` / `**NEVER**` prefixes,
-  matching `amortized-workflow`.
-
-## Iteration-2 follow-ups
-
-- Flesh out each Hard Rule with a one-paragraph rationale + example.
-- Draft each reference file's TOC + first prose paragraph.
-- Draft each script's docstring + argparse signature.
-- Write `eval_metadata.json` for at least 1 scenario.
-- Sketch the SKILL.md frontmatter `description:` paragraph in full.
-- Confirm the references/ DSL-vs-API split is implemented as planned so
-  `hssm-workflow` can lean on it.
+Bambi M1 is complete only when the installable folder and two supported analyses
+pass the [acceptance gates](bambi-workflow-skill-iter2.md). Broader coverage is a
+subsequent evaluated increment, not an obligation to fill six references or two
+script placeholders before the first useful contribution.
