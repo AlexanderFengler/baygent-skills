@@ -1,0 +1,12 @@
+{
+  "variable": "choice",
+  "n_observations": 100,
+  "pit_method": "ppc_pit",
+  "assessment": {
+    "pit_ecdf_inside_bands": true,
+    "coverage_ecdf_inside_bands": true,
+    "well_calibrated": true,
+    "mean_coverage_deviation": 0.002,
+    "calibration_diagnosis": "well-calibrated"
+  }
+}

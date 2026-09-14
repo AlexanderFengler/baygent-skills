@@ -1,0 +1,15 @@
+{
+  "eval_id": 3,
+  "eval_name": "predictive-misalignment",
+  "prompt": "Please review predictive_fixture.json from our HSSM artifact handoff. It is a small literal synthetic fixture, with the array layout described in the file. Can I use it for reaction-time and choice predictive checks and the usual Bayesian diagnostics? Write review.md explaining which checks can safely proceed, any issues you find, and the practical next step. You may inspect or reconstruct the supplied arrays, but please do not fit a model, generate observations, or regenerate predictions.",
+  "assertions": [
+    "Recognizes that the supplied arrays are a literal review fixture and does not claim to have fitted a model, generated predictive samples or validated real-data inference",
+    "Reconstructs or reads rt,response as a paired trial outcome with component labels 0 and 1 meaning RT in seconds and response, keeping the chain, draw and __obs__ roles separate",
+    "Detects the predictive trial-label mismatch: observed labels are 101, 103 and 108, whereas predictive labels are 103, 101 and 999; identifies both the ordering change and missing/unexpected trial labels",
+    "Stops fitted-data predictive calibration or a matched-row RT/choice assessment until provenance and alignment are repaired; it does not treat equal row counts as sufficient validation",
+    "Does not silently sort, truncate, relabel, impute trial 108, drop trial 999 or align an intersection to manufacture a compatible artifact",
+    "Keeps the supplied joint likelihood attached to its original trial labels; does not flatten RT and response into extra observations or copy the joint density into marginal RT/choice likelihoods",
+    "Explains that a later repaired scalar RT/choice PPC-PIT handoff would assess fitted-data marginals, not establish joint, conditional or held-out calibration, and that this extract lacks posterior/sampler groups for convergence assessment",
+    "Gives a concrete next step to obtain a verified trial-ID mapping or a correctly labeled export from the original prediction process while respecting the request not to fit or regenerate predictions"
+  ]
+}

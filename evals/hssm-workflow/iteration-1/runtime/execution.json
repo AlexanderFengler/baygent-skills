@@ -1,0 +1,107 @@
+{
+  "started_at": "2026-09-14T03:56:13.378147+00:00",
+  "command": [
+    "marimo",
+    "export",
+    "html",
+    "examples/hssm-workflow/analytical_ddm.py",
+    "-o",
+    "examples/hssm-workflow/results/round-1/analytical_ddm.html"
+  ],
+  "source_commit": "986a9dbd94f2c3e7e1e522732a0031962a11a597",
+  "source_sha256": {
+    "examples/hssm-workflow/analytical_ddm.py": "ec794e33efec06ecd4d7a2c02b6727ae283c444729bd2143781e5c3bce5cfaff",
+    "examples/hssm-workflow/hssm_example_support.py": "66a15e780a5d6c9812017a265986c60c8ad7473a2cd1c68a71801ef56a38e2f6",
+    "hssm-workflow/scripts/prepare_rt_choice.py": "c54294525e4c3ffbb170dac63ef1ad3b12b65fe41c8a1f646075b6fe2e8ae4a9",
+    "bayesian-workflow/scripts/diagnose_model.py": "41743cbda2c791d735092812e884a8f4fe4acac083f9a7b76fcb64aa75d3c8df",
+    "bayesian-workflow/scripts/calibration_check.py": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d",
+    "bayesian-workflow/scripts/check_diagnostics.py": "f413d440d08c97266ebfdaf4b0eed123fce3ded2f80306794160ab82c1c7c670",
+    "bayesian-workflow/references/reporting.md": "703ab1cf2ab4cfb1c927fcd85e8c180f0dcb6dc44bd02b6e82730a97a745cde0"
+  },
+  "environment_overrides": {
+    "BAYGENT_RUN_HSSM": "1",
+    "BAYGENT_OUTPUT_ROOT": "examples/hssm-workflow/results/round-1",
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "/tmp/baygent-hssm-mpl",
+    "XDG_CACHE_HOME": "/tmp/baygent-hssm-cache",
+    "PYTENSOR_FLAGS": "base_compiledir=/tmp/baygent-hssm-numerics"
+  },
+  "budget": {
+    "trials": 300,
+    "chains": 2,
+    "tune": 1000,
+    "draws_per_chain": 1000,
+    "prior_draws": 200
+  },
+  "status": "completed",
+  "returncode": 0,
+  "elapsed_seconds": 40.54761208302807,
+  "ended_at": "2026-09-14T03:56:53.938015+00:00",
+  "local_netcdf_sha256": {
+    "calibration/choice/inference_data.nc": "0b6a8c850923524e65d1a3573beac9508e47a9904758402fdcc1dfd47e43180a",
+    "calibration/rt/inference_data.nc": "d1ebd5f0d78668cd0cd1e1b5f35480b91e5dc4c018c373c1855f916566a96c31",
+    "checkpoint/traces.nc": "4c8e82ae324362392592a18677c8afacef399f2a654dccfbb7ceeac1f70eba9e",
+    "inference_data.nc": "627c6cf0036f0871237e3c48672f208c34e50eeb02dfbd2ccd40fb90193355c7",
+    "posterior.nc": "4c8e82ae324362392592a18677c8afacef399f2a654dccfbb7ceeac1f70eba9e",
+    "posterior_predictive.nc": "627c6cf0036f0871237e3c48672f208c34e50eeb02dfbd2ccd40fb90193355c7",
+    "prior_data.nc": "cbb01202397bef80bbbae0eaae5e84c46bcfd9cbb4b49df75f4b8502907e063a"
+  },
+  "successful_export_log_sha256": "00b91cb47cbcde0231c89882fe204e8583db041e52d90d6ade3320fa2bca963b",
+  "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86",
+  "same_data_and_settings_across_fits": true,
+  "review_scope": "All 11 final PNGs and the complete report reviewed; HTML serialized outputs verified, including both posterior plots and completed shared assessment. Browser layout inspection blocked by local-file URL policy; no workaround attempted.",
+  "portable_log_sha256": {
+    "logs/attempt-1-execution.log.txt": "60e980f191e33dccc4a3cbb2d6c2e92e2e4eec5313034450e2e1f90d840b941c",
+    "logs/attempt-2-execution.log.txt": "1adbcaa9fcffc375818d9e20a85766f72a9de8aa367ed9ef0a3d74bfa161beeb",
+    "logs/attempt-3-execution.log.txt": "534901d03cdc4876219c96ecbbe6e95d3a1dca30784433bb515eb5e0a582b201",
+    "logs/attempt-4-execution.log.txt": "e0441e562457b242c1371b5fe9b9174d6cbef01edb5c5eab2d42dbd2bbf48636",
+    "logs/execution.log.txt": "041d398994fb068dea5b0a61538978340f158013313daa578ef9d678c90797bd"
+  },
+  "log_note": "Portable logs replace absolute workspace/user prefixes and trim trailing whitespace; original-byte log hashes are retained separately.",
+  "notebook_export": {
+    "original_sha256": "9a7b2c16ba9cd9b44794257d91e3015536db4cef67a488f1437db0eb33a36cb1",
+    "published_transformation": "Removed exporter-generated whitespace on otherwise empty HTML lines; serialized session, plots and code unchanged.",
+    "published_sha256": "7bb8153779a3867ad90929d8056472e74db5cfbd9cee7dc3e818ae48e9b6f932"
+  },
+  "record_scope": "Historical development validation; source hashes and measurements are unchanged. This compact record is not a claim of execution on the extracted PR branch.",
+  "archived_full_record": {
+    "url": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/hssm-workflow/iteration-1/runtime/execution.json",
+    "sha256": "49e6bb22170f7ee26d5d733fe65213d0d38fb652dafdaa9fd850fc2ae57754b0"
+  },
+  "earlier_attempts": [
+    {
+      "source_commit": "f625198b6a3d2a8101ad56c07a3a3034a8cec68a",
+      "status": "failed",
+      "returncode": 1,
+      "elapsed_seconds": 0.2951049589901231,
+      "reason_superseded": "Marimo local IPC socket blocked before computation; no simulation or fit."
+    },
+    {
+      "source_commit": "f625198b6a3d2a8101ad56c07a3a3034a8cec68a",
+      "status": "failed",
+      "returncode": 1,
+      "elapsed_seconds": 40.49179904197808,
+      "reason_superseded": "Native HSSM quantile plot duplicated the response column; saved-data probe also exposed duplicate explicit ax forwarding. Fit checkpoint retained.",
+      "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86"
+    },
+    {
+      "source_commit": "0bbc31e130099ba9c886538ae4e905879cee0e0c",
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 41.609238040982746,
+      "reason_superseded": "Export exited zero but posterior/QP figures were omitted from its visible cell output because a flag assignment followed mo.vstack. Regression now checks visible embedded images. Report prose also needed DDM-specific corrections.",
+      "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86"
+    },
+    {
+      "source_commit": "ba3ad0ed38dcd726e2dcfc988df71be33b44beed",
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 41.98279354197439,
+      "data_sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86",
+      "reason_superseded": "Runtime and visible notebook plots passed, but independent review exposed mismatched PIT assessment/plot methods, duplicate coverage transformation and native ECDF coordinate rescaling. Final export uses the corrected shared pipeline with unchanged data, model and sampling budget."
+    }
+  ],
+  "archived_outputs": "https://github.com/AlexanderFengler/baygent-skills/tree/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/hssm-workflow/iteration-1/runtime/analytical-ddm",
+  "archived_logs": "https://github.com/AlexanderFengler/baygent-skills/tree/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/hssm-workflow/iteration-1/runtime/logs",
+  "local_netcdf_scope": "Hashes identify original ignored generated artifacts; NetCDF files are not published in this PR or in the archived report bundle."
+}

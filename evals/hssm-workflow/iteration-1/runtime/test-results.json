@@ -1,0 +1,73 @@
+{
+  "totals": {
+    "passed": 171,
+    "xfail": 4,
+    "skipped": 1
+  },
+  "elapsed_seconds": 7.369,
+  "adapter_line_coverage": {
+    "covered": 65,
+    "statements": 66,
+    "uncovered": [
+      141
+    ]
+  },
+  "source_sha256": {
+    "evals/smoke/hssm_numerical_reference.py": "eae473fe2f1d47ac575a952f08bbd8ff3a15575e5af0d14eb41cedeec7d3dae7",
+    "evals/smoke/test_calibration_consistency.py": "3a660f30784fdedb42de559c0eaa2dc6b03d9474bc1cff14742a063ec611013c",
+    "evals/smoke/test_hssm_notebook_contracts.py": "7de3bf22c424c996b4381d1f2719da1ae1443c3ecd719d03977837805cc74003",
+    "evals/smoke/test_hssm_numerics.py": "5e44ad9bd845741b3e2e8e3eb1ec66da2935032fd336218998a63431833a8b37",
+    "evals/smoke/test_hssm_reporting.py": "59f9e75bd9990bdea8800d683ee07aaf3ced5275c0dc401c6556cf7ff6b0f1d4",
+    "evals/smoke/test_hssm_saved_artifacts.py": "c3d68272d3cdfca6a0c1b0dea251136e474aef5ba6f11dc4bfcc047c321fcc85",
+    "evals/smoke/test_hssm_workflow.py": "b6b98f210ce63c8d1a2e288ce0699d6af528dc5e13c20b4080fa5e1bba76611c"
+  },
+  "warnings": [
+    "PyMC root compute_log_prior deprecation: use pymc.stats.compute_log_prior before the first 2027 release.",
+    "netCDF4 import ndarray-size RuntimeWarning; serialization roundtrip and saved artifacts pass."
+  ],
+  "command": "env -u BAYGENT_TEST_HSSM -u BAYGENT_RUN_HSSM BAYGENT_HSSM_ARTIFACT_DIR=examples/hssm-workflow/results/round-1/analytical-ddm MPLBACKEND=Agg MPLCONFIGDIR=/tmp/baygent-hssm-mpl XDG_CACHE_HOME=/tmp/baygent-hssm-cache PYTENSOR_FLAGS=base_compiledir=/tmp/baygent-hssm-numerics python -m pytest -q evals/smoke/test_hssm*.py evals/smoke/test_calibration_consistency.py -o junit_family=xunit1 --junitxml=/tmp/baygent-hssm-final-tests.xml",
+  "scope": "139 HSSM checks plus 32 shared calibration regressions passed; one duplicate opt-in fit skipped, four strict expected upstream coordinate failures.",
+  "record_scope": "Historical development validation; source hashes and measurements are unchanged. This compact record is not a claim of execution on the extracted PR branch.",
+  "archived_full_record": {
+    "url": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/hssm-workflow/iteration-1/runtime/test-results.json",
+    "sha256": "79e481259bfe1d4000d40e4eea45121996a7ea49e3fecbce1e13327cd28a5983"
+  },
+  "nonpassing_cases": [
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_prior_export_preserves_noncanonical_sample_coordinates[data-limited-t]",
+      "seconds": 0.058,
+      "outcome": "xfail",
+      "reason": "PyMC 6.1 compute_log_prior resets noncanonical chain/draw coordinates."
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_likelihood_accepts_noncanonical_sample_coordinates[data-limited-t]",
+      "seconds": 0.073,
+      "outcome": "xfail",
+      "reason": "HSSM 0.5 log_likelihood uses sample coordinate labels as array positions."
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_prior_export_preserves_noncanonical_sample_coordinates[capped-t]",
+      "seconds": 0.041,
+      "outcome": "xfail",
+      "reason": "PyMC 6.1 compute_log_prior resets noncanonical chain/draw coordinates."
+    },
+    {
+      "module": "evals.smoke.test_hssm_numerics",
+      "name": "test_native_likelihood_accepts_noncanonical_sample_coordinates[capped-t]",
+      "seconds": 0.07,
+      "outcome": "xfail",
+      "reason": "HSSM 0.5 log_likelihood uses sample coordinate labels as array positions."
+    },
+    {
+      "module": "evals.smoke.test_hssm_workflow",
+      "name": "test_authorized_ddm_notebook_preserves_joint_and_marginal_evidence",
+      "seconds": 0.0,
+      "outcome": "skipped",
+      "reason": "HSSM simulation and full notebook integration require explicit opt-in; execution is deferred."
+    }
+  ],
+  "complete_test_case_listing": "See archived_full_record; passing case details omitted from this compact summary."
+}

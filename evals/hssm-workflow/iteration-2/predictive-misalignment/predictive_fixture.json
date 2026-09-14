@@ -1,0 +1,36 @@
+{
+  "fixture_kind": "Literal, hand-authored synthetic arrays for artifact review; no simulation or sampling produced these values",
+  "model_context": {
+    "package": "HSSM",
+    "release": "0.5.0",
+    "model": "ddm",
+    "likelihood": "analytical",
+    "rt_units": "seconds",
+    "response_meaning": {"-1": "lower boundary", "1": "upper boundary"}
+  },
+  "serialization": "Each group maps variable names to dims, coords and values, which define an xarray DataArray. This JSON is a review transport format, not an HSSM native serialization format.",
+  "component_order": {"0": "rt", "1": "response"},
+  "groups": {
+    "observed_data": {
+      "rt,response": {
+        "dims": ["__obs__", "rt,response_extra_dim_0"],
+        "coords": {"__obs__": [101, 103, 108], "rt,response_extra_dim_0": [0, 1]},
+        "values": [[0.45, -1], [0.8, 1], [1.1, -1]]
+      }
+    },
+    "posterior_predictive": {
+      "rt,response": {
+        "dims": ["chain", "draw", "__obs__", "rt,response_dim"],
+        "coords": {"chain": [0], "draw": [0, 1], "__obs__": [103, 101, 999], "rt,response_dim": [0, 1]},
+        "values": [[[[0.7, 1], [0.5, -1], [1.2, 1]], [[0.9, -1], [0.6, -1], [1.0, 1]]]]
+      }
+    },
+    "log_likelihood": {
+      "rt,response": {
+        "dims": ["chain", "draw", "__obs__"],
+        "coords": {"chain": [0], "draw": [0, 1], "__obs__": [101, 103, 108]},
+        "values": [[[-1.2, -0.7, -1.8], [-1.1, -0.8, -1.6]]]
+      }
+    }
+  }
+}

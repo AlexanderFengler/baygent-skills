@@ -1,0 +1,51 @@
+{
+  "joint_log_density_atol": 1e-06,
+  "prior_log_density_atol": 1e-06,
+  "joint_selected_samples": [
+    {
+      "chain": 0,
+      "draw": 0,
+      "trials": 300,
+      "maximum_absolute_log_density_error": 1.7763568394002505e-15
+    },
+    {
+      "chain": 0,
+      "draw": 500,
+      "trials": 300,
+      "maximum_absolute_log_density_error": 3.774758283725532e-15
+    },
+    {
+      "chain": 0,
+      "draw": 999,
+      "trials": 300,
+      "maximum_absolute_log_density_error": 1.1546319456101628e-14
+    },
+    {
+      "chain": 1,
+      "draw": 0,
+      "trials": 300,
+      "maximum_absolute_log_density_error": 3.552713678800501e-15
+    },
+    {
+      "chain": 1,
+      "draw": 500,
+      "trials": 300,
+      "maximum_absolute_log_density_error": 7.549516567451064e-15
+    },
+    {
+      "chain": 1,
+      "draw": 999,
+      "trials": 300,
+      "maximum_absolute_log_density_error": 9.325873406851315e-15
+    }
+  ],
+  "prior_maximum_absolute_errors": {
+    "v": 2.220446049250313e-16,
+    "a": 3.885780586188048e-16,
+    "z": 3.3306690738754696e-16,
+    "t": 0.0
+  },
+  "prior_samples_per_parameter": 2000,
+  "reference": "hddm-wfpt 0.1.7 Cython wiener_logp_array, direct signed RT with boundary separation 2*a; SciPy natural-scale priors",
+  "no_fitting_during_verification": true
+}

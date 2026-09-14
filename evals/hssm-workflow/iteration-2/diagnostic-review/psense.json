@@ -1,0 +1,6 @@
+{
+  "v": {"prior": 0.22, "likelihood": 0.04, "diagnosis": "strong prior sensitivity in literal fixture"},
+  "a": {"prior": 0.03, "likelihood": 0.02, "diagnosis": "low sensitivity in literal fixture"},
+  "z": {"prior": 0.02, "likelihood": 0.03, "diagnosis": "low sensitivity in literal fixture"},
+  "t": {"prior": 0.01, "likelihood": 0.02, "diagnosis": "fixed-support sensitivity only; alternate t support not assessed"}
+}

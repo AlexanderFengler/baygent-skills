@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Use HSSM 0.5 to fit a flat analytical drift-diffusion model to my reaction times in seconds and choices coded -1/+1. Inspect priors and report joint predictive checks.",
+    "should_trigger": true
+  },
+  {
+    "query": "My HSSM DataTree stores rt,response as a two-component outcome. Help prepare separate RT and binary-choice PPC-PIT checks without losing trial alignment or calling them joint calibration.",
+    "should_trigger": true
+  },
+  {
+    "query": "Review the prior for nondecision time in my HSSM DDM. It sometimes exceeds the fastest observed RT; explain the support policy before we run any sampling.",
+    "should_trigger": true
+  },
+  {
+    "query": "I have a fitted hssm.HSSM model and saved posterior predictive draws. Use HSSM's native plots to compare choice proportions and RT quantiles and write a diagnostic report.",
+    "should_trigger": true
+  },
+  {
+    "query": "Use Bambi for a Bernoulli regression of survey support with a varying intercept by region. There are no reaction-time observations.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build a custom diffusion likelihood directly in PyMC. Keep my explicit PyMC implementation; do not use HSSM.",
+    "should_trigger": false
+  },
+  {
+    "query": "Train a BayesFlow amortized posterior network for my simulator and evaluate it on held-out simulations. Do not fit an HSSM model.",
+    "should_trigger": false
+  },
+  {
+    "query": "Make a histogram of these reaction times and count the two response labels. I only want descriptive summaries, with no probabilistic model or fitting.",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "eval_id": 4,
+  "eval_name": "diagnostic-review",
+  "prompt": "Please review the saved diagnostic summaries listed in fixture_metadata.json and write report.md for the synthetic flat-DDM example. These are hand-authored test inputs for our reporting workflow, not results from a scientific experiment. Explain what the supplied evidence supports, the main concerns, and the next actions you would take. Use the available Bayesian reporting conventions, but work only from these files: I do not want a new fit, replacement observations, or invented plots.",
+  "assertions": [
+    "Treats the inputs as hand-authored diagnostic evidence for a reporting scenario, without claiming to have run HSSM inference or to have established a scientific finding",
+    "Uses the real shared Bayesian assessment implementation on the supplied diagnostic, prior-sensitivity and separate marginal-calibration JSON where applicable; does not recreate thresholds or replace their qualitative ratings with an unsupported healthy verdict",
+    "Preserves poor convergence, including the supplied high R-hat, weak ESS and divergences; clearly limits posterior interpretation until the sampling problems are resolved",
+    "Reports joint-trial LOO as unavailable with its supplied reason and does not substitute either marginal calibration result or invent ELPD, Pareto-k values or a model-comparison conclusion",
+    "Retains the strong prior-sensitivity flag on v with its supplied evidence while acknowledging that this extract lacks the raw posterior and density groups needed for independent density verification; does not claim complete robustness or support-policy sensitivity",
+    "Keeps the poor RT marginal assessment distinct from the excellent choice marginal assessment; does not average their ratings or conclude that passing choice calibration establishes joint, conditional or held-out calibration",
+    "Uses the supplied response-conditional RT quantiles and choice proportions as domain evidence, identifying the slow upper RT tails despite close mean choice proportions, without inventing replicate or posterior draws",
+    "Prioritizes HSSM-appropriate next steps for convergence, RT units and response coding, parameter support and priors, with model extensions explicitly justified; does not apply generic StudentT/NegBinomial or non-centering advice as an automatic change to the flat DDM",
+    "Produces an evidence-based report using the applicable canonical sections, labels unavailable posterior/prior-predictive/figure evidence, and neither links nonexistent plots nor presents this single literal fixture as a recovery or calibration experiment"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "dataset_kind": "Frozen synthetic observations generated during the authorized local notebook run; no scientific experiment is represented",
+  "file": "data.csv",
+  "sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86",
+  "n_observations": 300,
+  "columns": {
+    "rt": "Reaction time in seconds",
+    "response": "Lower boundary -1 or upper boundary +1; not an accuracy label",
+    "condition": "Constant teaching label for display only, not a modeled covariate"
+  },
+  "generation": {
+    "api": "hssm.simulate_data",
+    "model": "ddm",
+    "theta": {
+      "v": 0.7,
+      "a": 1.2,
+      "z": 0.5,
+      "t": 0.25
+    },
+    "size": 300,
+    "random_state": 1412,
+    "seed_description": "sum(map(ord, \"analytical-ddm\"))",
+    "output_df": true,
+    "assumptions": "Flat constant-drift and constant-boundary DDM, no lapses, missing responses or deadlines"
+  },
+  "generation_versions": {
+    "hssm": "0.5.0",
+    "ssm-simulators": "0.14.0"
+  },
+  "source_notebook": "examples/hssm-workflow/analytical_ddm.py",
+  "source_repository_commit": "f625198b6a3d2a8101ad56c07a3a3034a8cec68a",
+  "hssm_release_source": "fefed57d2142637af503b0e92cefe799715c0f46",
+  "processing": "Copied the notebook input CSV byte-for-byte, preserving all rows, order, values and columns",
+  "exclusions": "None",
+  "interpretation_limit": "Generating values document the synthetic design; one fitted dataset does not establish parameter recovery"
+}
