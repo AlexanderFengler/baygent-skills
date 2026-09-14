@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "ddm-flat",
+  "prompt": "Prepare an HSSM 0.5.0 analytical flat DDM workflow for a supplied dataset with reaction times in seconds and response labels -1/+1. Estimate v, a, z and t without regressions, group effects, lapse contamination, censoring or missing-data handling. Verify the release APIs and paired artifact layout from source, inspect explicit priors and explain a physically valid nondecision-time support policy. Execution is currently deferred: do not simulate, fit, run synthetic adapter tests or claim numerical validation until separately authorized. Prepare the reproducible notebook and reporting path. Once execution is authorized, save the posterior before downstream processing; use HSSM's predictive and log-likelihood APIs, assess choice proportions and conditional RT quantiles, prepare separate scalar RT/choice marginal PPC-PIT views for shared diagnostics, and write the canonical report with actual evidence and limitations. Distinguish source review, runtime validation, numerical diagnostic health and parameter recovery throughout.",
+  "assertions": [
+    "Uses the source-audited HSSM 0.5.0 analytical flat DDM scope and records the package versions or source baseline without claiming an unexecuted environment is validated",
+    "Respects deferred execution: simulation, fitting and synthetic test results remain pending until separately authorized, and no numerical grades, recovery claims or diagnostic ratings are invented",
+    "Checks positive finite RTs in documented seconds and response labels exactly -1/+1, preserving row alignment and treating missing data, censoring and other response encodings as unsupported extensions",
+    "Specifies and inspects priors for v, a, z and t, explains HSSM parameter units and boundary convention, and makes the nondecision-time support policy explicit including any use of the observed minimum RT",
+    "Uses HSSM model construction, sample, sample_prior_predictive, sample_posterior_predictive and log_likelihood APIs; saves sampling output before diagnostics and describes a source-supported flat-model prior-density bridge without extending it to regression models",
+    "Preserves the authoritative rt,response paired artifact and joint pointwise log_likelihood with one scalar per chain, draw and trial; verifies complete prior-density variables before sensitivity assessment",
+    "Creates independent scalar RT and response==+1 choice PPC-PIT views with explicit component order, matching observation coordinates and intact chain/draw axes; does not flatten pairs or attach the joint log likelihood as a marginal likelihood",
+    "Distinguishes fitted-data marginal PPC-PIT from joint, conditional and held-out calibration, and complements it with HSSM native predictive plots, choice proportions and conditional RT quantiles",
+    "Uses shared Bayesian diagnostic assessments and next steps only when they were actually computed, preserves failed or missing checks as limitations, and does not require a small execution check to yield healthy inference",
+    "Prepares the canonical report with the scientific target, priors and support policy, source/runtime status, paired and scalar evidence, and only links produced artifacts after an authorized execution"
+  ]
+}

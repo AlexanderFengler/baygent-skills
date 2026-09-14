@@ -1,0 +1,10 @@
+{
+  "skill_name": "hssm-workflow",
+  "iteration": 1,
+  "status": "deferred_by_user",
+  "with_skill": null,
+  "without_skill": null,
+  "trigger_results": null,
+  "runtime_results": null,
+  "reason": "Implementation first; synthetic model runs and agent evaluations are explicitly deferred. Static validation does not establish numerical correctness or skill performance."
+}
