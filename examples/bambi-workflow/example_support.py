@@ -59,6 +59,30 @@ def _table(frame: pd.DataFrame) -> str:
     return "\n".join("| " + " | ".join(map(cell, row)) + " |" for row in rows)
 
 
+def _convergence_rows(convergence: dict, summary: pd.DataFrame) -> list[dict]:
+    """Display available extrema without changing the shared diagnostic verdicts."""
+    extrema = {
+        "rhat": summary["r_hat"].max(skipna=False),
+        "ess_bulk": summary["ess_bulk"].min(skipna=False),
+        "ess_tail": summary["ess_tail"].min(skipna=False),
+    }
+    return [
+        {
+            "Diagnostic": name,
+            "Value": convergence[key][value]
+            if convergence[key].get(value) is not None
+            else extrema.get(key, "Not returned by shared helper"),
+            "Status": "pass" if convergence[key]["ok"] else "flag",
+        }
+        for name, key, value in [
+            ("Max R-hat", "rhat", "max"),
+            ("Min ESS (bulk)", "ess_bulk", "min"),
+            ("Min ESS (tail)", "ess_tail", "min"),
+            ("Divergences", "divergences", "count"),
+        ]
+    ]
+
+
 def _run_helper(name: str, arguments: list[str], output: Path) -> dict:
     completed = subprocess.run(
         [sys.executable, str(BAYESIAN / "scripts" / name), *arguments],
@@ -129,7 +153,9 @@ def write_report(
     model.data.to_csv(output_dir / "data.csv", index=False)
     prediction_summary = result.summary.copy()
     prediction_summary.to_csv(output_dir / "predictions.csv", index=False)
-    summary = az.summary(idata, var_names=var_names, ci_prob=0.94, ci_kind="hdi")
+    summary = az.summary(
+        idata, var_names=var_names, ci_prob=0.94, ci_kind="hdi", round_to="none"
+    )
     summary.to_csv(output_dir / "summary.csv")
     psense = azs.psense_summary(idata, var_names=var_names)
     # Shared checker expects parameter -> {prior, likelihood}, not column -> rows.
@@ -300,20 +326,7 @@ def write_report(
         }
         for name, parameter in model.marginal_parameters.items()
     )
-    conv = diagnostics["convergence"]
-    diagnostic_rows = [
-        {
-            "Diagnostic": name,
-            "Value": conv[key].get(value, "Not returned by shared helper"),
-            "Status": "pass" if conv[key]["ok"] else "flag",
-        }
-        for name, key, value in [
-            ("Max R-hat", "rhat", "max"),
-            ("Min ESS (bulk)", "ess_bulk", "min"),
-            ("Min ESS (tail)", "ess_tail", "min"),
-            ("Divergences", "divergences", "count"),
-        ]
-    ]
+    diagnostic_rows = _convergence_rows(diagnostics["convergence"], summary)
     data_table = pd.DataFrame(
         {
             "Field": ["Source", "Sample size", "Key variables", "Question"],
@@ -367,7 +380,8 @@ def write_report(
         "Prior Predictive Check": (details["prior_assessment"], None),
         "Sampling and Convergence": (
             checks["summary"]["convergence"]
-            + f" Sampling settings: `{details['sampling']}`.",
+            + f" Sampling settings: `{details['sampling']}`."
+            + " Missing extrema in the shared output are taken from the selected parameter summary.csv; pass/flag statuses retain the shared assessment.",
             _table(pd.DataFrame(diagnostic_rows)),
         ),
         "Posterior": (
