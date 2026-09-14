@@ -1,6 +1,8 @@
 # Bambi and HSSM workflow skills
 
-**Status:** architecture refreshed on 2026-09-14; neither skill is implemented.
+**Status:** Bambi M1 implementation and runtime validation recorded on 2026-09-14;
+paired agent/trigger evaluations pending. HSSM M2 remains a plan. See the
+[validation record](../evals/bambi-workflow/iteration-1/README.md).
 
 ## Branch and upstream assessment
 
@@ -52,8 +54,11 @@ transfer to HSSM.
    RT/choice outputs connect to shared diagnostics before broadening to
    hierarchical models. See [HSSM plan](hssm-workflow-skill.md).
 
-M1 is the next meaningful deliverable. A folder containing instructions alone
-is not its completion criterion: the installed skill must produce an executable
-analysis and report with truthful validation evidence. This refresh changes
-plans only; no skill execution, benchmark improvement, or package compatibility
-has been established by it.
+The installed Bambi folder, two marimo examples and 13 integration checks now
+exist. Both full examples executed against Bambi 0.21.0/PyMC 6.3.2 and produced
+canonical reports. M1's remaining acceptance gate is the independent paired
+behavior and trigger evaluation; no benchmark improvement is claimed yet.
+
+Next, finish that gate and compare a justified alternative region-scale prior
+in the survey example, whose sensitivity assessment flags that parameter.
+Broader Bambi families and HSSM M2 require their own verified increments.

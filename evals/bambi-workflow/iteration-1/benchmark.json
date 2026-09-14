@@ -1,0 +1,10 @@
+{
+  "skill_name": "bambi-workflow",
+  "iteration": 1,
+  "status": "pending",
+  "with_skill": null,
+  "without_skill": null,
+  "trigger_results": null,
+  "reason": "Independent Codex execution was blocked by automatic approval review: explicit authorization required to transmit skill text and synthetic evaluation prompts to the model service. Awaiting clarified user decision; no agent evaluation scores are claimed.",
+  "runtime_evidence": "runtime/execution.json"
+}

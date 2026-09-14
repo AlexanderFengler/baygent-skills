@@ -1,0 +1,92 @@
+{
+  "recorded_at": "2026-09-14T01:58:53.958936+00:00",
+  "source_commit": "efce9e2ad025b53f3fa6edc1e342f118ffc3b2bf",
+  "source_sha256": {
+    "examples/bambi-workflow/gaussian_regression.py": "1155f821ca6af61c3bdef76e96efceb34f6c7b3e7300b69aa56d40ccaf71d0c7",
+    "examples/bambi-workflow/hierarchical_bernoulli.py": "f48590e5139c46e5fb7aff69e873ba2a490a40466925b2f30bd5ffb83d838e5a",
+    "examples/bambi-workflow/example_support.py": "708ac9d9696a2009cd9354867baf2c0284eafae3f2cd40dbea3a585d7eca98a8",
+    "evals/smoke/test_bambi_workflow.py": "48700ab7237fb1d6f8979fecea324d890eeeb0e77cd025f96074235aeaa3da7c"
+  },
+  "analyses": {
+    "gaussian-regression": {
+      "sampling": {
+        "draws": 1000,
+        "tune": 1000,
+        "chains": 4,
+        "retained_draws_per_chain": 1000,
+        "backend": "nutpie",
+        "omit_offsets": false,
+        "center_predictors": false
+      },
+      "seed": 1993,
+      "prediction": [
+        {
+          "term": "x",
+          "estimate_type": "diff",
+          "value": "-0.5_vs_0.5",
+          "estimate": 1.846758516966503,
+          "lower_3.0%": 1.500900374350735,
+          "upper_97.0%": 2.160781402730119
+        }
+      ],
+      "assessments": {
+        "convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences).",
+        "loo": "LOO Pareto-k: excellent.",
+        "calibration": "Calibration is excellent \u2014 well-calibrated.",
+        "psense": "Prior sensitivity: low sensitivity (flagged: none)."
+      },
+      "local_netcdf_sha256": {
+        "inference_data.nc": "128b99c6ef950e9b4baa9383dfe9a09101d85479a91f78c445a3805adbbccea8",
+        "prior_data.nc": "fece5a302a92f991e4b87e5e5ad84e33588a1595c10c910cbda68a2fa8e0787d",
+        "posterior.nc": "1ff0cd12ee38f90293194d2be7de002352e3babfe039aa0081049d554955380b"
+      },
+      "command": "marimo export html examples/bambi-workflow/gaussian_regression.py -o examples/bambi-workflow/results/gaussian_regression.html"
+    },
+    "hierarchical-bernoulli": {
+      "sampling": {
+        "draws": 1000,
+        "tune": 1000,
+        "chains": 4,
+        "retained_draws_per_chain": 1000,
+        "backend": "nutpie",
+        "omit_offsets": false,
+        "center_predictors": false
+      },
+      "seed": 2264,
+      "prediction": [
+        {
+          "age_scaled": 0.0,
+          "income_bracket": "medium",
+          "urban": 1,
+          "region": "north",
+          "estimate": 0.5402042852894202,
+          "lower_3.0%": 0.3862410919432948,
+          "upper_97.0%": 0.6808248853387445
+        }
+      ],
+      "assessments": {
+        "convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences).",
+        "loo": "LOO Pareto-k: excellent.",
+        "calibration": "Calibration is excellent \u2014 well-calibrated.",
+        "psense": "Prior sensitivity: strong sensitivity (flagged: 1|region_sigma)."
+      },
+      "local_netcdf_sha256": {
+        "inference_data.nc": "5099106c16078e23d3b5c9e29a186860be8eea1e6b9d10648b79f5937b710835",
+        "prior_data.nc": "8cd8ec5baf14faca8733f0715b20f3d0447f91e059bb0ed5b617acc00f22348e",
+        "posterior.nc": "3927f780fbde6388ab13ded80e1a186a93f6182be813c8edad66f9c6de5b5e24"
+      },
+      "command": "marimo export html examples/bambi-workflow/hierarchical_bernoulli.py -o examples/bambi-workflow/results/hierarchical_bernoulli.html"
+    }
+  },
+  "smoke": {
+    "passed": 13,
+    "elapsed_seconds": 10.63,
+    "command": "python -m pytest -q evals/smoke/test_bambi_workflow.py",
+    "budget": {
+      "chains": 2,
+      "draws": 150,
+      "tune": 150
+    },
+    "does_not_assert_posterior_adequacy": true
+  }
+}

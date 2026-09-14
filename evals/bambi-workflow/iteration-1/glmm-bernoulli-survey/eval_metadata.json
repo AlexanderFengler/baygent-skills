@@ -1,0 +1,16 @@
+{
+  "eval_id": 2,
+  "eval_name": "glmm-bernoulli-survey",
+  "prompt": "Use Bambi to demonstrate hierarchical logistic regression of survey support with a small reproducible synthetic dataset, clearly labeled as synthetic. Include support (0=no, 1=yes), age, income_bracket (low/medium/high), urban (0/1), and region; make some regions smaller than others. Use low income as the reference and a varying intercept by region. Check resolved priors and prior predictions, fit the model, and report the posterior-mean probability of support at age 40, medium income, urban=1 in a specified observed region, with a 94% HDI. Save a diagnostic report and artifacts, reporting failed or unavailable checks and the limits of a small synthetic example. Use the available Bambi 0.21/PyMC 6 environment.",
+  "assertions": [
+    "Uses Bambi with an explicit Bernoulli likelihood, a logit link, and a varying intercept for region",
+    "Verifies the modeled support event and the actual low-income reference coding, rather than assuming C(), categorical=, or an unordered category list establishes the baseline",
+    "Records predictor transformations and unequal group sizes, preserving training encoding when creating prediction data",
+    "Inspects resolved Bambi priors, evaluates prior predictions on probability or replicated support-rate scales, and justifies overrides before fitting",
+    "Uses supported Bambi fit and prediction APIs and saves the sampling output before downstream processing",
+    "Reports the posterior-mean support probability for age 40, medium income and urban=1 in a named observed region, with an explicit 94% HDI and no confusion with an average or unseen-region target",
+    "Uses Bambi's log-density bridge and keeps original-data observed/predictive groups and coordinates compatible with the shared Bayesian diagnostic helpers",
+    "Reports convergence, calibration and sensitivity evidence honestly, including missing or failed checks and the limitations of synthetic or smoke-sized inference",
+    "Writes the canonical results-folder report.md using shared check_report.json assessments and includes the formula, family/link, event/reference coding and prediction target"
+  ]
+}

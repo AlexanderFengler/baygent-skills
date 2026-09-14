@@ -12,6 +12,10 @@ baygent-skills/
 │   ├── SKILL.md                # Main workflow instructions
 │   ├── references/             # Detailed reference docs (priors, diagnostics, sensitivity, reporting)
 │   └── scripts/                # diagnose_model.py, calibration_check.py, check_diagnostics.py
+├── bambi-workflow/             # Bambi 0.21 / PyMC 6; depends directly on bayesian-workflow
+│   ├── SKILL.md
+│   └── references/             # Formulas, families, priors, interpretation/reporting
+├── examples/bambi-workflow/    # Two marimo notebooks; example-only report assembly
 ├── causal-inference/           # Shipped skill (v1.2)
 │   ├── SKILL.md                # Main workflow instructions (depends on bayesian-workflow)
 │   ├── references/             # DAGs, quasi-experiments, structural models, refutation, reporting
@@ -22,6 +26,7 @@ baygent-skills/
 │   └── scripts/                # check_diagnostics.py, inspect_training.py
 ├── evals/                         # Eval scenarios and benchmarks
 │   ├── bayesian-workflow/         # 6 scenarios, 3 iterations
+│   ├── bambi-workflow/            # 2 scenarios + trigger set + runtime evidence
 │   ├── causal-inference/          # 6 scenarios
 │   ├── amortized-workflow/        # 6 scenarios + trigger set + benchmark results
 │   └── smoke/                     # Reporting-harness smoke test + cross-env (PyMC 5/6) equivalence gate
@@ -38,6 +43,7 @@ baygent-skills/
   - `baygent` (PyMC 5.28 / arviz 0.23 + arviz-stats/plots 1.0) — `environment.yml`. The **causal-inference** skill is pinned here (CausalPy caps `pymc<6`).
   - `baygent6` (PyMC 6.0.1 / arviz 1.x + pymc-extras 0.12) — `environment-pymc6.yml`. The **bayesian-workflow** scripts run on **both**; that dual run is the compatibility guarantee.
 - Run `conda run -n baygent python <script>` (or `-n baygent6`). Recreate with `mamba env create -f environment.yml` / `mamba env create -f environment-pymc6.yml`
+- Bambi M1 is tested separately on Bambi 0.21.0 / PyMC 6.3.2 / ArviZ 1.3.0. Its [example README](examples/bambi-workflow/README.md) includes a tested uv alternative and exact validation artifacts. This does not extend the Bambi skill to PyMC 5.
 - Never use system Python
 
 ### Skill structure
@@ -64,3 +70,5 @@ Every skill follows the Agent Skills spec:
 - Each eval has: `eval_metadata.json` (prompt + assertions), `with_skill/` and `without_skill/` outputs + grading
 - **Reporting harness smoke test** (`evals/smoke/test_reporting_harness.py`): runs the bayesian diagnostics pipeline (`diagnose_model → calibration_check → check_diagnostics`) end-to-end on a tiny model and the causal `check_refutation` harness on fixtures. Run after any change to the `scripts/` of either skill — on **both** envs: `conda run -n baygent python evals/smoke/test_reporting_harness.py` and `conda run -n baygent6 python evals/smoke/test_reporting_harness.py`. Guards JSON-serializability, the diagnose→check schema contract, and refutation metric direction.
 - **Cross-env equivalence gate** (`evals/smoke/cross_env_equivalence.py`): feeds one shared idata to both `baygent` (PyMC 5) and `baygent6` (PyMC 6) and asserts identical user-facing diagnostics/ratings across a healthy and a pathological fixture — this is the dual-compat guarantee. Run: `python evals/smoke/cross_env_equivalence.py` (needs conda on PATH; skips loudly if `baygent6` is absent, fails with `--require-both`). Run after any change to the bayesian-workflow `scripts/`.
+
+- **Bambi integration smoke:** in the modern environment, install `pytest` and run `python -m pytest evals/smoke/test_bambi_workflow.py`. Both marimo notebooks execute with small budgets and exercise the unchanged shared diagnostics/report pipeline. Numerical health is not a smoke assertion. Use `marimo check --strict examples/bambi-workflow/gaussian_regression.py examples/bambi-workflow/hierarchical_bernoulli.py` for notebook structure.

@@ -1,6 +1,7 @@
 # `bambi-workflow` — Architecture
 
-**Status:** refreshed planning baseline, 2026-09-14. No skill implementation.
+**Status:** implemented and runtime-validated, 2026-09-14; agent evaluation
+remains pending. See the [validation record](../evals/bambi-workflow/iteration-1/README.md).
 This replaces iteration 1 at `ee52405`; the original remains in Git history.
 See the [upstream assessment](README.md) and [M1 plan](bambi-workflow-skill-iter2.md).
 
@@ -71,7 +72,7 @@ without adaptation. Bambi 0.21 uses DataTree; shared helper compatibility must
 be exercised with a real Bambi output, not inferred from a raw PyMC example.
 
 A future HSSM skill may consult a precise formula-syntax section. The Bambi
-prior reference is package-specific: its auto-scaling, components, and
+prior reference is package-specific: its auto-scaling, parameter components, and
 construction behavior are not a reusable HSSM prior policy.
 
 ## Workflow
@@ -109,7 +110,7 @@ These are source-based boundaries, not new universal modeling requirements.
 | `C(x)`/`categorical=` ensures a meaningful baseline | Object columns are already converted to categorical. Verify levels/reference and encoded columns; the wrapper alone does not choose a scientific baseline. |
 | Every auxiliary parameter needs a formula | Constant auxiliary parameters are legitimate. Add a distributional formula when the scientific model calls for one; inspect its defaults either way. |
 | Every slope follows one 2.5×response-SD rule | Scaling depends on family, link, and predictors. Inspect resolved priors and prior predictions; do not rate them against generic raw-scale cutoffs. |
-| Use `nuts_numpyro` and raw PyMC log-prior computation | Verify release sampler names (`nutpie`, `numpyro`) and use Bambi's likelihood/prior bridge, including its omitted-offset handling. |
+| Use `nuts_numpyro` and raw PyMC log-prior computation | Verify release sampler names (`nutpie`, `numpyro`) and use Bambi's likelihood/prior bridge, with complete retained offsets and consistent intercept coordinates for sensitivity. |
 | `comparisons(..., value=...)` | Use the released `contrast` interface; test the exact native call in M1. |
 | An artifact with the right API names proves correctness | Static agent evaluation and executed package smoke checks are different evidence; require both. |
 

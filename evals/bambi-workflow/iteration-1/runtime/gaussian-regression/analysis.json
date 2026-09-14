@@ -1,0 +1,26 @@
+{
+  "title": "Gaussian regression",
+  "formula": "y ~ x",
+  "family": "gaussian",
+  "link": "identity",
+  "seed": 1993,
+  "smoke": false,
+  "sampling": {
+    "draws": 1000,
+    "tune": 1000,
+    "chains": 4,
+    "retained_draws_per_chain": 1000,
+    "backend": "nutpie",
+    "omit_offsets": false,
+    "center_predictors": false
+  },
+  "question": "How does expected y change when x increases from -0.5 to +0.5?",
+  "generative_story": "Independent Normal outcomes with a linear exposure mean and common residual scale.",
+  "prior_rationale": "Baseline Normal(10,5), slope Normal(0,3), and residual HalfNormal(3) express the measurement scale.",
+  "encoding": "Numeric centered exposure; no categorical predictors; rows checked finite.",
+  "prediction_target": "Expected outcome difference: x=+0.5 minus x=-0.5, with a 94% HDI.",
+  "interpretation": "The contrast is a conditional association on the outcome scale, not a causal effect.",
+  "prior_assessment": "The pooled 94% prior-predictive interval is [-3.00, 22.02]. This broad range covers the intended measurement scale; tails outside a plausible domain would require a prior or likelihood revision.",
+  "ppc_assessment": "Observed mean 10.41; 94% interval for replicated means [10.02, 10.82]. Agreement of the pooled distribution is only one check: inspect residual shape and changes in spread across exposure before trusting constant variance.",
+  "limitations": "Synthetic linear data cannot validate a real-data likelihood; pooled PPCs do not establish constant variance."
+}

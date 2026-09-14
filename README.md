@@ -9,6 +9,7 @@ A set of skills to call your agent Bayes. Thomas Bayes.
 | Skill | Description |
 |---|---|
 | [bayesian-workflow](bayesian-workflow/) | Full Bayesian modeling workflow with PyMC and ArviZ. [Full breakdown](https://learnbayesstats.com/blog-posts/bayesian-workflow-agent-skill-pymc-arviz). |
+| [bambi-workflow](bambi-workflow/) | Formula-based Gaussian and hierarchical Bernoulli regression with Bambi; shared Bayesian diagnostics and reporting. [Two interactive examples](examples/bambi-workflow/). |
 | [causal-inference](causal-inference/) | Production-grade Bayesian causal inference with PyMC, CausalPy, and DoWhy. [Full breakdown](https://learnbayesstats.com/blog-posts/causal-inference-agent-skill-pymc-causalpy-dowhy). |
 | [amortized-workflow](amortized-workflow/) | Amortized Bayesian workflow with BayesFlow for simulation-based inference. [Full breakdown](https://learnbayesstats.com/blog-posts/amortized-bayesian-inference-agent-skill-bayesflow). |
 
@@ -22,6 +23,7 @@ More skills coming soon. Issues and PRs are welcome!
 git clone https://github.com/Learning-Bayesian-Statistics/baygent-skills.git /tmp/baygent-skills
 mkdir -p ~/.claude/skills
 cp -r /tmp/baygent-skills/bayesian-workflow ~/.claude/skills/
+cp -r /tmp/baygent-skills/bambi-workflow ~/.claude/skills/  # requires bayesian-workflow
 cp -r /tmp/baygent-skills/causal-inference ~/.claude/skills/
 cp -r /tmp/baygent-skills/amortized-workflow ~/.claude/skills/  # BayesFlow / SBI
 ```
@@ -33,11 +35,12 @@ Clone the repo and copy the skill folders you need into your agent's skills loca
 ```bash
 git clone https://github.com/Learning-Bayesian-Statistics/baygent-skills.git /tmp/baygent-skills
 cp -r /tmp/baygent-skills/bayesian-workflow/ ~/.config/agents/skills/bayesian-workflow/
+cp -r /tmp/baygent-skills/bambi-workflow/ ~/.config/agents/skills/bambi-workflow/
 cp -r /tmp/baygent-skills/causal-inference/ ~/.config/agents/skills/causal-inference/
 cp -r /tmp/baygent-skills/amortized-workflow/ ~/.config/agents/skills/amortized-workflow/
 ```
 
-> **Note:** causal-inference depends on bayesian-workflow — install both if you want causal inference.
+> **Note:** bambi-workflow and causal-inference each depend directly on bayesian-workflow — install the shared skill alongside either one. Bambi examples target Bambi 0.21 / PyMC 6; see their [setup and run instructions](examples/bambi-workflow/README.md).
 
 ## Philosophy
 
@@ -46,6 +49,7 @@ These skills are **opinionated and workflow-first**. They don't just teach an ag
 Each skill is focused and lean. Rather than one monolithic skill that covers everything, we build specialized skills that do one thing well:
 
 - **bayesian-workflow** covers the fundamentals that every Bayesian analysis needs.
+- **bambi-workflow** owns Bambi formulas, priors and native predictions, and delegates shared checks and reports to bayesian-workflow.
 - **causal-inference** handles causal design, identification, and refutation — delegating the modeling to bayesian-workflow.
 - **amortized-workflow** covers simulation-based inference with BayesFlow — end-to-end architecture selection, training, simulation-based diagnostics, and real data application.
 

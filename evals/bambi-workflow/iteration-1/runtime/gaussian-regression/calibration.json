@@ -1,0 +1,16 @@
+{
+  "variable": "y",
+  "n_observations": 120,
+  "pit_method": "ppc_pit",
+  "assessment": {
+    "pit_ecdf_inside_bands": true,
+    "coverage_ecdf_inside_bands": true,
+    "well_calibrated": true,
+    "mean_coverage_deviation": 0.0012,
+    "calibration_diagnosis": "well-calibrated"
+  },
+  "plots": {
+    "pit_ecdf": "pit_ecdf.png",
+    "coverage": "pit_coverage.png"
+  }
+}

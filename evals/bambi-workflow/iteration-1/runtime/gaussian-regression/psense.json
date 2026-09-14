@@ -1,0 +1,17 @@
+{
+  "Intercept": {
+    "prior": 0.0,
+    "likelihood": 0.094,
+    "diagnosis": "\u2713"
+  },
+  "x": {
+    "prior": 0.005,
+    "likelihood": 0.095,
+    "diagnosis": "\u2713"
+  },
+  "sigma": {
+    "prior": 0.003,
+    "likelihood": 0.117,
+    "diagnosis": "\u2713"
+  }
+}

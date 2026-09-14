@@ -1,8 +1,9 @@
 # `bambi-workflow` — M1 implementation and acceptance plan
 
-**Status:** refreshed design, 2026-09-14; all implementation and execution gates
-below are pending. This replaces the WIP content draft at `73de41c`, retained
-in Git history. Read with the [architecture](bambi-workflow-skill.md).
+**Status:** implementation and runtime gates validated, 2026-09-14; paired
+agent and trigger evaluations remain pending. See the
+[validation record](../evals/bambi-workflow/iteration-1/README.md). This replaces
+the WIP content draft at `73de41c`, retained in Git history. Read with the [architecture](bambi-workflow-skill.md).
 
 ## Milestone outcome
 
@@ -58,9 +59,9 @@ evals/smoke/
   test_bambi_workflow.py
 ```
 
-These are planned files, not existing resources. Add the skill to the root
-README only when its folder works. Keep developer setup and validation notes in
-root documentation/evaluation records. No new executable helper is mandatory:
+These files now exist, along with two marimo examples under
+`examples/bambi-workflow/` and executed report snapshots in the validation record.
+Keep developer setup and validation notes in root documentation/evaluation records. No new executable helper is mandatory:
 reuse Bambi and the installed Bayesian skill first. If a prior exporter is
 needed, give it an in-process function and a narrowly justified input contract;
 do not require pickled models or infer prior quality from generic thresholds.
@@ -98,18 +99,18 @@ the installed `bayesian-workflow` utilities on that artifact:
    artifact names and Bambi model/contrast details in the existing sections.
 
 Supply the actual outcome name where required. Exercise log-likelihood and
-prior-sensitivity inputs, including Bambi's omitted-offset handling; a missing
-prerequisite must remain visible. Do not claim a calibration or sensitivity
+prior-sensitivity inputs, including retained Bambi offsets and consistent intercept
+coordinates; a missing prerequisite must remain visible. Do not claim a calibration or sensitivity
 assessment merely because a JSON file was written. A numerical check that is
 unstable on a small fixture is recorded and diagnosed, not graded as healthy.
 
 ## Developer environment
 
-Extend the modern package set in `environment-pymc6.yml` with
-`bambi==0.21.0` when implementing M1, and record all resolved dependency versions
-for the run. Check the dependency declarations at the frozen release used in
-the [architecture](bambi-workflow-skill.md). This environment currently contains
-no Bambi; the existing PyMC 5 environment does not establish modern Bambi support.
+The modern package set in `environment-pymc6.yml` now includes
+`bambi==0.21.0` and marimo. Resolved dependency versions are recorded with the run.
+Check the dependency declarations at the frozen release used in the
+[architecture](bambi-workflow-skill.md). The existing PyMC 5 environment does not
+establish modern Bambi support.
 
 Keep the shared workflow's legacy compatibility guarantee separate. M1 supports
 the tested Bambi/PyMC 6 path; older Bambi support requires another explicit run.
@@ -180,3 +181,19 @@ fixtures and any justified helper; evaluation evidence and discovery/install
 documentation. Do not advertise M1 as completed until all gates have evidence.
 Distributional models, HSGP/splines, generic model serialization, comprehensive
 family tables, and six-scenario coverage remain later evaluated increments.
+
+## Implementation progress
+
+- ~~Standalone skill and four references, direct Bayesian dependency, discovery/install docs.~~
+- ~~Two narrated marimo examples with prior/PPC checks, native targets and complete saved artifacts.~~
+- ~~Thirteen execution checks, independent analytic likelihood/prior/contrast verification.~~
+- ~~Full 4-chain exports, canonical reports, diagnostic JSON, figures and resolved environment record.~~
+- ~~Copied-folder link/resource validation and independent scientific/API review.~~
+- Paired agent behavior and trigger evaluation: pending authorization for model-service transmission.
+
+Runtime review refined the initial bridge assumption: Bambi 0.21 does not repair
+saved intercept coordinates or reconstruct omitted offsets for log-prior evaluation.
+The examples explicitly scale predictors, disable internal centering, retain offsets
+and verify every free-variable prior density. This is release-scoped evidence, not
+a generic prohibition on centered models. The survey's region-scale sensitivity
+flag remains visible and motivates a justified alternative-prior comparison.

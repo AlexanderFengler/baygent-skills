@@ -1,0 +1,38 @@
+{
+  "convergence": {
+    "rating": "excellent",
+    "problematic_params": []
+  },
+  "loo": {
+    "rating": "excellent",
+    "pareto_k": {
+      "max": 0.1883244737663738,
+      "n_bad": 0,
+      "n_marginal": 0,
+      "n_nonfinite": 0,
+      "ok": true
+    }
+  },
+  "posterior_predictive": {
+    "available": true
+  },
+  "calibration": {
+    "rating": "excellent",
+    "diagnosis": "well-calibrated"
+  },
+  "psense": {
+    "rating": "strong sensitivity",
+    "flagged_params": [
+      "1|region_sigma"
+    ]
+  },
+  "summary": {
+    "convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences).",
+    "loo": "LOO Pareto-k: excellent.",
+    "calibration": "Calibration is excellent \u2014 well-calibrated.",
+    "psense": "Prior sensitivity: strong sensitivity (flagged: 1|region_sigma)."
+  },
+  "next_steps": [
+    "Strong prior sensitivity on 1|region_sigma \u2014 either justify the informative prior explicitly with domain knowledge, or widen it and refit. Report both versions if the substantive conclusion changes."
+  ]
+}
