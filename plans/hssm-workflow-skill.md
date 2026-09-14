@@ -1,8 +1,11 @@
 # `hssm-workflow` — Architecture and first milestone
 
-**Status:** refreshed planning baseline, 2026-09-14. No skill implementation.
-This replaces iteration 1 at `ee52405`, retained in Git history. See the
-[upstream assessment and milestone order](README.md).
+**Status (2026-09-14):** skill, adapter and analytical-DDM marimo notebook
+implemented; static checks complete. Numerical runs, environment resolution
+and agent evaluations are deferred by request. M2 runtime acceptance remains
+open. See the [validation record](../evals/hssm-workflow/iteration-1/README.md)
+and [upstream assessment](README.md). The original plan at `ee52405` remains
+in Git history.
 
 ## Purpose and scope
 
@@ -17,8 +20,10 @@ two declared choices. Use released HSSM **0.5.0** at
 as the source baseline. This is a deliberate narrow validation target, not a
 claim that HSSM supports only this model or data regime.
 
-The first Bambi milestone precedes M2 to establish the shared diagnostics and
-evaluation pattern. HSSM's installed skill does not require Bambi's skill.
+The Bambi implementation established the shared diagnostics and reporting
+pattern; its agent evaluations remain pending. HSSM implementation proceeds
+before those evaluations at the user's request. HSSM's installed skill does not
+require Bambi's skill.
 Hierarchical effects, LAN likelihoods, RLSSMs, missing RTs, deadlines, lapse
 regressions, and other SSM families are later evaluated increments.
 
@@ -34,18 +39,29 @@ hssm-workflow/
     data-and-ddm.md
     priors-and-links.md
     prediction-and-reporting.md
+  scripts/
+    prepare_rt_choice.py
+examples/hssm-workflow/
+  analytical_ddm.py
+  hssm_example_support.py
+  README.md
 evals/hssm-workflow/
   trigger_eval_set.json
-  iteration-1/ddm-flat/eval_metadata.json
+  iteration-1/
+    README.md
+    benchmark.json
+    ddm-flat/eval_metadata.json
 evals/smoke/
   test_hssm_workflow.py
+environment-hssm.yml
 ```
 
-These are planned paths. Keep `SKILL.md` focused on triggers, dependencies,
+These paths now exist. `SKILL.md` stays focused on triggers, dependencies,
 numbered workflow, essential domain constraints, and links. Use the repo's
 `name`/`description`/`license`/quoted author/version frontmatter. Details go in
-references, while a `scripts/` helper is added only for demonstrated repeated
-work. Do not create a new registry, plugin, CLI framework, or diagnostic engine.
+references. The installed `scripts/` helper owns only the repeated RT/choice
+adaptation; the notebook's report assembly stays in `examples/`. No new
+registry, plugin, CLI framework, or diagnostic engine is introduced.
 
 **Require `bayesian-workflow` directly.** Resolve its installed location and
 use its diagnostics/reporting resources. Do not depend on it transitively through
@@ -117,6 +133,21 @@ unassessed with a reason; a valid domain assessment is a milestone requirement,
 not something that an unassessed label alone completes. Establish pointwise
 likelihood units before LOO and the actual prior-density inputs before sensitivity.
 
+The implemented adapter enforces named sample/trial axes and `[RT,response]`
+component labels, exact fitted-trial alignment, positive finite RTs and −1/+1
+choices. It writes separate marginal RT and binary +1-choice PPC artifacts,
+without posterior or joint log likelihood. Shared helpers rate each margin;
+HSSM-specific actions translate those ratings without changing thresholds.
+The original joint likelihood remains the input to LOO and sensitivity.
+
+The notebook adds native HSSM signed-RT and quantile-probability figures, plus
+replicate choice proportions and conditional RT quantiles with absent-choice
+counts. Before sensitivity, a runtime guard compares every scalar prior density
+to its independent analytical expression. These are implemented checks, not
+executed evidence. An initial button gates simulation and prior predictions;
+a second gates fitting after prior review. Command-line execution requires an
+explicit `BAYGENT_RUN_HSSM=1` opt-in.
+
 ## Corrected prior and likelihood boundaries
 
 The old universal non-centering rule is retired. HSSM 0.5.0 deliberately centers
@@ -148,6 +179,17 @@ coverage. Defer the original `check_lan_coverage.py` proposal until this contrac
 has concrete data and tests.
 
 ## Acceptance and later milestones
+
+Implementation checklist:
+
+- ~~Author an installable skill with three focused references and direct Bayesian dependency.~~
+- ~~Implement the strict paired-outcome adapter and document marginal calibration scope.~~
+- ~~Author the gated marimo notebook and canonical shared-report handoff.~~
+- ~~Prepare a separate candidate environment, adapter/integration tests and evaluation metadata.~~
+- ~~Check release source contracts, skill installation structure, syntax, links, Ruff and marimo.~~
+
+All execution gates below remain open. The candidate HSSM 0.5 / Bambi 0.19 /
+PyMC 6.1 / ArviZ 1.2 environment is not a resolved or tested dependency set.
 
 For M2, require:
 

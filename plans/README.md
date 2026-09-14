@@ -1,8 +1,11 @@
 # Bambi and HSSM workflow skills
 
-**Status:** Bambi M1 implementation and runtime validation recorded on 2026-09-14;
-paired agent/trigger evaluations pending. HSSM M2 remains a plan. See the
-[validation record](../evals/bambi-workflow/iteration-1/README.md).
+**Status (2026-09-14):** Bambi M1 implementation and runtime validation recorded;
+paired agent/trigger evaluations pending. HSSM M2 skill and analytical-DDM
+notebook are implemented and statically checked. HSSM numerical runs and all
+new agent evaluations are deferred by request. See the
+[Bambi validation record](../evals/bambi-workflow/iteration-1/README.md) and
+[HSSM validation record](../evals/hssm-workflow/iteration-1/README.md).
 
 ## Branch and upstream assessment
 
@@ -31,7 +34,7 @@ workflow or reporting implementation.
 
 ## Architecture and next milestone
 
-Use ordinary sibling skill folders, like the three shipped skills. Keep a
+Use ordinary sibling skill folders, like the existing skills. Keep a
 concise `SKILL.md`, optional detailed `references/`, and executable `scripts/`
 only when a demonstrated repeated task needs one. Evaluation lives in root
 `evals/`; developer environments and plans are not installed skill resources.
@@ -59,6 +62,14 @@ exist. Both full examples executed against Bambi 0.21.0/PyMC 6.3.2 and produced
 canonical reports. M1's remaining acceptance gate is the independent paired
 behavior and trigger evaluation; no benchmark improvement is claimed yet.
 
-Next, finish that gate and compare a justified alternative region-scale prior
-in the survey example, whose sensitivity assessment flags that parameter.
-Broader Bambi families and HSSM M2 require their own verified increments.
+The HSSM implementation now includes a standalone skill, three focused
+references, a strict RT/choice adapter, one gated marimo notebook and authored
+tests/evaluation scenarios. It uses the same direct Bayesian dependency and
+canonical report. The candidate environment and statistical workflow have not
+been executed; source inspection and static checks do not complete M2 acceptance.
+
+Next, resolve the HSSM candidate environment and perform the deferred adapter,
+full notebook and paired agent checks described in its validation record. For
+Bambi, complete the agent evaluation gate and compare a justified alternative
+region-scale prior in the survey example, whose sensitivity assessment flags
+that parameter. Broader models require their own verified increments.

@@ -16,6 +16,11 @@ baygent-skills/
 │   ├── SKILL.md
 │   └── references/             # Formulas, families, priors, interpretation/reporting
 ├── examples/bambi-workflow/    # Two marimo notebooks; example-only report assembly
+├── hssm-workflow/              # Flat analytical DDM; source-checked HSSM 0.5 preview
+│   ├── SKILL.md                # Direct bayesian-workflow dependency; Bambi skill optional
+│   ├── references/             # Data, parameter support, native predictions and reporting
+│   └── scripts/                # Strict paired RT/choice to scalar marginal PPC adapter
+├── examples/hssm-workflow/     # Gated marimo notebook; numerical execution deferred
 ├── causal-inference/           # Shipped skill (v1.2)
 │   ├── SKILL.md                # Main workflow instructions (depends on bayesian-workflow)
 │   ├── references/             # DAGs, quasi-experiments, structural models, refutation, reporting
@@ -27,11 +32,13 @@ baygent-skills/
 ├── evals/                         # Eval scenarios and benchmarks
 │   ├── bayesian-workflow/         # 6 scenarios, 3 iterations
 │   ├── bambi-workflow/            # 2 scenarios + trigger set + runtime evidence
+│   ├── hssm-workflow/             # DDM scenario + trigger set; unexecuted metadata
 │   ├── causal-inference/          # 6 scenarios
 │   ├── amortized-workflow/        # 6 scenarios + trigger set + benchmark results
 │   └── smoke/                     # Reporting-harness smoke test + cross-env (PyMC 5/6) equivalence gate
 ├── environment.yml             # Mamba/conda env (env name: baygent, PyMC 5)
 ├── environment-pymc6.yml       # Mamba/conda env (env name: baygent6, PyMC 6 / ArviZ 1.x)
+├── environment-hssm.yml        # Separate candidate HSSM 0.5 environment; unresolved/unexecuted
 ├── LICENSE                     # MIT
 └── CLAUDE.md                   # This file
 ```
@@ -44,6 +51,7 @@ baygent-skills/
   - `baygent6` (PyMC 6.0.1 / arviz 1.x + pymc-extras 0.12) — `environment-pymc6.yml`. The **bayesian-workflow** scripts run on **both**; that dual run is the compatibility guarantee.
 - Run `conda run -n baygent python <script>` (or `-n baygent6`). Recreate with `mamba env create -f environment.yml` / `mamba env create -f environment-pymc6.yml`
 - Bambi M1 is tested separately on Bambi 0.21.0 / PyMC 6.3.2 / ArviZ 1.3.0. Its [example README](examples/bambi-workflow/README.md) includes a tested uv alternative and exact validation artifacts. This does not extend the Bambi skill to PyMC 5.
+- HSSM's initial analytical-DDM implementation uses HSSM 0.5.0 release source as its baseline. `environment-hssm.yml` separately proposes Bambi 0.19 / PyMC 6.1 / ArviZ 1.2 / NumPy 2.4.6; it has not been resolved or execution-validated. Do not infer compatibility from Bambi M1's environment.
 - Never use system Python
 
 ### Skill structure
@@ -60,15 +68,16 @@ Every skill follows the Agent Skills spec:
 
 ### Code style
 - PyMC 5+ syntax with coords and dims; the bayesian-workflow scripts are dual-compatible with PyMC 5 and 6 via capability detection (`hasattr` / try-import / field-name fallbacks), not version branches
-- nutpie sampler by default
+- nutpie sampler by default; the HSSM analytical-DDM example explicitly selects HSSM's `pymc` sampler for its own scoped baseline
 - Descriptive seeds: `RANDOM_SEED = sum(map(ord, "analysis-name"))`
 - xarray-first for InferenceData operations
 
 ### Testing
-- All evals now in `evals/` (bayesian-workflow, causal-inference, amortized-workflow)
+- All evals live in `evals/`, grouped by skill; authored metadata is distinct from executed evidence
 - Benchmark target: 100% with skill vs ~90% without
 - Each eval has: `eval_metadata.json` (prompt + assertions), `with_skill/` and `without_skill/` outputs + grading
 - **Reporting harness smoke test** (`evals/smoke/test_reporting_harness.py`): runs the bayesian diagnostics pipeline (`diagnose_model → calibration_check → check_diagnostics`) end-to-end on a tiny model and the causal `check_refutation` harness on fixtures. Run after any change to the `scripts/` of either skill — on **both** envs: `conda run -n baygent python evals/smoke/test_reporting_harness.py` and `conda run -n baygent6 python evals/smoke/test_reporting_harness.py`. Guards JSON-serializability, the diagnose→check schema contract, and refutation metric direction.
 - **Cross-env equivalence gate** (`evals/smoke/cross_env_equivalence.py`): feeds one shared idata to both `baygent` (PyMC 5) and `baygent6` (PyMC 6) and asserts identical user-facing diagnostics/ratings across a healthy and a pathological fixture — this is the dual-compat guarantee. Run: `python evals/smoke/cross_env_equivalence.py` (needs conda on PATH; skips loudly if `baygent6` is absent, fails with `--require-both`). Run after any change to the bayesian-workflow `scripts/`.
 
 - **Bambi integration smoke:** in the modern environment, install `pytest` and run `python -m pytest evals/smoke/test_bambi_workflow.py`. Both marimo notebooks execute with small budgets and exercise the unchanged shared diagnostics/report pipeline. Numerical health is not a smoke assertion. Use `marimo check --strict examples/bambi-workflow/gaussian_regression.py examples/bambi-workflow/hierarchical_bernoulli.py` for notebook structure.
+- **HSSM validation is deferred:** `marimo check --strict examples/hssm-workflow/analytical_ddm.py` and Ruff inspect structure without sampling. The authored `evals/smoke/test_hssm_workflow.py` contains deterministic adapter cases and an opt-in full notebook integration (`BAYGENT_TEST_HSSM=1`), all currently unexecuted. Opening the notebook defaults to preview; simulation/prior generation and fitting have separate run buttons. See the [validation record](evals/hssm-workflow/iteration-1/README.md) before claiming runtime support or starting synthetic runs.
