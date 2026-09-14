@@ -186,3 +186,7 @@ blog-posts/
 
 # Internal working docs (specs, plans)
 docs/
+# Regenerated Bambi notebook runs (review evidence lives in evals/)
+examples/bambi-workflow/results/
+# Regenerated HSSM notebook runs (review evidence lives in evals/)
+examples/hssm-workflow/results/
