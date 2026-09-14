@@ -7,6 +7,10 @@ new agent evaluations are deferred by request. See the
 [Bambi validation record](../evals/bambi-workflow/iteration-1/README.md) and
 [HSSM validation record](../evals/hssm-workflow/iteration-1/README.md).
 
+The [next validation round](validation-round-1.md) specifies the environment,
+deterministic contracts, independent density checks, full notebook run and
+separate agent evaluations, with explicit evidence and acceptance criteria.
+
 ## Branch and upstream assessment
 
 The contribution branch is `AlexanderFengler/baygent-skills:hssm-bambi-dev`.
