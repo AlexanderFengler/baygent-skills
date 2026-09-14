@@ -232,14 +232,6 @@ def _canonical_report(sections: dict[str, tuple[str, str | None]], title: str) -
         "The forest plot shows posterior medians (points) and credible intervals (lines) for the parameters of interest. Wide intervals indicate parameters the data are only weakly informative for; narrow intervals concentrated away from zero indicate strong evidence in a direction.",
         "The forest plot shows posterior medians (points) and 50% and 94% HDIs (lines). Interval width describes posterior uncertainty on each parameter's own scale; compare priors and posteriors before attributing precision to the data. Interpret drift v relative to 0 and normalized starting point z relative to 0.5. For a and t, excluding zero reflects their positive support and is not itself evidence of a directional effect.",
     )
-    template = template.replace(
-        "The PIT-ECDF plot tests whether the model's predictive distribution is calibrated — that is, whether stated credible levels match empirical coverage. The empirical CDF of probability integral transform values should fall within the simultaneous confidence bands. Lines outside the bands above the diagonal indicate under-confident predictions (intervals wider than they should be); lines below indicate over-confident predictions (intervals too narrow).",
-        "The PIT plot shows the empirical CDF of predictive PIT values minus the uniform CDF (ΔECDF). The dashed horizontal zero line is the uniform reference. Departures can reflect location bias or dispersion errors; their shape matters. The p-value annotation reports a test against that reference at the displayed significance level. These are fitted-data marginal PPC-PIT checks, not held-out validation.",
-    )
-    template = template.replace(
-        "The coverage plot tests the same idea in coverage units: it asks whether nominal central credible intervals (50%, 80%, 95%) actually contain the stated fraction of the observed data. A well-calibrated model lies on the diagonal.",
-        "The coverage plot applies the same ΔECDF display to coverage-transformed PIT values. Its x-axis gives nominal central predictive coverage in percent; its y-axis gives the ECDF difference, with agreement represented by the horizontal zero line. Use its p-value annotation alongside the PIT check; passing both checks does not establish joint or held-out calibration.",
-    )
     parts = re.split(r"(?m)^## (.+)\n", template)
     output = [f"# {title} — Bayesian Analysis Report\n"]
     for heading, body in zip(parts[1::2], parts[2::2], strict=True):

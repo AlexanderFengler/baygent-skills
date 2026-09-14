@@ -88,10 +88,6 @@ def _canonical_report(sections: dict[str, tuple[str, str | None]], title: str) -
         "Rank-vline trace plots check chain mixing. Well-mixed chains show overlapping rank distributions across chains — the vertical lines (one per chain) sit close to the uniform expectation.",
         "Trace plots show parameter draws in sampling order for each chain. Well-mixed chains explore similar ranges without persistent drift or sticking.",
     )
-    template = template.replace(
-        "Lines outside the bands above the diagonal indicate under-confident predictions (intervals wider than they should be); lines below indicate over-confident predictions (intervals too narrow).",
-        "Departures from uniform PIT values can reflect location bias or dispersion errors; their shape matters. Use the separate coverage curve to assess interval coverage. These are fitted-data PPC-PIT checks, not held-out validation.",
-    )
     parts = re.split(r"(?m)^## (.+)\n", template)
     output = [f"# {title} — Bayesian Analysis Report\n"]
     for heading, body in zip(parts[1::2], parts[2::2], strict=True):
