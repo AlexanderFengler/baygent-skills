@@ -12,12 +12,14 @@ Usage:
 """
 
 import argparse
+import inspect
 import json
 import os
 import sys
 import warnings
 
 import numpy as np
+import xarray as xr
 
 try:
     import arviz_plots as azp
@@ -25,15 +27,6 @@ try:
     from arviz_base import convert_to_datatree
     from arviz_stats.ecdf_utils import ecdf_pit
 
-    # `difference_ecdf_pit` is a statistics helper; its stable home is
-    # arviz_stats.ecdf_utils on arviz-stats >= 1.0 (both PyMC-5 and PyMC-6 stacks).
-    # arviz_plots <= 1.0 also re-exported it under arviz_plots.plots.ppc_pit_plot,
-    # but arviz_plots 1.1 removed that re-export — import from arviz_stats, and only
-    # fall back to the old plots path for the older layout.
-    try:
-        from arviz_stats.ecdf_utils import difference_ecdf_pit
-    except ImportError:  # pragma: no cover - pre-1.0 arviz_stats layout
-        from arviz_plots.plots.ppc_pit_plot import difference_ecdf_pit
 except ImportError:
     print(
         json.dumps(
@@ -49,97 +42,225 @@ except ImportError:
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-
-def _extract_ecdf_results(ds, var_name):
-    """Extract ΔECDF check from a difference_ecdf_pit result Dataset.
-
-    Returns (inside_bands, mean_delta_ecdf).
-    """
-    dy = ds[var_name].sel(plot_axis="y").values
-    dy_lb = ds[var_name].sel(plot_axis="y_bottom").values
-    dy_ub = ds[var_name].sel(plot_axis="y_top").values
-    inside = bool(((dy >= dy_lb) & (dy <= dy_ub)).all())
-    return inside, round(float(np.mean(dy)), 4)
+try:
+    # ArviZ's native PPC-PIT preprocessing includes its Pareto tail refinement.
+    from arviz_plots.plots.utils_ppc import get_ppc_pit
+except ImportError:  # arviz-plots 1.0 uses empirical PIT and envelopes
+    get_ppc_pit = None
 
 
-def _ecdf_check(pit_vals, ci_prob=0.99, n_simulations=1000):
-    """Compute ΔECDF and check if it stays inside simultaneous confidence bands.
-
-    Uses arviz_stats.ecdf_pit. i.e the same computation that powers the ArviZ plots.
-    Returns (inside_bands, mean_delta_ecdf).
-    """
-    eval_pts, ecdf_vals, ci_lb, ci_ub = ecdf_pit(
-        pit_vals, ci_prob, n_simulations=n_simulations
+def _has_modern_pit() -> bool:
+    plot = getattr(azp, "plot_ecdf_pit", None)
+    return (
+        callable(get_ppc_pit)
+        and callable(plot)
+        and "method" in inspect.signature(plot).parameters
+        and hasattr(xr.Dataset().azstats, "uniformity_test")
     )
-    dy = ecdf_vals - eval_pts
-    dy_lb = ci_lb - eval_pts
-    dy_ub = ci_ub - eval_pts
-    inside = bool(((dy >= dy_lb) & (dy <= dy_ub)).all())
-    return inside, round(float(np.mean(dy)), 4)
 
 
-def assess_calibration(dt, var_name, use_loo, ci_prob=0.99):
-    """Assess calibration using the same ΔECDF + simultaneous bands as the plots.
+def _resolve_method(method: str) -> str:
+    if method not in {"auto", "pot_c", "envelope"}:
+        raise ValueError(f"Unknown uniformity method: {method!r}.")
+    modern = _has_modern_pit()
+    if method == "auto":
+        return "pot_c" if modern else "envelope"
+    if method == "pot_c" and not modern:
+        raise ValueError("pot_c requires modern ArviZ PIT and uniformity-test APIs.")
+    return method
 
-    For PPC-PIT, delegates to arviz_plots.difference_ecdf_pit which handles
-    discrete-data randomization correctly. For LOO-PIT, uses arviz_stats.loo_pit
-    (which also handles discrete data) then arviz_stats.ecdf_pit.
 
-    "Well-calibrated" means the ΔECDF stays inside the simultaneous bands.
-
-    The coverage direction follows ArviZ conventions (EABM reference):
-        positive coverage ΔECDF → empirical > nominal → under-confident (too uncertain)
-        negative coverage ΔECDF → empirical < nominal → over-confident (too certain)
-    """
+def prepare_pit_values(dt, var_name, use_loo=False, method="auto") -> xr.Dataset:
+    """Prepare one labeled raw PIT dataset, shared by assessment and plotting."""
+    method = _resolve_method(method)
+    predictive = dt["posterior_predictive"][var_name]
+    observed = dt["observed_data"][var_name]
+    if set(predictive.dims) != set(observed.dims) | {"chain", "draw"}:
+        raise ValueError(
+            "Predictive dimensions must match observed dimensions plus chain/draw."
+        )
+    if "chain" in observed.dims or "draw" in observed.dims:
+        raise ValueError("Observed data cannot have chain/draw dimensions.")
+    xr.align(predictive, observed, join="exact")
+    for label, array in (("predictive", predictive), ("observed", observed)):
+        if not array.size or not np.isfinite(array.values).all():
+            raise ValueError(f"{label} data must be nonempty and finite.")
     if use_loo:
-        pit_vals = azs.loo_pit(dt, var_names=var_name)[var_name].values
-        pit_inside, _ = _ecdf_check(pit_vals, ci_prob=ci_prob)
-        coverage_vals = 2 * np.abs(pit_vals - 0.5)
-        coverage_inside, mean_cov_delta = _ecdf_check(coverage_vals, ci_prob=ci_prob)
+        kwargs = {"var_names": [var_name]}
+        if "pareto_pit" in inspect.signature(azs.loo_pit).parameters:
+            kwargs["pareto_pit"] = method == "pot_c"
+        pit = azs.loo_pit(dt, **kwargs)[[var_name]]
+    elif method == "pot_c":
+        pit = get_ppc_pit(
+            dt["posterior_predictive"].ds[[var_name]],
+            dt["observed_data"].ds[[var_name]],
+            ["chain", "draw"],
+            coverage=False,
+            method=method,
+        )["ecdf_pit"].ds
     else:
-        pp_ds = dt["posterior_predictive"].dataset
-        obs_ds = dt["observed_data"].dataset
-        ds_pit = difference_ecdf_pit(
-            pp_ds, obs_ds, ci_prob=ci_prob, coverage=False, n_simulations=1000
-        )
-        pit_inside, _ = _extract_ecdf_results(ds_pit, var_name)
-        ds_cov = difference_ecdf_pit(
-            pp_ds, obs_ds, ci_prob=ci_prob, coverage=True, n_simulations=1000
-        )
-        coverage_inside, mean_cov_delta = _extract_ecdf_results(ds_cov, var_name)
+        values = (predictive <= observed).mean(("chain", "draw"))
+        if predictive.dtype.kind in "biu" or observed.dtype.kind in "biu":
+            less = (predictive < observed).mean(("chain", "draw"))
+            uniforms = np.random.default_rng(214).uniform(size=values.shape)
+            # Preserve the legacy ArviZ 1.0 tie-breaking convention exactly.
+            values = uniforms * less + (1 - uniforms) * values
+        pit = values.rename(var_name).to_dataset()
+    values = pit[var_name].values
+    if (
+        values.size == 0
+        or not np.isfinite(values).all()
+        or not ((values >= 0) & (values <= 1)).all()
+    ):
+        raise ValueError("PIT values must be finite, nonempty and lie in [0, 1].")
+    return pit
 
-    if mean_cov_delta > 0.02:
-        calibration_diagnosis = "under-confident (predictions too uncertain)"
-    elif mean_cov_delta < -0.02:
-        calibration_diagnosis = "over-confident (predictions too certain)"
+
+def _evaluate_pit(pit_values, var_name, method, ci_prob):
+    """Return the exact curve and uniformity evidence used by assessment and plots."""
+    values = pit_values[var_name].values.ravel()
+    if (
+        values.size == 0
+        or not np.isfinite(values).all()
+        or not ((values >= 0) & (values <= 1)).all()
+    ):
+        raise ValueError("PIT values must be finite, nonempty and lie in [0, 1].")
+    if not 0 < ci_prob < 1:
+        raise ValueError("ci_prob must lie strictly between 0 and 1.")
+    if method == "envelope":
+        x, _, lower, upper = ecdf_pit(values, ci_prob, n_simulations=1000)
+        # Count real PIT atoms at zero in the curve. Native ecdf_pit pads its
+        # endpoints with zeros; those are not part of its envelope test.
+        delta = np.searchsorted(np.sort(values), x, side="right") / values.size - x
+        lower, upper = lower - x, upper - x
+        passed = bool(
+            ((delta[1:-1] >= lower[1:-1]) & (delta[1:-1] <= upper[1:-1])).all()
+        )
+        lower[[0, -1]] = upper[[0, -1]] = np.nan
+        p_value = None
     else:
-        calibration_diagnosis = "well-calibrated"
-
+        # Use actual probability coordinates. ArviZ's plotting ECDF currently
+        # rescales its grid by max(PIT), which can shift a genuine PIT curve.
+        x = np.linspace(0, 1, values.size + 1)
+        delta = np.searchsorted(np.sort(values), x, side="right") / values.size - x
+        p_values, _, _ = pit_values.azstats.uniformity_test(
+            dim=list(pit_values[var_name].dims), method=method
+        )
+        p_value = float(p_values[var_name].item())
+        if not np.isfinite(p_value) or not 0 <= p_value <= 1:
+            raise ValueError("ArviZ returned an invalid uniformity p-value.")
+        passed = p_value >= 1 - ci_prob
+        lower = upper = None
     return {
-        "pit_ecdf_inside_bands": pit_inside,
-        "coverage_ecdf_inside_bands": coverage_inside,
-        "well_calibrated": pit_inside and coverage_inside,
+        "x": x,
+        "delta": delta,
+        "lower": lower,
+        "upper": upper,
+        "p_value": p_value,
+        "passed": passed,
+        "mean_delta": round(float(np.mean(delta)), 4),
+    }
+
+
+def assess_calibration(
+    dt, var_name, use_loo, ci_prob=0.99, *, method="auto", pit_values=None
+):
+    """Assess raw PIT and once-transformed central coverage with one named method.
+
+    Modern ArviZ uses its native ``pot_c`` uniformity test. Older stacks use
+    simultaneous ECDF envelopes. The mean coverage deviation is a descriptive
+    direction statistic; a small mean does not override a failed shape test.
+    Pass the same prepared ``pit_values`` to plotting to share discrete tie draws.
+    """
+    method = _resolve_method(method)
+    if pit_values is None:
+        pit_values = prepare_pit_values(dt, var_name, use_loo, method)
+    pit = _evaluate_pit(pit_values, var_name, method, ci_prob)
+    coverage = _evaluate_pit(2 * np.abs(pit_values - 0.5), var_name, method, ci_prob)
+    mean_cov_delta = coverage["mean_delta"]
+    well_calibrated = pit["passed"] and coverage["passed"]
+    if mean_cov_delta > 0.02:
+        diagnosis = "under-confident (predictions too uncertain)"
+    elif mean_cov_delta < -0.02:
+        diagnosis = "over-confident (predictions too certain)"
+    elif well_calibrated:
+        diagnosis = "well-calibrated"
+    else:
+        diagnosis = "non-uniform predictive PIT; no dominant mean coverage direction"
+    return {
+        "uniformity_method": method,
+        "significance_level": 1 - ci_prob,
+        "pit_p_value": pit["p_value"],
+        "coverage_p_value": coverage["p_value"],
+        "pit_uniformity_passed": pit["passed"],
+        "coverage_uniformity_passed": coverage["passed"],
+        # No confidence bands are computed by pot_c: null is not a passing band.
+        "pit_ecdf_inside_bands": pit["passed"] if method == "envelope" else None,
+        "coverage_ecdf_inside_bands": coverage["passed"]
+        if method == "envelope"
+        else None,
+        "well_calibrated": well_calibrated,
         "mean_coverage_deviation": mean_cov_delta,
-        "calibration_diagnosis": calibration_diagnosis,
+        "calibration_diagnosis": diagnosis,
     }
 
 
 def save_pit_plot(
-    dt, var_name, output_path, *, use_loo=False, coverage=False, ci_prob=0.99
+    dt,
+    var_name,
+    output_path,
+    *,
+    use_loo=False,
+    coverage=False,
+    ci_prob=0.99,
+    method="auto",
+    pit_values=None,
 ):
-    """Generate and save a PIT-based calibration plot.
+    """Plot the exact tested ECDF on its unscaled probability axis.
 
-    Uses azp.plot_loo_pit (LOO-PIT, avoids double-dipping) or
-    azp.plot_ppc_pit (PPC-PIT) with optional coverage=True for the
-    coverage transformation. Both produce ΔECDF plots with simultaneous
-    confidence bands (Säilynoja et al. 2022).
+    Rendering the native statistics directly avoids the PPC wrapper's repeated
+    coverage transform and plotting ECDF's maximum normalization. Only legacy
+    envelope mode has simultaneous confidence bands; pot_c displays its p-value.
     """
-    plot_fn = azp.plot_loo_pit if use_loo else azp.plot_ppc_pit
-    # arviz_plots 1.0 names the simultaneous-band probability `envelope_prob`;
-    # passing `ci_prob` here falls through to **pc_kwargs and the backend rejects
-    # it ("no active aesthetic"). The lower-level ecdf helpers still use ci_prob.
-    pc = plot_fn(dt, var_names=var_name, coverage=coverage, envelope_prob=ci_prob)
-    pc.savefig(output_path)
+    import matplotlib.pyplot as plt
+
+    method = _resolve_method(method)
+    if pit_values is None:
+        pit_values = prepare_pit_values(dt, var_name, use_loo, method)
+    if coverage:
+        pit_values = 2 * np.abs(pit_values - 0.5)
+    evidence = _evaluate_pit(pit_values, var_name, method, ci_prob)
+    fig, ax = plt.subplots(figsize=(6.4, 4.8))
+    ax.axhline(0, color="0.4", linewidth=1)
+    if method == "envelope":
+        ax.fill_between(
+            evidence["x"],
+            evidence["lower"],
+            evidence["upper"],
+            color="C0",
+            alpha=0.2,
+            label=f"{ci_prob:.0%} simultaneous envelope",
+        )
+        annotation = f"envelope: {'pass' if evidence['passed'] else 'fail'}"
+    else:
+        annotation = f"pot_c: p={evidence['p_value']:.3g}, α={1 - ci_prob:.3g}"
+    ax.step(evidence["x"], evidence["delta"], where="post", color="C0")
+    ax.text(0.02, 0.98, annotation, transform=ax.transAxes, va="top")
+    ax.set(
+        xlim=(0, 1),
+        ylabel="ΔECDF",
+        title=f"{var_name}: {'LOO-PIT' if use_loo else 'PPC-PIT'}",
+    )
+    if coverage:
+        ax.set_xlabel("Nominal central predictive coverage (%)")
+        ax.set_xticks(np.linspace(0, 1, 5), ["0", "25", "50", "75", "100"])
+    else:
+        ax.set_xlabel("PIT")
+    fig.tight_layout()
+    try:
+        fig.savefig(output_path)
+    finally:
+        plt.close(fig)
     return output_path
 
 
@@ -169,13 +290,19 @@ def main():
         "--ci-prob",
         type=float,
         default=0.99,
-        help="Probability for simultaneous confidence bands (default: 0.99)",
+        help="One minus the uniformity significance level (default: 0.99)",
+    )
+    parser.add_argument(
+        "--uniformity-method",
+        choices=("auto", "pot_c", "envelope"),
+        default="auto",
+        help="auto selects native pot_c when supported, otherwise legacy envelopes",
     )
     args = parser.parse_args()
 
     try:
         dt = convert_to_datatree(args.idata)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 -- CLI boundary reports loader failures
         print(json.dumps({"error": f"Could not load InferenceData: {e}"}))
         sys.exit(1)
 
@@ -257,15 +384,25 @@ def main():
         )
         sys.exit(1)
 
-    # Assess calibration using ArviZ ΔECDF + simultaneous bands
     ci_prob = args.ci_prob
-    assessment = assess_calibration(dt, var_name, use_loo=args.loo_pit, ci_prob=ci_prob)
+    method = _resolve_method(args.uniformity_method)
+    pit_values = prepare_pit_values(dt, var_name, args.loo_pit, method)
+    assessment = assess_calibration(
+        dt,
+        var_name,
+        use_loo=args.loo_pit,
+        ci_prob=ci_prob,
+        method=method,
+        pit_values=pit_values,
+    )
 
     n_obs = len(dt["observed_data"][var_name].values)
     report = {
         "variable": var_name,
         "n_observations": n_obs,
         "pit_method": "loo_pit" if args.loo_pit else "ppc_pit",
+        "uniformity_method": method,
+        "coverage_transform": "2 * abs(PIT - 0.5), applied once",
         "assessment": assessment,
     }
 
@@ -280,6 +417,8 @@ def main():
                 os.path.join(args.plot_dir, f"{prefix}_ecdf.png"),
                 use_loo=args.loo_pit,
                 ci_prob=ci_prob,
+                method=method,
+                pit_values=pit_values,
             ),
             "coverage": save_pit_plot(
                 dt,
@@ -288,10 +427,12 @@ def main():
                 use_loo=args.loo_pit,
                 coverage=True,
                 ci_prob=ci_prob,
+                method=method,
+                pit_values=pit_values,
             ),
         }
 
-    output = json.dumps(report, indent=2)
+    output = json.dumps(report, indent=2, allow_nan=False)
     if args.output:
         with open(args.output, "w") as f:
             f.write(output)
