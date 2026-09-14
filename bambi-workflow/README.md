@@ -59,4 +59,3 @@ See [SKILL.md](SKILL.md) for scope, dependency resolution, and the workflow.
 ## License
 
 MIT, as distributed with baygent-skills.
-
