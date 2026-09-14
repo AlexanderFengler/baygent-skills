@@ -44,13 +44,14 @@ prior-scaling instructions to an HSSM object.
 
 This implementation targets released **HSSM 0.5.0** and a **flat analytical
 DDM**, with complete positive RTs in seconds, responses `-1/+1`, and an explicit
-no-lapse assumption. It describes source-checked APIs; numerical runs and agent
-evaluations are deferred. Do not claim that this contribution has demonstrated
-recovery, predictive calibration, or compatibility with an arbitrary dependency
-set. Record installed package versions when execution is performed.
-The candidate dependency baseline uses HSSM 0.5.0, Bambi 0.19.0, PyMC 6.1.0,
-ArviZ 1.2.0 and NumPy 2.4.6; it is source/metadata checked, not a tested
-environment. Do not substitute the separate Bambi skill's version set.
+no-lapse assumption. Deterministic contracts, independent numerical density
+checks and one full synthetic notebook/report run passed on HSSM 0.5.0,
+Bambi 0.19.0, PyMC 6.1.0, ArviZ 1.2.0 and NumPy 2.4.6, installed with uv on
+Python 3.12.13/macOS arm64. This validates that scoped runtime workflow;
+agent behavior evaluations, multi-dataset recovery and broader compatibility
+remain untested. Marginal fitted-data predictive checks do not establish joint
+or held-out calibration. Record installed versions for each analysis and do
+not substitute the separate Bambi skill's version set.
 
 Hierarchical effects, LANs, RLSSMs, alternate SSMs, missing/deadline trials,
 lapse mixtures and regressions are later extensions. HSSM itself supports more

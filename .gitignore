@@ -188,5 +188,5 @@ blog-posts/
 docs/
 # Regenerated Bambi notebook runs (review evidence lives in evals/)
 examples/bambi-workflow/results/
-# Regenerated HSSM notebook runs (execution deferred for the initial implementation)
+# Regenerated HSSM notebook runs (review evidence lives in evals/)
 examples/hssm-workflow/results/

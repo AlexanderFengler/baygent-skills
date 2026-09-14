@@ -1,76 +1,96 @@
-# HSSM implementation and deferred validation
+# HSSM runtime validation and pending behavior evaluations
 
-**Status:** implemented for source baseline HSSM 0.5.0 (`fefed57d`); runtime
-validation is deferred at the user's request. No simulated data, posterior
-samples, rendered notebook, diagnostic scores, recovery results, or agent
-benchmark grades were produced in this increment.
+**Status (2026-09-14): HSSM runtime validated; skill behavior pending.**
+The flat analytical-DDM workflow passed deterministic contracts, independent
+numerical density checks and a full synthetic notebook/report run. See the
+[runtime evidence](runtime/README.md) for exact commands, source hashes,
+resolved requirements, test results, figures and raw assessments. Paired agent
+and trigger evaluations have not executed; their benchmark fields remain null.
+The final combined suite recorded **139 passed, one intentionally skipped and
+four strict expected failures**. The corrected canonical HTML export succeeded
+with the original model, seed and sampling budget.
 
-The [skill](../../../hssm-workflow/SKILL.md), installed RT/choice adapter, and
-[marimo notebook](../../../examples/hssm-workflow/analytical_ddm.py) form the flat
-analytical-DDM implementation. The separate [candidate environment](../../../environment-hssm.yml)
-uses Bambi 0.19/PyMC 6.1/ArviZ 1.2/NumPy 2.4.6. Pins are source/metadata choices,
-not a resolved or tested environment guarantee.
+The [skill](../../../hssm-workflow/SKILL.md), installed RT/choice adapter and
+[marimo notebook](../../../examples/hssm-workflow/analytical_ddm.py) target HSSM
+0.5.0, using release source `fefed57d2142637af503b0e92cefe799715c0f46`.
+The tested environment used Python 3.12.13/macOS arm64 with HSSM 0.5.0,
+Bambi 0.19.0, PyMC 6.1.0, ArviZ 1.2.0 and NumPy 2.4.6. Its pip requirements
+were installed with uv and system Graphviz. The alternative
+[conda recipe](../../../environment-hssm.yml) itself was not tested.
 
-## Completed source and static checks
+## Completed runtime gates
 
-- HSSM tag `fefed57d2142637af503b0e92cefe799715c0f46` supplies the native sampling,
-  predictive, graph and joint log-likelihood contracts. The flat prior bridge
-  uses PyMC's public `compute_log_prior` with `model.pymc_model`.
-- Bambi 0.19 constructs observed `rt,response_extra_dim_0` and predicted
-  `rt,response_dim` axes, both labeled `[0,1]` for `[RT,response]`. The adapter
-  accepts the differing names while enforcing sample/trial dimensions, exact
-  matching observation coordinates, positive finite RTs and choices −1/+1.
-- Scalar RT and binary +1-choice views contain only observed/predictive groups.
-  The original joint log-likelihood stays with the joint artifact. No joint
-  calibration guarantee follows from the two marginal PPC-PIT checks.
-- Skill frontmatter, relative links and embedded example syntax are checked.
-  Python/Ruff and strict marimo checks assess the implementation's structure;
-  they do not execute statistical code or establish package compatibility.
-- Pytest collection finds 44 cases: 43 deterministic adapter cases and one
-  opt-in full notebook integration. No test bodies were executed.
-- Independent static review checked the marginal helper CLI arguments, the
-  scalar analytical prior guards and HSSM-specific next steps derived from
-  shared ratings. Numerical behavior remains to be verified.
+- ~~Resolve a clean environment and verify imports, dependency consistency,
+  labeled DataTree serialization and graph rendering.~~
+- ~~Test the paired-response adapter and actual installed CLI with literal data,
+  including exact values/labels, malformed input and unchanged source artifacts.~~
+- ~~Test hand-calculated choice proportions, replicate conditional RT quantiles,
+  absent-choice counts, execution buttons and failed/stale report handling.~~
+- ~~Verify effective prior support/densities and native joint DDM likelihood
+  against the separately compiled `hddm_wfpt` reference, including response
+  conventions, reflection symmetry, normalization and physical support.~~
+- ~~Execute the documented full notebook budget and inspect the saved joint and
+  scalar artifacts, domain summaries, shared assessments and rendered figures.~~
 
-Static commands ran with the existing `baygent-bambi-m1` tooling environment,
-without installing HSSM there or importing/executing the notebook:
+The ordinary adapter suite's separate opt-in full-fit integration was skipped
+intentionally: the full HTML export and saved-artifact checks provide the real
+execution evidence without another duplicate fit. Strict expected failures
+retain two native sample-coordinate bugs across two `t`-support cases. HSSM's
+likelihood method uses chain/draw labels as positional indices, and PyMC's prior
+method can reset those labels. The notebook rejects nondefault sample labels
+before density recomputation and compares output coordinates afterward. The
+scalar adapter independently preserves arbitrary unique sample/trial labels.
 
-```bash
-ruff check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm_workflow.py
-ruff format --check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm_workflow.py
-marimo check --strict examples/hssm-workflow/analytical_ddm.py
-python -m pytest --collect-only -q evals/smoke/test_hssm_workflow.py
-git diff --cached --check
-```
+Native QP plotting needed two scoped call corrections: HSSM already separates
+response quantiles, so `quantile_by="response"` unnecessarily duplicates a
+column; explicit `ax` is also forwarded twice in that release. A native
+literal-array regression verifies the plotted points. Failed export attempts
+and their checkpoints are retained with the execution record.
 
-Additional parsing checked nine embedded Python snippets, five shell snippets,
-37 repository Markdown links, evaluation JSON and candidate YAML syntax.
-The skill frontmatter validator and all 11 installed-skill local links passed
-in an isolated copy containing only `hssm-workflow` and `bayesian-workflow`.
-That copy check validates installation structure, not HSSM package execution.
+## What the run establishes
 
-## Deferred execution gates
+The example generated 300 teaching trials and used 200 prior draws, two chains,
+1,000 tuning and 1,000 retained draws per chain. It saved the fit before
+post-processing and completed native predictions, independent density guards,
+shared convergence/joint-trial LOO/sensitivity checks, and a canonical report.
+The shared checks rated convergence and LOO **excellent**, prior sensitivity
+**low**, and each fitted-data RT/choice marginal PPC-PIT assessment **excellent**.
+However, review found that the final RT coverage plot reports a discrepancy
+while the shared JSON marks its coverage as inside the bands. That disagreement
+is under investigation: the JSON's RT rating cannot currently support a claim
+of adequate RT marginal calibration. The linked report retains the actual
+parameter and domain summaries, and the runtime record preserves both outputs.
 
-1. Resolve the candidate environment on the intended Python/platform and record
-   every runtime dependency. Confirm simulator, plotting and netCDF dependencies.
-2. Run `python -m pytest evals/smoke/test_hssm_workflow.py` for the authored
-   deterministic adapter checks. They use literal array fixtures and are not
-   evidence of a fitted HSSM model.
-3. Run `BAYGENT_TEST_HSSM=1 python -m pytest evals/smoke/test_hssm_workflow.py`
-   to include the explicitly gated real notebook integration path. It will
-   generate synthetic data and sample; its run budget is deliberately visible.
-4. Independently verify effective prior densities and selected joint analytical
-   log-likelihood values, positive RT/choice semantics, and the scalar views.
-   Finite log likelihood is insufficient: HSSM floors impossible `rt <= t`
-   observations, and the example explicitly bounds `t` below the observed RTs.
-5. Execute and inspect the full notebook/report, including the RT/choice domain
-   checks, actual prior assessment, all figure links and sensitivity limitations.
-   Missing or failed checks must remain visible; do not equate a completed fit
-   with adequacy or a teaching example with a parameter-recovery experiment.
-6. Run independent paired with-skill/without-skill scenarios and trigger cases,
-   retaining actual outputs, grading evidence and timing. Do not infer scores
-   from the authored metadata or from source inspection.
+These ratings apply to this dataset and specification. They do not establish
+multi-dataset parameter recovery, joint/conditional/held-out calibration,
+scientific validity for another task, or broad HSSM/platform compatibility.
+HSSM 0.5's posterior-predictive API has no public seed argument; the saved draws
+are evidence, not a claim of deterministic PPC reproduction. Power sensitivity
+does not test changes to the data-informed non-decision-time support policy.
 
-The next broader model milestone is a hierarchical condition contrast with
-HSSM's own safe-prior/link policy. LAN artifact-domain checks, RLSSMs, missing
-RTs, deadlines and lapse regressions remain separate increments.
+## Original implementation baseline
+
+At the original `54bf1f77e801a2dcb1a539f4cbb4a37b8ab0c6c2` plan baseline,
+validation consisted of release-source review, syntax/frontmatter/link checks,
+Ruff, strict marimo checks and collection of 44 test cases without execution.
+That earlier state remains in Git history. The runtime evidence above supersedes
+its deferred numerical status; it does not convert authored agent metadata into
+executed behavior evidence.
+
+The installed skill remains self-contained with its direct Bayesian dependency.
+Its scalar RT and binary `response == +1` views exclude joint log likelihood;
+LOO and sensitivity retain the original paired artifact. No thresholds or
+statistical ratings are reimplemented in the HSSM adapter.
+
+## Remaining acceptance gates
+
+1. Execute the prepared independent paired with-skill/without-skill scenarios
+   and trigger cases after the model-service payloads are authorized. Preserve
+   actual outputs, per-assertion grading and timing; authored fixtures have no
+   benchmark score. See the [validation plan](../../../plans/validation-round-1.md).
+2. Treat a hierarchical condition contrast as a separate model increment with
+   HSSM's own safe-prior/link policy. LAN artifact-domain checks, RLSSMs, missing
+   RTs, deadlines and lapse regressions need their own scoped verification.
+
+Formal simulation-based calibration, multi-dataset recovery and a multi-platform
+support matrix remain separate follow-ups.

@@ -8,8 +8,11 @@ The initial implementation targets HSSM 0.5.0 and a flat analytical DDM with
 complete positive RTs in seconds, responses `-1/+1`, and no lapse mixture.
 It includes data/parameter guidance, native HSSM API recipes and a small adapter
 for separate RT and choice marginal predictive assessments.
-Numerical runs and agent evaluations are deferred; this is not a claim of
-validated parameter recovery or a tested dependency stack.
+Deterministic contracts, numerical density checks and a full synthetic
+notebook/report run passed on HSSM 0.5.0, Bambi 0.19.0, PyMC 6.1.0,
+ArviZ 1.2.0 and NumPy 2.4.6 with Python 3.12.13 on macOS arm64.
+Agent behavior evaluations remain pending. One teaching dataset does not
+establish parameter recovery, joint calibration or a broader support matrix.
 
 ## Install
 

@@ -1,9 +1,10 @@
 # `hssm-workflow` — Architecture and first milestone
 
 **Status (2026-09-14):** skill, adapter and analytical-DDM marimo notebook
-implemented; static checks complete. Numerical runs, environment resolution
-and agent evaluations are deferred by request. M2 runtime acceptance remains
-open. See the [validation record](../evals/hssm-workflow/iteration-1/README.md)
+implemented; M2's scoped runtime gates passed in a fresh uv environment,
+including independent density checks and the full synthetic notebook/report.
+Agent behavior and trigger evaluations remain pending. See the
+[runtime evidence](../evals/hssm-workflow/iteration-1/runtime/README.md)
 and [upstream assessment](README.md). The original plan at `ee52405` remains
 in Git history.
 
@@ -53,6 +54,10 @@ evals/hssm-workflow/
     ddm-flat/eval_metadata.json
 evals/smoke/
   test_hssm_workflow.py
+  test_hssm_notebook_contracts.py
+  test_hssm_reporting.py
+  test_hssm_numerics.py
+  test_hssm_saved_artifacts.py
 environment-hssm.yml
 ```
 
@@ -143,8 +148,9 @@ The original joint likelihood remains the input to LOO and sensitivity.
 The notebook adds native HSSM signed-RT and quantile-probability figures, plus
 replicate choice proportions and conditional RT quantiles with absent-choice
 counts. Before sensitivity, a runtime guard compares every scalar prior density
-to its independent analytical expression. These are implemented checks, not
-executed evidence. An initial button gates simulation and prior predictions;
+to its independent analytical expression. Literal-array tests and the full
+notebook run now exercise these checks. An initial button gates simulation and
+prior predictions;
 a second gates fitting after prior review. Command-line execution requires an
 explicit `BAYGENT_RUN_HSSM=1` opt-in.
 
@@ -188,24 +194,28 @@ Implementation checklist:
 - ~~Prepare a separate candidate environment, adapter/integration tests and evaluation metadata.~~
 - ~~Check release source contracts, skill installation structure, syntax, links, Ruff and marimo.~~
 
-All execution gates below remain open. The candidate HSSM 0.5 / Bambi 0.19 /
-PyMC 6.1 / ArviZ 1.2 environment is not a resolved or tested dependency set.
+Runtime gates passed with HSSM 0.5 / Bambi 0.19 / PyMC 6.1 / ArviZ 1.2 /
+NumPy 2.4.6 on Python 3.12.13/macOS arm64. The pip requirements were installed
+with uv and system Graphviz; the conda recipe itself was not tested. The record
+includes deterministic contracts, independent model-level density checks and
+the successfully exported teaching run. Agent evaluations remain open.
 
 For M2, require:
 
-- An installable skill with valid frontmatter, resolvable dependency/resources,
-  and a clear narrow support statement.
-- A reproducible small analytical DDM run exercising data validation,
+- ~~An installable skill with valid frontmatter, resolvable dependency/resources,
+  and a clear narrow support statement.~~
+- ~~A recorded analytical DDM run exercising data validation,
   prior/posterior predictive APIs, save/load, diagnostics handoff, and a report
-  whose figures and conclusions come from that run.
-- A meaningful RT/choice model check with documented calibration applicability;
-  no generic-PIT success claim based solely on container compatibility.
-- Agent evaluations in the existing scenario/trigger layout, plus an executed
-  smoke test. Paired output/grading/timing artifacts are produced by actual
+  whose figures and conclusions come from that run.~~
+- ~~A meaningful RT/choice model check with documented calibration applicability;
+  no generic-PIT success claim based solely on container compatibility.~~
+- ~~Executed notebook software checks with saved-artifact verification.~~
+- Agent evaluations in the existing scenario/trigger layout.
+  Paired output/grading/timing artifacts are produced by actual
   runs; metadata or code inspection alone does not establish performance.
-- Recorded exact runtime dependencies and review of the statistical/API
+- ~~Recorded exact runtime dependencies and review of the statistical/API
   boundaries above. No claim that shared helper tests establish HSSM-wide
-  compatibility.
+  compatibility.~~
 
 Then add a hierarchical condition contrast as a separate milestone, including
 safe-prior/link policy and parameter-level prediction checks. LAN models follow

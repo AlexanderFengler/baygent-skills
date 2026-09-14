@@ -1,15 +1,15 @@
 # Bambi and HSSM workflow skills
 
 **Status (2026-09-14):** Bambi M1 implementation and runtime validation recorded;
-paired agent/trigger evaluations pending. HSSM M2 skill and analytical-DDM
-notebook are implemented and statically checked. HSSM numerical runs and all
-new agent evaluations are deferred by request. See the
+paired agent/trigger evaluations pending. HSSM M2's flat analytical-DDM runtime
+is validated on its recorded release stack; all new agent behavior and trigger
+evaluations remain pending. See the
 [Bambi validation record](../evals/bambi-workflow/iteration-1/README.md) and
-[HSSM validation record](../evals/hssm-workflow/iteration-1/README.md).
+[HSSM runtime evidence](../evals/hssm-workflow/iteration-1/runtime/README.md).
 
-The [next validation round](validation-round-1.md) specifies the environment,
-deterministic contracts, independent density checks, full notebook run and
-separate agent evaluations, with explicit evidence and acceptance criteria.
+The [validation round](validation-round-1.md) records completed environment,
+deterministic-contract, independent-density and full-notebook gates, together
+with the remaining separate agent evaluations and their acceptance criteria.
 
 ## Branch and upstream assessment
 
@@ -69,11 +69,20 @@ behavior and trigger evaluation; no benchmark improvement is claimed yet.
 The HSSM implementation now includes a standalone skill, three focused
 references, a strict RT/choice adapter, one gated marimo notebook and authored
 tests/evaluation scenarios. It uses the same direct Bayesian dependency and
-canonical report. The candidate environment and statistical workflow have not
-been executed; source inspection and static checks do not complete M2 acceptance.
+canonical report. Its fresh uv environment, deterministic contracts, independent
+prior/likelihood checks and full notebook/report have now run. Exact dependencies,
+known native coordinate limitations and compact evidence are recorded. This is
+one tested teaching workflow, not recovery or broad HSSM validation.
 
-Next, resolve the HSSM candidate environment and perform the deferred adapter,
-full notebook and paired agent checks described in its validation record. For
+Completed HSSM runtime gates:
+
+- ~~Resolve and record the separate HSSM runtime environment.~~
+- ~~Execute adapter/CLI, domain-summary, execution-gate and report-failure contracts.~~
+- ~~Check native likelihood/prior values against independent numerical references.~~
+- ~~Export the full notebook and inspect its saved artifacts and report.~~
+
+Next, execute the prepared paired agent and trigger evaluations when their
+model-service payloads are authorized, as described in the validation plan. For
 Bambi, complete the agent evaluation gate and compare a justified alternative
 region-scale prior in the survey example, whose sensitivity assessment flags
 that parameter. Broader models require their own verified increments.

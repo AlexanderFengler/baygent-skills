@@ -107,7 +107,7 @@ those rules when extending the scope instead of enforcing universal
 non-centering.
 
 HSSM has no public log-prior method in this release. For this **flat model
-only**, the source-checked bridge is PyMC's public `compute_log_prior` with
+only**, the runtime-checked bridge is PyMC's public `compute_log_prior` with
 `model.pymc_model`. HSSM preserves the free parameter names `v`, `a`, `z`, `t`
 in the posterior; there are no covariate-centering adjustments or group offsets
 in this specification. Do not copy the Bambi example's centering workaround
@@ -126,13 +126,15 @@ if set(idata["log_prior"].data_vars) != free_names:
     raise ValueError("Prior density must cover exactly the model's free random variables.")
 ```
 
-Completeness is necessary but does not prove correct density values. The
-deferred execution check must also compare these densities with independent
+Completeness is necessary but does not prove correct density values. For each
+model specification, also compare these densities with independent
 calculations of the **effective** Normal, bounded LogNormal, bounded Beta and
 Uniform priors, including any truncation normalization. Verify support and
 chain/draw alignment. Record the actual HSSM/PyMC/Bambi versions. Until these
-checks have run, leave sensitivity explicitly unassessed; the source review
-alone does not establish numerical correctness or robustness. Continue with
+checks have run, leave sensitivity explicitly unassessed. The teaching
+notebook's declared priors passed both model-level support tests and draw-wise
+density comparisons on the recorded release stack; that result does not verify
+different priors or hierarchies. Continue with
 the shared sensitivity and reporting handoff in
 [prediction-and-reporting.md](prediction-and-reporting.md) after verification.
 

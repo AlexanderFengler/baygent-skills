@@ -10,7 +10,7 @@ A set of skills to call your agent Bayes. Thomas Bayes.
 |---|---|
 | [bayesian-workflow](bayesian-workflow/) | Full Bayesian modeling workflow with PyMC and ArviZ. [Full breakdown](https://learnbayesstats.com/blog-posts/bayesian-workflow-agent-skill-pymc-arviz). |
 | [bambi-workflow](bambi-workflow/) | Formula-based Gaussian and hierarchical Bernoulli regression with Bambi; shared Bayesian diagnostics and reporting. [Two interactive examples](examples/bambi-workflow/). |
-| [hssm-workflow](hssm-workflow/) | Flat analytical DDM with HSSM, choice/RT checks and shared reporting. [Interactive example](examples/hssm-workflow/); implementation preview, execution validation pending. |
+| [hssm-workflow](hssm-workflow/) | Flat analytical DDM with HSSM, choice/RT checks and shared reporting. [Interactive example](examples/hssm-workflow/) with [runtime evidence](evals/hssm-workflow/iteration-1/runtime/README.md); agent behavior evaluation pending. |
 | [causal-inference](causal-inference/) | Production-grade Bayesian causal inference with PyMC, CausalPy, and DoWhy. [Full breakdown](https://learnbayesstats.com/blog-posts/causal-inference-agent-skill-pymc-causalpy-dowhy). |
 | [amortized-workflow](amortized-workflow/) | Amortized Bayesian workflow with BayesFlow for simulation-based inference. [Full breakdown](https://learnbayesstats.com/blog-posts/amortized-bayesian-inference-agent-skill-bayesflow). |
 
@@ -43,7 +43,7 @@ cp -r /tmp/baygent-skills/causal-inference/ ~/.config/agents/skills/causal-infer
 cp -r /tmp/baygent-skills/amortized-workflow/ ~/.config/agents/skills/amortized-workflow/
 ```
 
-> **Note:** bambi-workflow, hssm-workflow and causal-inference each depend directly on bayesian-workflow — install the shared skill alongside each. Bambi examples target Bambi 0.21 / PyMC 6; see their [setup and run instructions](examples/bambi-workflow/README.md). HSSM has a separate [candidate environment and deferred validation record](examples/hssm-workflow/README.md); its skill does not require the Bambi skill.
+> **Note:** bambi-workflow, hssm-workflow and causal-inference each depend directly on bayesian-workflow — install the shared skill alongside each. Bambi examples target Bambi 0.21 / PyMC 6; see their [setup and run instructions](examples/bambi-workflow/README.md). HSSM has a separate [tested runtime stack and example](examples/hssm-workflow/README.md); its skill does not require the Bambi skill.
 
 ## Philosophy
 

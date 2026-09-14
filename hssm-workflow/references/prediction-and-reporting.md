@@ -111,6 +111,14 @@ condition may be supplied in the plotting data; it is not a modeled covariate.
 Document its meaning and retain the original row alignment. Do not invent a
 condition effect solely to obtain that plot.
 
+HSSM 0.5 already computes these quantiles separately by response sign.
+`quantile_by` adds other groups whose quantiles are averaged; passing
+`quantile_by="response"` duplicates a mandatory column and fails. The same
+release forwards an explicit `ax` twice to seaborn in an unfaceted QP call.
+Create the desired current axes and omit that keyword, then save the returned
+Axes' `.figure`. Native plotting joins condition labels by zero-based observation
+position; verify row alignment before plotting an externally relabeled artifact.
+
 ## Adaptation to shared diagnostics
 
 Resolve the installed directories as described in [../SKILL.md](../SKILL.md).
@@ -157,8 +165,9 @@ of both marginals does not establish joint, conditional or held-out calibration.
 The choice-proportion and response-conditional RT checks remain necessary domain
 evidence. Keep the two shared assessment outputs distinct, with these scope
 limits next to their ratings. Missing groups, invalid schema and failed checks
-must remain visible. Numerical validation of the adapter and complete analysis
-is deferred; a successful static check does not establish calibration.
+must remain visible. Literal-array adapter tests and one complete analytical-DDM
+run verified this handoff on the recorded HSSM 0.5 stack. These software checks
+do not extend the statistical meaning of the marginal assessments.
 
 ## Prior sensitivity
 

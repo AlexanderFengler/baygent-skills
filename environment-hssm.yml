@@ -1,7 +1,8 @@
-# Candidate HSSM 0.5 teaching environment; execution validation is deferred.
+# HSSM 0.5 teaching environment; pip requirements tested via uv on macOS arm64.
 # Kept separate from Bambi M1: HSSM 0.5 requires numpy<2.5 and its release
-# environment used Bambi 0.19. These pins are source/metadata baselines,
-# not evidence that this complete recipe or notebook has run.
+# environment used Bambi 0.19. Python 3.12.13 and system Graphviz were used;
+# the conda/mamba recipe itself was not tested. Exact runtime evidence:
+# evals/hssm-workflow/iteration-1/runtime/README.md
 name: baygent-hssm
 channels:
   - conda-forge

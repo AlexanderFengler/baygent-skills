@@ -5,17 +5,31 @@ flat analytical DDM. It covers explicit priors, positive reaction times in
 seconds, declared choices −1/+1, native HSSM predictions, choice proportions and
 conditional RT quantiles, and baygent's shared diagnostic report.
 
-**Implementation preview:** the notebook and adapter have been source-reviewed
-and statically checked. Synthetic data generation, fitting, predictive checks,
-report generation and recovery validation are deferred. No rendered result or
-numerical success claim accompanies this increment.
+**Runtime validated; skill behavior pending.** Deterministic contracts,
+independent density checks, a full notebook export and saved-artifact checks
+passed on the recorded HSSM 0.5 stack. See the [runtime evidence](../../evals/hssm-workflow/iteration-1/runtime/README.md)
+for commands, resolved dependencies, figures and actual assessments. This is
+one synthetic teaching dataset, not a parameter-recovery experiment or a
+joint-calibration guarantee. Paired agent and trigger evaluations have not run.
 
 ## Open without running
 
-Use the separate candidate [environment-hssm.yml](../../environment-hssm.yml).
+Use the separate [environment-hssm.yml](../../environment-hssm.yml) package set.
 HSSM 0.5 requires NumPy below 2.5, so do not reuse the Bambi example environment
-unchanged. The candidate pins reflect release source and local package metadata;
-this full recipe has not yet been resolved or executed for the example.
+unchanged. The tested installation used uv with Python 3.12.13 on macOS arm64,
+the recipe's pip requirements and system Graphviz. The conda/mamba recipe below
+is an alternative setup; it was not itself executed during validation.
+
+```bash
+uv venv --python 3.12 .venv-hssm
+uv pip install --python .venv-hssm/bin/python \
+  -r evals/hssm-workflow/iteration-1/runtime/requirements-resolved.txt
+source .venv-hssm/bin/activate
+dot -V  # Requires a system Graphviz installation for this uv setup.
+marimo edit examples/hssm-workflow/analytical_ddm.py
+```
+
+Or create the untested conda alternative:
 
 ```bash
 mamba env create -f environment-hssm.yml
@@ -23,9 +37,9 @@ conda activate baygent-hssm
 marimo edit examples/hssm-workflow/analytical_ddm.py
 ```
 
-Graphviz's `dot` executable is included in that conda recipe. A future uv setup
-can create a Python 3.12 environment and install the same pip requirements, with
-Graphviz supplied by the system package manager. Keep personal environments in
+Graphviz's `dot` executable is included in that conda recipe. The
+[runtime record](../../evals/hssm-workflow/iteration-1/runtime/README.md) records
+the tested uv setup and exact resolved versions. Keep personal environments in
 Spine's `_local/venvs/` when working from HSSMSpine.
 
 Opening the notebook leaves it in preview mode. Its run button explicitly opts
@@ -33,7 +47,7 @@ into generating the teaching data and prior predictions. A second button
 continues to fitting after the reader reviews the prior checks. The final choice
 selector only filters an already computed diagnostic table; it never refits.
 
-## Later execution
+## Run or export
 
 For an explicitly requested command-line run/export, set `BAYGENT_RUN_HSSM=1`:
 
@@ -106,18 +120,28 @@ between PIT location patterns and coverage direction. The report and notebook
 translate shared ratings into HSSM-specific next steps; the raw shared output
 is preserved in JSON.
 
-## Checks and deferred runs
+## Checks and remaining evaluations
 
 Static checks do not execute the notebook:
 
 ```bash
 marimo check --strict examples/hssm-workflow/analytical_ddm.py
-ruff check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm_workflow.py
-ruff format --check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm_workflow.py
+ruff check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm*.py
+ruff format --check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm*.py
 ```
 
 [Validation status](../../evals/hssm-workflow/iteration-1/README.md) distinguishes
-completed source/static checks from the deferred adapter tests, sampling smoke,
-full notebook export and paired agent evaluations. Later runs must verify the
-actual densities, dimensions, numerical outputs and artifact links before this
-example is advertised as runtime-validated.
+the completed adapter/CLI, domain-summary, execution-gate, report-failure,
+numerical-density and full-run checks from pending paired agent and trigger
+evaluations. The numerical suite uses the separate compiled `hddm_wfpt` reference
+recorded in the runtime requirements. The ordinary adapter suite retains an
+opt-in full-fit integration test; validation instead ran the full HTML export
+once successfully and checked its saved artifacts without a duplicate fit.
+
+Four strict expected failures document two native density-coordinate defects
+across two `t`-support cases. The notebook rejects nondefault chain/draw labels
+before density recomputation; the scalar adapter still preserves arbitrary
+unique labels. HSSM's QP call also needs the documented release workaround for
+`quantile_by="response"` and explicit `ax`; a native literal-data regression
+checks the actual plotted points. See the runtime record for exact commands,
+test totals and the preserved failed export attempts.

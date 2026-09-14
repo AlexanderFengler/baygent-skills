@@ -1,15 +1,28 @@
-# Next validation round: HSSM runtime and skill behavior
+# Validation round 1: HSSM runtime and skill behavior
 
-**Status:** proposed test plan; no tests or evaluations executed by writing it.
-Implementation baseline: `54bf1f77e801a2dcb1a539f4cbb4a37b8ab0c6c2` on
-`hssm-bambi-dev`. HSSM source baseline: released 0.5.0 (`fefed57d`).
+**Status (2026-09-14): HSSM runtime validated; skill behavior pending.**
+Environment, deterministic-contract, independent-density and full-export gates
+have passed. See the [runtime evidence](../evals/hssm-workflow/iteration-1/runtime/README.md)
+for exact commands, resolved dependencies, reports and limitations. Prepared
+model-service scenarios have not executed; no agent or trigger grades exist.
 
-The next milestone is an execution-validated flat analytical DDM example,
-followed by evidence that the Bambi and HSSM skills guide agents correctly.
+Original implementation baseline: `54bf1f77e801a2dcb1a539f4cbb4a37b8ab0c6c2`
+on `hssm-bambi-dev`. HSSM source baseline: released 0.5.0 (`fefed57d`).
+The procedures below retain the planned acceptance criteria; sections 1–4 now
+have executed evidence, while section 5 remains open.
+
+- ~~Establish and record one clean HSSM environment.~~
+- ~~Exercise deterministic adapter/CLI, domain, execution-gate and report contracts.~~
+- ~~Verify model-level priors and analytical likelihood against independent references.~~
+- ~~Export the full notebook, fix observed defects, and inspect saved evidence.~~
+- Execute paired model-service and trigger evaluations with authorized payloads.
+
+The runtime milestone is one execution-validated flat analytical DDM example.
+The next milestone is evidence that the Bambi and HSSM skills guide agents correctly.
 Software correctness, statistical adequacy, and agent behavior have separate
 acceptance criteria. A successful fit alone does not establish any of them.
 
-## Starting evidence
+## Starting evidence at the original plan baseline
 
 - HSSM: static checks passed; 43 literal-array adapter cases and one opt-in full
   notebook integration have been collected but never executed.
@@ -52,8 +65,10 @@ env -u BAYGENT_TEST_HSSM -u BAYGENT_RUN_HSSM \
   python -m pytest -q evals/smoke/test_hssm_workflow.py
 ```
 
-Expected current selection: **43 adapter cases pass, one full integration skips**.
-Add only the following contract checks; test counts can increase accordingly.
+The original selection was **43 adapter cases and one opt-in full integration**.
+The completed round added the focused contracts below; exact results are in
+the runtime record. The duplicate full-fit integration remains intentionally
+skipped because the successful HTML export and saved-artifact suite exercise it.
 
 | Check | Required evidence |
 |---|---|
@@ -114,6 +129,13 @@ established, keep this gate open and avoid a numerical-correctness claim.
 **Gate:** native/model-level densities and an independent reference agree on the
 declared valid domain; prior support and response conventions are demonstrated.
 
+**Executed finding:** four strict expected failures preserve two release defects
+across both `t`-support cases: HSSM likelihood recomputation treats nondefault
+sample labels as positional indices, while PyMC prior recomputation resets those
+labels. The notebook now refuses nondefault chain/draw labels before either
+density call and verifies coordinates afterward; it never silently reindexes.
+The scalar adapter retains its separate arbitrary-unique-label contract.
+
 ## 4. Execute one full notebook, then inspect its evidence
 
 Use the existing documented budget: **300 synthetic trials, 200 prior draws,
@@ -163,6 +185,14 @@ commands/settings, source hashes, resolved requirements, reports, HTML, figures,
 synthetic CSVs, numerical summaries and raw diagnostic JSON. Keep large NetCDF
 files in ignored results with hashes and regeneration instructions. Update the
 validation status only after reviewing the resulting evidence.
+
+**Executed finding:** the first completed fit preserved its checkpoint when
+native QP plotting failed. `quantile_by="response"` duplicated a mandatory
+column; explicit `ax` was then forwarded twice to seaborn. The notebook omits
+both arguments because HSSM already separates response quantiles and can use
+the current axes. A native literal-draw regression verifies the actual saved
+figure's points. A documented retry with the same model, seed and sampler budget
+then exported successfully; failed attempts remain in the evidence record.
 
 ## 5. Evaluate skill behavior in isolated agent runs
 
