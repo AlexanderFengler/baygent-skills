@@ -1,0 +1,707 @@
+{
+  "kind": "Paired evaluation pilot preparation manifest; not a run record",
+  "launch_ready": false,
+  "service_calls_made": false,
+  "git_head_at_preparation": "27fed63923e1baa3b12ccc86cfcb009378fa2c7b",
+  "source_hash_policy": "Draft snapshot of per-file SHA256 values. Shared calibration helper/reporting corrections are in progress: refresh all payload hashes and review the final source/runtime evidence before launch. Git HEAD is provenance, not proof that all payload files are committed. Reject mismatches.",
+  "pilot": {
+    "scenarios": 6,
+    "arms_per_scenario": 2,
+    "maximum_agent_runs": 12,
+    "concurrent_runs": 1,
+    "automatic_retries": 0,
+    "trigger_trials_included": false,
+    "automated_model_grading_included": false,
+    "maximum_combined_wall_time_seconds": 14400
+  },
+  "model": {
+    "provider": "OpenAI Codex service, intended transport; verify isolated authentication/provider before launch",
+    "id": "gpt-6-astra",
+    "reasoning_effort": "ultra",
+    "selection_source": "Only the nonsecret model and model_reasoning_effort fields from the local user config were used; both are explicit CLI overrides",
+    "immutable_model_revision_available": false,
+    "access_verified_by_new_request": false
+  },
+  "cli": {
+    "version": "0.153.4",
+    "binary_name": "codex",
+    "binary_sha256": "b973d440acac501fd2594a43e7ca9ce41e0a65b9dfb28d0d7a7837c99e1261e3",
+    "inspected_local_surfaces": [
+      "codex --version",
+      "codex --help",
+      "codex exec --help",
+      "codex features --help",
+      "codex features list",
+      "codex debug --help",
+      "codex debug prompt-input --help"
+    ],
+    "candidate_argv": [
+      "/opt/homebrew/Caskroom/codex/0.153.4/bin/codex",
+      "-a",
+      "never",
+      "exec",
+      "--ignore-user-config",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--strict-config",
+      "--model",
+      "gpt-6-astra",
+      "-c",
+      "model_reasoning_effort=\"ultra\"",
+      "--sandbox",
+      "workspace-write",
+      "--json",
+      "--color",
+      "never",
+      "--cd",
+      "<RUN_DIR>",
+      "--output-last-message",
+      "<RUN_DIR>/results/final-response.md",
+      "--disable",
+      "apps",
+      "--disable",
+      "enable_mcp_apps",
+      "--disable",
+      "plugins",
+      "--disable",
+      "remote_plugin",
+      "--disable",
+      "plugin_sharing",
+      "--disable",
+      "browser_use",
+      "--disable",
+      "browser_use_external",
+      "--disable",
+      "browser_use_full_cdp_access",
+      "--disable",
+      "computer_use",
+      "--disable",
+      "image_generation",
+      "--disable",
+      "in_app_browser",
+      "--disable",
+      "in_app_chat",
+      "--disable",
+      "hooks",
+      "--disable",
+      "multi_agent",
+      "--disable",
+      "multi_agent_v2",
+      "--disable",
+      "memories",
+      "--disable",
+      "shell_snapshot",
+      "--disable",
+      "skill_mcp_dependency_install",
+      "--disable",
+      "skill_search",
+      "--disable",
+      "tool_suggest",
+      "--disable",
+      "goals",
+      "--disable",
+      "sleep_tool",
+      "--disable",
+      "workspace_dependencies",
+      "--disable",
+      "auth_elicitation",
+      "-"
+    ],
+    "stdin": "UTF-8 bytes: shared_prompt_prefix + \"\\n\\n\" + scenario.prompt + \"\\n\\n\" + scenario.pilot_settings_text + \"\\n\"; verify scenario.stdin_sha256",
+    "disabled_features": [
+      "apps",
+      "enable_mcp_apps",
+      "plugins",
+      "remote_plugin",
+      "plugin_sharing",
+      "browser_use",
+      "browser_use_external",
+      "browser_use_full_cdp_access",
+      "computer_use",
+      "image_generation",
+      "in_app_browser",
+      "in_app_chat",
+      "hooks",
+      "multi_agent",
+      "multi_agent_v2",
+      "memories",
+      "shell_snapshot",
+      "skill_mcp_dependency_install",
+      "skill_search",
+      "tool_suggest",
+      "goals",
+      "sleep_tool",
+      "workspace_dependencies",
+      "auth_elicitation"
+    ],
+    "catalog_isolation_verified": false,
+    "tool_inventory_verified": false,
+    "filesystem_read_isolation_verified": false
+  },
+  "shared_prompt_prefix": "Work on this standalone analysis task inside the supplied workspace. Available skills are installed under .agents/skills; the analysis environment is described in environment.json. Use the supplied data and installed Python packages, and save new work under results/. Do not inspect parent directories or unrelated user configuration, install packages, make network requests, contact other agents or model services, or read another run's outputs. Respect the scenario's computation limits. If a required step cannot complete, preserve its failure evidence and explain the limitation instead of changing the task or silently increasing its budget.",
+  "pilot_settings_text_rule": "Use each scenario's concrete pilot_settings_text verbatim. It is included in stdin_sha256.",
+  "skill_payloads": {
+    "bayesian-workflow": [
+      {
+        "source": "bayesian-workflow/SKILL.md",
+        "destination": ".agents/skills/bayesian-workflow/SKILL.md",
+        "sha256": "f33a8cef9154a926c0f0541b753516b01e434dad6dd2bd6da582cd5dd483cb63"
+      },
+      {
+        "source": "bayesian-workflow/references/diagnostics.md",
+        "destination": ".agents/skills/bayesian-workflow/references/diagnostics.md",
+        "sha256": "296b3f835da85f15e6adb37b52bd2b8b683fde4c5236dc3cd4e866b75c3ba552"
+      },
+      {
+        "source": "bayesian-workflow/references/hierarchical.md",
+        "destination": ".agents/skills/bayesian-workflow/references/hierarchical.md",
+        "sha256": "2d052dc12d29a6a4113cb72ef4614cdfae1c9f9993df8e48a3b3c3f4c7be9910"
+      },
+      {
+        "source": "bayesian-workflow/references/model-comparison.md",
+        "destination": ".agents/skills/bayesian-workflow/references/model-comparison.md",
+        "sha256": "c6354d20bb90dbd7efa82937d8ddecc3188267d0b6e855402d6d9c303a5b87ab"
+      },
+      {
+        "source": "bayesian-workflow/references/model-criticism.md",
+        "destination": ".agents/skills/bayesian-workflow/references/model-criticism.md",
+        "sha256": "93f0e84f38308a88b40a216f9a9b759d7b5589214cdb6ee281f98c90c137bbfd"
+      },
+      {
+        "source": "bayesian-workflow/references/priors.md",
+        "destination": ".agents/skills/bayesian-workflow/references/priors.md",
+        "sha256": "5d6e9590562b66d2ecface546c20d6923a9455b38d8968b43ce24fe80c9a0203"
+      },
+      {
+        "source": "bayesian-workflow/references/reporting.md",
+        "destination": ".agents/skills/bayesian-workflow/references/reporting.md",
+        "sha256": "703ab1cf2ab4cfb1c927fcd85e8c180f0dcb6dc44bd02b6e82730a97a745cde0"
+      },
+      {
+        "source": "bayesian-workflow/references/sensitivity.md",
+        "destination": ".agents/skills/bayesian-workflow/references/sensitivity.md",
+        "sha256": "7786e57bf659cddd0394fcb7cc86b498aad77d22da6fc13f230d4ce94fbee811"
+      },
+      {
+        "source": "bayesian-workflow/scripts/calibration_check.py",
+        "destination": ".agents/skills/bayesian-workflow/scripts/calibration_check.py",
+        "sha256": "ed02b29d74f750d5ee7c224e1260d7fef5f3d63b6a717a7e95ecd361651b9bd1"
+      },
+      {
+        "source": "bayesian-workflow/scripts/check_diagnostics.py",
+        "destination": ".agents/skills/bayesian-workflow/scripts/check_diagnostics.py",
+        "sha256": "f413d440d08c97266ebfdaf4b0eed123fce3ded2f80306794160ab82c1c7c670"
+      },
+      {
+        "source": "bayesian-workflow/scripts/diagnose_model.py",
+        "destination": ".agents/skills/bayesian-workflow/scripts/diagnose_model.py",
+        "sha256": "41743cbda2c791d735092812e884a8f4fe4acac083f9a7b76fcb64aa75d3c8df"
+      }
+    ],
+    "bambi-workflow": [
+      {
+        "source": "bambi-workflow/SKILL.md",
+        "destination": ".agents/skills/bambi-workflow/SKILL.md",
+        "sha256": "9ee5eeeff233271d2b1126ec0b5a1c9c35ad2d4ae86595bf542f0ab7cfdd6913"
+      },
+      {
+        "source": "bambi-workflow/references/families-and-links.md",
+        "destination": ".agents/skills/bambi-workflow/references/families-and-links.md",
+        "sha256": "18ad448d7a52bfafae8a49eb5dd3fc7f991e66e358ec3d754a67170be2028110"
+      },
+      {
+        "source": "bambi-workflow/references/formula-syntax.md",
+        "destination": ".agents/skills/bambi-workflow/references/formula-syntax.md",
+        "sha256": "46110fb89a316e5578e7e56c8a38c7a4e91bc46be681a27c01c426bf619461f6"
+      },
+      {
+        "source": "bambi-workflow/references/interpretation-and-reporting.md",
+        "destination": ".agents/skills/bambi-workflow/references/interpretation-and-reporting.md",
+        "sha256": "5abd89637804285db65fb69374d32484acf87927e55cc4709f0b36a2bf592520"
+      },
+      {
+        "source": "bambi-workflow/references/priors-in-bambi.md",
+        "destination": ".agents/skills/bambi-workflow/references/priors-in-bambi.md",
+        "sha256": "f47b91829b4747910857635ba10d272bf481b7b0a01e5ae21d8fefdf9238cab0"
+      }
+    ],
+    "hssm-workflow": [
+      {
+        "source": "hssm-workflow/SKILL.md",
+        "destination": ".agents/skills/hssm-workflow/SKILL.md",
+        "sha256": "31942d8b8d32a9fa5bb9b59dba4e678265c8bfc5553bed081bf661dc13980137"
+      },
+      {
+        "source": "hssm-workflow/references/data-and-ddm.md",
+        "destination": ".agents/skills/hssm-workflow/references/data-and-ddm.md",
+        "sha256": "70239a0c07d0972567bc4dd644447f019196430103f563eaa5e1cf71e04cd578"
+      },
+      {
+        "source": "hssm-workflow/references/prediction-and-reporting.md",
+        "destination": ".agents/skills/hssm-workflow/references/prediction-and-reporting.md",
+        "sha256": "c04523b3e56c10339ddd955318f66edb2027e2d54cac60acc6548abc2d8e4144"
+      },
+      {
+        "source": "hssm-workflow/references/priors-and-links.md",
+        "destination": ".agents/skills/hssm-workflow/references/priors-and-links.md",
+        "sha256": "1f88c2e7b8b9f317b14360ec10c9d4d8219ef776013ab232bfe7e5268d1de4ad"
+      },
+      {
+        "source": "hssm-workflow/scripts/prepare_rt_choice.py",
+        "destination": ".agents/skills/hssm-workflow/scripts/prepare_rt_choice.py",
+        "sha256": "c54294525e4c3ffbb170dac63ef1ad3b12b65fe41c8a1f646075b6fe2e8ae4a9"
+      }
+    ]
+  },
+  "arms": {
+    "baseline": [
+      "bayesian-workflow"
+    ],
+    "treatment": [
+      "bayesian-workflow",
+      "scenario.treatment_skill"
+    ]
+  },
+  "environments": {
+    "bambi": {
+      "runtime_versions": {
+        "bambi": "0.21.0",
+        "pymc": "6.3.2",
+        "pytensor": "3.3.1",
+        "formulae": "0.6.2",
+        "arviz": "1.3.0",
+        "arviz-stats": "1.3.2",
+        "arviz-plots": "1.3.1",
+        "nutpie": "0.16.11",
+        "marimo": "0.24.2",
+        "numpy": "2.5.3",
+        "pandas": "3.0.5",
+        "python": "3.12.13"
+      },
+      "requirements_source": {
+        "source": "evals/bambi-workflow/iteration-1/runtime/requirements-resolved.txt",
+        "sha256": "c98a9ba03fb90496e80796132a858932ea9f0a0cd1f5e342065043bdac5dcc83",
+        "evaluator_only": true
+      },
+      "provisioning": "Scenario environment matching the recorded requirements, with no editable sibling dependency. The manifest does not claim that using this environment restricts other host reads.",
+      "environment_json_sha256": "2ca1423926b1a47d0e547442f4c3d89a29d5006f3bafe5adb2645b9e6d82e01a"
+    },
+    "hssm": {
+      "runtime_versions": {
+        "hssm": "0.5.0",
+        "bambi": "0.19.0",
+        "pymc": "6.1.0",
+        "pytensor": "3.1.3",
+        "ssm-simulators": "0.14.0",
+        "arviz": "1.2.0",
+        "arviz-stats": "1.2.0",
+        "arviz-plots": "1.2.0",
+        "numpy": "2.4.6",
+        "marimo": "0.24.2",
+        "python": "3.12.13"
+      },
+      "provisioning": "Scenario environment matching the recorded requirements, with no editable sibling dependency. The manifest does not claim that using this environment restricts other host reads.",
+      "requirements_source": {
+        "source": "evals/hssm-workflow/iteration-1/runtime/requirements-resolved.txt",
+        "evaluator_only": true,
+        "sha256": "6b3809290ab7bf89abecac3073fba40fd3a8cc88a31920392c62bdca4d9c7513"
+      },
+      "environment_json_sha256": "0d4e033801a2326e6f52792ec3b7bacaa65d9b97adc69dcf6018111ae7a69b51"
+    }
+  },
+  "materialized_environment_json_rule": "For each run, environment.json is exactly its environments[scenario.environment].runtime_versions object serialized as sorted-key, two-space-indented UTF-8 JSON with a trailing newline. It contains versions only, not host paths or source files.",
+  "scenarios": [
+    {
+      "id": "bambi-gaussian",
+      "original_metadata": {
+        "source": "evals/bambi-workflow/iteration-1/gaussian-regression/eval_metadata.json",
+        "sha256": "5678c39f186bd343df4b774c4523ddbfa0683cdb1ecba3cab9b970ce32d46b5d",
+        "evaluator_only": true
+      },
+      "prompt": "Use Bambi to analyze the frozen synthetic data.csv described in dataset_metadata.json with a Gaussian regression y ~ x. The scientific target is the expected outcome at x=0.5 minus the expected outcome at x=-0.5. Inspect resolved priors and prior predictions, fit the model, and report the contrast with a 94% HDI. Include predictive checks, diagnostics and their limitations, and save the analysis artifacts and a report. Use a common uncertain residual scale and the supplied Bambi 0.21/PyMC 6 environment. Use these observations as supplied rather than generate a replacement dataset. Sampling and predictive generation are authorized within the pilot budget.",
+      "prompt_adaptation": "Frozen input and named prediction target; original assertions retained outside agent workspace",
+      "environment": "bambi",
+      "treatment_skill": "bambi-workflow",
+      "timeout_seconds": 1800,
+      "inputs": [
+        {
+          "source": "evals/bambi-workflow/iteration-1/runtime/gaussian-regression/data.csv",
+          "destination": "data.csv",
+          "sha256": "6dcf2253a065db819603e3cc431f5eb413f96f478bf76b836872212f1316d6db"
+        }
+      ],
+      "materialized_json_inputs": {
+        "dataset_metadata.json": {
+          "kind": "Existing synthetic input only; verify/extract before evaluation without rerunning fitting",
+          "n_observations": 120,
+          "columns": {
+            "x": "Standardized exposure",
+            "y": "Continuous synthetic outcome"
+          },
+          "generation": {
+            "numpy_generator": "default_rng",
+            "seed": 1993,
+            "x": "120 independent Uniform(-1.5, 1.5) values",
+            "y": "10 + 2*x + independent Normal(0, 1.5) residuals, drawn after x from the same generator"
+          },
+          "source_notebook": "examples/bambi-workflow/gaussian_regression.py",
+          "interpretation_limit": "A single synthetic dataset is not a recovery study",
+          "sha256": "6dcf2253a065db819603e3cc431f5eb413f96f478bf76b836872212f1316d6db",
+          "file": "data.csv",
+          "generation_versions": {
+            "numpy": "2.5.3",
+            "pandas": "3.0.5",
+            "python": "3.12.13"
+          }
+        }
+      },
+      "scope": "one fit plus predictive/diagnostic computations",
+      "mcmc_budget": {
+        "prior_predictive_draws": 500,
+        "chains": 2,
+        "tune_per_chain": 1000,
+        "retained_per_chain": 1000,
+        "worker_processes": 1,
+        "fit_seed": 1993,
+        "max_fits": 1,
+        "automatic_retries": 0
+      },
+      "pilot_settings_text": "Pilot settings: 500 prior-predictive draws; 2 chains; 1000 tuning and 1000 retained draws per chain; one worker process; fit seed 1993; at most one fit; no retries or extra fits without new authorization.",
+      "stdin_sha256": "0ad285ecb3d29175a0c7a3277e97054d46fc6385a40756e5a01fa01613599779",
+      "materialized_json_input_sha256": {
+        "dataset_metadata.json": "17cc9d8659c8b8d6d15c0e27e441220d66172d8de7a9104fd0ef084d5ed6f3f5"
+      }
+    },
+    {
+      "id": "bambi-survey",
+      "original_metadata": {
+        "source": "evals/bambi-workflow/iteration-1/glmm-bernoulli-survey/eval_metadata.json",
+        "sha256": "533a85653a6194e0d95c20fe6c51244b04b0cd7685bed175b21fcda090d8d22d",
+        "evaluator_only": true
+      },
+      "prompt": "Use Bambi to analyze the frozen synthetic survey in data.csv, described in dataset_metadata.json. Model support (0=no, 1=yes) using age, income_bracket (low/medium/high), urban (0/1), and a varying intercept by region. Use low income as the reference and preserve the unequal region sizes. Check resolved priors and prior predictions, fit the model, and report the posterior-mean probability of support at age 40, medium income, urban=1 in the observed region north, with a 94% HDI. Save a diagnostic report and artifacts, reporting failed or unavailable checks and the limitations of this synthetic example. Use the supplied Bambi 0.21/PyMC 6 environment and these observations rather than generating a replacement dataset. Sampling and predictive generation are authorized within the pilot budget.",
+      "prompt_adaptation": "Frozen input and named prediction target; original assertions retained outside agent workspace",
+      "environment": "bambi",
+      "treatment_skill": "bambi-workflow",
+      "timeout_seconds": 1800,
+      "inputs": [
+        {
+          "source": "evals/bambi-workflow/iteration-1/runtime/hierarchical-bernoulli/data.csv",
+          "destination": "data.csv",
+          "sha256": "a389a6ac3a67a5e5654793e40a3032034146a7dee401b85234034e653fcfac56"
+        }
+      ],
+      "materialized_json_inputs": {
+        "dataset_metadata.json": {
+          "kind": "Existing synthetic input only; verify/extract before evaluation without rerunning fitting",
+          "n_observations": 440,
+          "columns": {
+            "age": "Years",
+            "age_scaled": "(age - 40) / 10",
+            "income_bracket": "low, medium or high; categorical reference requested by task is low",
+            "urban": "0 rural, 1 urban",
+            "region": "Observed region label",
+            "support": "0 no, 1 yes"
+          },
+          "generation": {
+            "numpy_generator": "default_rng",
+            "seed": 2264,
+            "regions": [
+              "north",
+              "south",
+              "east",
+              "west",
+              "central",
+              "coast",
+              "valley",
+              "hill"
+            ],
+            "region_sizes": [
+              25,
+              35,
+              45,
+              55,
+              60,
+              65,
+              70,
+              85
+            ],
+            "draw_order": [
+              "age Uniform(20,70)",
+              "income choice [low,medium,high] with probabilities [0.4,0.4,0.2]",
+              "urban Bernoulli(0.6)",
+              "8 region offsets Normal(0,0.55)",
+              "support Bernoulli(inverse_logit(log_odds))"
+            ],
+            "log_odds": "-0.4 + 0.2*age_scaled + 0.35*(income==medium) + 0.6*(income==high) + 0.45*urban + region_offset"
+          },
+          "source_notebook": "examples/bambi-workflow/hierarchical_bernoulli.py",
+          "interpretation_limit": "A single synthetic dataset is not a recovery study",
+          "sha256": "a389a6ac3a67a5e5654793e40a3032034146a7dee401b85234034e653fcfac56",
+          "file": "data.csv",
+          "generation_versions": {
+            "numpy": "2.5.3",
+            "pandas": "3.0.5",
+            "python": "3.12.13"
+          }
+        }
+      },
+      "scope": "one fit plus predictive/diagnostic computations",
+      "mcmc_budget": {
+        "prior_predictive_draws": 500,
+        "chains": 2,
+        "tune_per_chain": 1000,
+        "retained_per_chain": 1000,
+        "worker_processes": 1,
+        "fit_seed": 2264,
+        "max_fits": 1,
+        "automatic_retries": 0
+      },
+      "pilot_settings_text": "Pilot settings: 500 prior-predictive draws; 2 chains; 1000 tuning and 1000 retained draws per chain; one worker process; fit seed 2264; at most one fit; no retries or extra fits without new authorization.",
+      "stdin_sha256": "6daa0027977db478adaccc58504199c816368174e32722333dbf0ae020230ed8",
+      "materialized_json_input_sha256": {
+        "dataset_metadata.json": "0aee17a09487268d6a9f70253c8e657f7a7d096595c90046e582376a7d1ad51d"
+      }
+    },
+    {
+      "id": "hssm-deferred",
+      "original_metadata": {
+        "source": "evals/hssm-workflow/iteration-1/ddm-flat/eval_metadata.json",
+        "sha256": "68c365b8e7e33a2d84cb4647e8114114c738d9e4a55f39cb9decd5ab749101d1",
+        "evaluator_only": true
+      },
+      "prompt": "Prepare an HSSM 0.5.0 analytical flat DDM workflow for a supplied dataset with reaction times in seconds and response labels -1/+1. Estimate v, a, z and t without regressions, group effects, lapse contamination, censoring or missing-data handling. Verify the release APIs and paired artifact layout from source, inspect explicit priors and explain a physically valid nondecision-time support policy. Execution is currently deferred: do not simulate, fit, run synthetic adapter tests or claim numerical validation until separately authorized. Prepare the reproducible notebook and reporting path. Once execution is authorized, save the posterior before downstream processing; use HSSM's predictive and log-likelihood APIs, assess choice proportions and conditional RT quantiles, prepare separate scalar RT/choice marginal PPC-PIT views for shared diagnostics, and write the canonical report with actual evidence and limitations. Distinguish source review, runtime validation, numerical diagnostic health and parameter recovery throughout.",
+      "prompt_adaptation": "Original prompt unchanged; frozen observations attached for the supplied-dataset request, with execution still deferred",
+      "environment": "hssm",
+      "treatment_skill": "hssm-workflow",
+      "timeout_seconds": 600,
+      "inputs": [
+        {
+          "source": "evals/hssm-workflow/iteration-2/ddm-runtime/data.csv",
+          "destination": "data.csv",
+          "sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86"
+        },
+        {
+          "source": "evals/hssm-workflow/iteration-2/ddm-runtime/dataset_metadata.json",
+          "destination": "dataset_metadata.json",
+          "sha256": "ec0f8d6664c54772ff2eac38bae9338a58deddbc2dbddd0a512c2772eb6007ec"
+        }
+      ],
+      "materialized_json_inputs": {},
+      "scope": "supplied-file inspection and deterministic calculations only; no inference, simulation or predictive generation",
+      "pilot_settings_text": "Pilot settings: no simulation, fitting, predictive generation, model-service calls, or new agent sessions. Review the supplied inputs and installed skills/package documentation; prepare the requested deliverable within the scenario's restrictions.",
+      "stdin_sha256": "e998e9153b7a6ef9b1110a05c6a330495ba0bd11aadce2c25d1fb8df853e6bf5",
+      "materialized_json_input_sha256": {}
+    },
+    {
+      "id": "hssm-runtime",
+      "original_metadata": {
+        "source": "evals/hssm-workflow/iteration-2/ddm-runtime/eval_metadata.json",
+        "sha256": "2f9cf3a336e8d8e129295539773f1dc1f5fb3454c63452861388eae7f53d2911",
+        "evaluator_only": true
+      },
+      "prompt": "Please carry out an HSSM analysis of the frozen synthetic trials in data.csv; dataset_metadata.json describes how they were generated. I want a flat analytical drift-diffusion model with uncertainty on v, a, z and t, and an assessment of how well it reproduces reaction times and choices. Treat the condition column as a display label. Use the supplied HSSM 0.5.0 environment, no regressions or lapse mixture, 200 prior-predictive draws, and two MCMC chains with 1,000 tuning and 1,000 retained draws each, using one process and a fixed reported seed. Sampling and predictive generation are authorized for this scenario, but please use the supplied observations rather than generate a replacement dataset. Inspect the prior predictions before fitting. Save the analysis code, artifacts, and a Bayesian report with the evidence, uncertainty, and any unresolved concerns. Do not increase the sampling budget or change the seed to improve diagnostic results without asking.",
+      "prompt_adaptation": "Original prompt unchanged",
+      "environment": "hssm",
+      "treatment_skill": "hssm-workflow",
+      "timeout_seconds": 1800,
+      "inputs": [
+        {
+          "source": "evals/hssm-workflow/iteration-2/ddm-runtime/data.csv",
+          "destination": "data.csv",
+          "sha256": "74b7e9760614f5cddb434e7366e2c8d822f691e888bf65cb0e0ab75d9da4ce86"
+        },
+        {
+          "source": "evals/hssm-workflow/iteration-2/ddm-runtime/dataset_metadata.json",
+          "destination": "dataset_metadata.json",
+          "sha256": "ec0f8d6664c54772ff2eac38bae9338a58deddbc2dbddd0a512c2772eb6007ec"
+        }
+      ],
+      "materialized_json_inputs": {},
+      "scope": "one fit plus predictive/diagnostic computations",
+      "mcmc_budget": {
+        "prior_predictive_draws": 200,
+        "chains": 2,
+        "tune_per_chain": 1000,
+        "retained_per_chain": 1000,
+        "worker_processes": 1,
+        "fit_seed": 1414,
+        "max_fits": 1,
+        "automatic_retries": 0
+      },
+      "pilot_settings_text": "Pilot settings: 200 prior-predictive draws; 2 chains; 1000 tuning and 1000 retained draws per chain; one worker process; fit seed 1414; at most one fit; no retries or extra fits without new authorization.",
+      "stdin_sha256": "ec41e0e77a63f139fe0c3df668c06faa51c395a3fd0a5db3c42d686e0b539e64",
+      "materialized_json_input_sha256": {}
+    },
+    {
+      "id": "hssm-misalignment",
+      "original_metadata": {
+        "source": "evals/hssm-workflow/iteration-2/predictive-misalignment/eval_metadata.json",
+        "sha256": "f8f5897c9e84fd58d40ea66974509b3fe50ce0f5c353a3a2e306c75b9d6a80f4",
+        "evaluator_only": true
+      },
+      "prompt": "Please review predictive_fixture.json from our HSSM artifact handoff. It is a small literal synthetic fixture, with the array layout described in the file. Can I use it for reaction-time and choice predictive checks and the usual Bayesian diagnostics? Write review.md explaining which checks can safely proceed, any issues you find, and the practical next step. You may inspect or reconstruct the supplied arrays, but please do not fit a model, generate observations, or regenerate predictions.",
+      "prompt_adaptation": "Original prompt unchanged",
+      "environment": "hssm",
+      "treatment_skill": "hssm-workflow",
+      "timeout_seconds": 600,
+      "inputs": [
+        {
+          "source": "evals/hssm-workflow/iteration-2/predictive-misalignment/predictive_fixture.json",
+          "destination": "predictive_fixture.json",
+          "sha256": "2c732811a5e0727e6212e035d4245d2c6117e0dc8716803174104123b9ffe1c7"
+        }
+      ],
+      "materialized_json_inputs": {},
+      "scope": "supplied-file inspection and deterministic calculations only; no inference, simulation or predictive generation",
+      "pilot_settings_text": "Pilot settings: no simulation, fitting, predictive generation, model-service calls, or new agent sessions. Review the supplied inputs and installed skills/package documentation; prepare the requested deliverable within the scenario's restrictions.",
+      "stdin_sha256": "866bd0e513f2c3ec34603434e2d6916c2d30ba105c8d8503888205227d27f646",
+      "materialized_json_input_sha256": {}
+    },
+    {
+      "id": "hssm-diagnostic-review",
+      "original_metadata": {
+        "source": "evals/hssm-workflow/iteration-2/diagnostic-review/eval_metadata.json",
+        "sha256": "b85408a7512532701e2e15603c8eadd86f0f520f35e10a4f2e594e9a7d1a1964",
+        "evaluator_only": true
+      },
+      "prompt": "Please review the saved diagnostic summaries listed in fixture_metadata.json and write report.md for the synthetic flat-DDM example. These are hand-authored test inputs for our reporting workflow, not results from a scientific experiment. Explain what the supplied evidence supports, the main concerns, and the next actions you would take. Use the available Bayesian reporting conventions, but work only from these files: I do not want a new fit, replacement observations, or invented plots.",
+      "prompt_adaptation": "Original prompt unchanged",
+      "environment": "hssm",
+      "treatment_skill": "hssm-workflow",
+      "timeout_seconds": 600,
+      "inputs": [
+        {
+          "source": "evals/hssm-workflow/iteration-2/diagnostic-review/fixture_metadata.json",
+          "destination": "fixture_metadata.json",
+          "sha256": "f57b601c7c25b842d07d4bf20f5315156de2d109135b729a644b03c8b233b475"
+        },
+        {
+          "source": "evals/hssm-workflow/iteration-2/diagnostic-review/diagnostics.json",
+          "destination": "diagnostics.json",
+          "sha256": "770126570a369c16db17376e5a28d604468a0f79ca45b8d808418efcbb0c7722"
+        },
+        {
+          "source": "evals/hssm-workflow/iteration-2/diagnostic-review/psense.json",
+          "destination": "psense.json",
+          "sha256": "6a8b57bbe2d73ab4d89e0779261a6b7728ff0d14a65926cfde147065e45f928d"
+        },
+        {
+          "source": "evals/hssm-workflow/iteration-2/diagnostic-review/rt_calibration.json",
+          "destination": "rt_calibration.json",
+          "sha256": "d654cf4d502a78fbf3f64a21649878c9007447cfe85ef8433a0f3df6b65e2be3"
+        },
+        {
+          "source": "evals/hssm-workflow/iteration-2/diagnostic-review/choice_calibration.json",
+          "destination": "choice_calibration.json",
+          "sha256": "0f970adba54ea5cb6c00aff4f527629900d53c3a70998e0096502115dafe77b8"
+        },
+        {
+          "source": "evals/hssm-workflow/iteration-2/diagnostic-review/domain_checks.csv",
+          "destination": "domain_checks.csv",
+          "sha256": "0685f684b51aa3b76f51fa956f10a1d446fcbb5074c91ac29c9533911047cecd"
+        }
+      ],
+      "materialized_json_inputs": {},
+      "scope": "supplied-file inspection and deterministic calculations only; no inference, simulation or predictive generation",
+      "pilot_settings_text": "Pilot settings: no simulation, fitting, predictive generation, model-service calls, or new agent sessions. Review the supplied inputs and installed skills/package documentation; prepare the requested deliverable within the scenario's restrictions.",
+      "stdin_sha256": "f144c7351911545a9f07b8f3002d9865ded3f0193505023926f33f8194265895",
+      "materialized_json_input_sha256": {}
+    }
+  ],
+  "planned_order": [
+    {
+      "run_id": "pilot-01",
+      "scenario": "bambi-gaussian",
+      "arm": "baseline"
+    },
+    {
+      "run_id": "pilot-02",
+      "scenario": "bambi-gaussian",
+      "arm": "treatment"
+    },
+    {
+      "run_id": "pilot-03",
+      "scenario": "bambi-survey",
+      "arm": "treatment"
+    },
+    {
+      "run_id": "pilot-04",
+      "scenario": "bambi-survey",
+      "arm": "baseline"
+    },
+    {
+      "run_id": "pilot-05",
+      "scenario": "hssm-deferred",
+      "arm": "baseline"
+    },
+    {
+      "run_id": "pilot-06",
+      "scenario": "hssm-deferred",
+      "arm": "treatment"
+    },
+    {
+      "run_id": "pilot-07",
+      "scenario": "hssm-runtime",
+      "arm": "treatment"
+    },
+    {
+      "run_id": "pilot-08",
+      "scenario": "hssm-runtime",
+      "arm": "baseline"
+    },
+    {
+      "run_id": "pilot-09",
+      "scenario": "hssm-misalignment",
+      "arm": "baseline"
+    },
+    {
+      "run_id": "pilot-10",
+      "scenario": "hssm-misalignment",
+      "arm": "treatment"
+    },
+    {
+      "run_id": "pilot-11",
+      "scenario": "hssm-diagnostic-review",
+      "arm": "treatment"
+    },
+    {
+      "run_id": "pilot-12",
+      "scenario": "hssm-diagnostic-review",
+      "arm": "baseline"
+    }
+  ],
+  "controller_policy": {
+    "timeout": "Enforce each wall-clock limit in a controller that terminates the CLI process group and its local child commands, retaining partial evidence. No timeout rerun. An already-dispatched service request may still complete.",
+    "token_or_money_cap": "The inspected CLI help exposes no verified per-run token or money cap. Do not promise one; collect usage from actual event output if provided. This remains a separate approval consideration.",
+    "output_capture": "Capture --json stdout and stderr outside the next run's workspace. Record exit status, duration, complete/timeout/error classification and the requested/reported model metadata without adding fabricated metrics.",
+    "analysis_threads": "Request one worker process and set numerical-library thread limits in the fresh environment; the absence of a verified OS CPU quota must not be described as a hard hardware guarantee."
+  },
+  "remaining_launch_gates": [
+    "Review final local runtime validation, including the shared calibration correction; this manifest does not assert that new skill behavior has been evaluated.",
+    "Extract the two Bambi input CSVs and the exact generation metadata above into standalone fixtures. Verify their generation-only recipes if needed; do not run notebooks or refit models. Preserve the original eval metadata and use the adapted prompts here.",
+    "Refresh every payload and environment-requirements hash after the shared calibration helper/reporting correction and final runtime evidence are committed; the current hashes are a draft snapshot.",
+    "Prepare fresh temporary workspaces outside Spine with only the intended per-arm files. Preserve execution-policy rules. Record native CLI catalog/tool/host-read isolation limits; a new OS account or container is not required by this preparation manifest.",
+    "If a local-only initial prompt/catalog rendering command can be established from local help or source, inspect its output before launch. Current debug prompt-input help does not establish offline behavior or parity with exec --ignore-user-config, so it has not been run. Do not call it merely to test whether it contacts a service.",
+    "Review optional feature settings and any observable extra global skills, user/project instructions, MCP or account tools. Describe unresolved contamination risks explicitly; feature flags and prompt instructions are not a verified hard isolation boundary.",
+    "Present the finalized exact task texts, intended file allowlist, model settings, maximum 12-run budget and remaining isolation/cost limitations for the user's separate transmission authorization. No run is authorized by this preparation manifest; a subsequent runtime preflight failure stops that run."
+  ],
+  "materialized_json_serialization": "UTF-8 JSON with sorted keys, two-space indentation, ensure_ascii=False, and one trailing newline; use this for environment.json and each materialized_json_inputs value.",
+  "workspace_preparation": {
+    "location": "Fresh /tmp/baygent-agent-round-1/<run_id> directory, outside Spine and any repository instruction ancestry; create results/ before launch",
+    "copy_policy": "Copy only this arm's allowlisted skill payload and scenario inputs; materialize only the specified JSON. Do not symlink a repository or copy evaluator metadata, notebooks or reference outputs.",
+    "provisioning_status": "Not executed",
+    "read_scope_limit": "A fresh workspace and workspace-write sandbox do not prove host read isolation. Document the actual catalog/tool/read scope available in the authorized CLI run instead of claiming a hard allowlist."
+  },
+  "analysis_environment_settings": {
+    "MPLBACKEND": "Agg",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "per_run_cache_paths": "Set MPLCONFIGDIR, XDG_CACHE_HOME and PYTENSOR_FLAGS base_compiledir to distinct evaluator-created cache directories for this run, outside other run workspaces.",
+    "PATH": "Prepend the provisioned scenario environment bin directory; retain required system/CLI tool paths only. Record the resolved Python and Codex executable paths before launch.",
+    "inheritance": "Do not pass unrelated service tokens or task variables to analysis child commands. Keep HOME and CODEX_HOME unchanged and preserve execution rules; native CLI authentication remains managed by the existing supported setup and is not copied into payload files."
+  }
+}
