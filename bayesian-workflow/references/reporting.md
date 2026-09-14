@@ -156,11 +156,11 @@ The posterior predictive distribution shows what the fitted model implies the da
 
 ![PIT ECDF](pit_ecdf.png)
 
-The PIT-ECDF plot tests whether the model's predictive distribution is calibrated — that is, whether stated credible levels match empirical coverage. The empirical CDF of probability integral transform values should fall within the simultaneous confidence bands. Lines outside the bands above the diagonal indicate under-confident predictions (intervals wider than they should be); lines below indicate over-confident predictions (intervals too narrow).
+The PIT plot shows the empirical CDF of probability integral transform values minus the uniform CDF (ΔECDF), with a horizontal zero line as the uniform reference. Departures can reflect location bias or dispersion errors; their shape matters. Modern ArviZ output uses a p-value annotation from the `pot_c` test; older supported output may use a simulated reference envelope. Report the method and settings recorded in `calibration.json` and interpret the corresponding plot. Discrete outcomes use randomized PIT values; for a binary choice check, label the response coding and randomization explicitly. Treat fitted-data marginal PPC-PIT as model criticism: passing these checks does not establish joint, conditional or held-out calibration.
 
 ![Coverage](pit_coverage.png)
 
-The coverage plot tests the same idea in coverage units: it asks whether nominal central credible intervals (50%, 80%, 95%) actually contain the stated fraction of the observed data. A well-calibrated model lies on the diagonal.
+The coverage plot applies the same ΔECDF display to coverage-transformed PIT values. In modern ArviZ output, its x-axis gives nominal central predictive coverage in percent and its y-axis gives the ECDF difference, with agreement represented by the horizontal zero line. Interpret its p-value annotation or legacy reference envelope using the recorded method, alongside the original PIT check. Coverage deviations describe this predictive check and do not by themselves identify a unique model defect or demonstrate performance on new observations.
 
 **Assessment:** <1–2 sentences from `check_diagnostics()` calibration section — well-calibrated, over-confident, or under-confident, with the mean coverage deviation if available.>
 
