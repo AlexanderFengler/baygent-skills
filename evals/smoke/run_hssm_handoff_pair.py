@@ -66,12 +66,31 @@ def run_session(argv, workspace, env, evidence, timeout):
     completed = [e for e in events if e.get("type") == "turn.completed"]
     if completed:
         result["usage"] = completed[-1].get("usage")
+    errors = [e.get("message") for e in events if e.get("type") == "error"]
+    result["errors"] = errors
+    if "shared rollout token budget exhausted" in errors:
+        result["status"] = "budget_exhausted"
     result["thread_ids"] = [
         e["thread_id"] for e in events if e.get("type") == "thread.started"
     ]
     result["model_turn_completed"] = bool(completed)
     write_json(evidence / "execution.json", result)
     return result
+
+
+def summarize_results(results):
+    complete = all(r["usage"] is not None for r in results)
+    known_total = sum(
+        r["usage"]["input_tokens"] + r["usage"]["output_tokens"]
+        for r in results
+        if r["usage"] is not None
+    )
+    return {
+        "runs": results,
+        "reported_input_plus_output_tokens": known_total if complete else None,
+        "known_reported_tokens_subtotal": known_total,
+        "usage_complete": complete,
+    }
 
 
 def prepare(repo, root, env_bin):
@@ -237,11 +256,7 @@ def execute(root):
             total += usage["input_tokens"] + usage["output_tokens"]
         write_json(
             root / "results.json",
-            {
-                "runs": results,
-                "reported_input_plus_output_tokens": total,
-                "usage_complete": all(r["usage"] is not None for r in results),
-            },
+            summarize_results(results),
         )
         print(
             json.dumps(
