@@ -1,0 +1,17 @@
+{
+  "eval_id": 2,
+  "eval_name": "ddm-runtime",
+  "prompt": "Please carry out an HSSM analysis of the frozen synthetic trials in data.csv; dataset_metadata.json describes how they were generated. I want a flat analytical drift-diffusion model with uncertainty on v, a, z and t, and an assessment of how well it reproduces reaction times and choices. Treat the condition column as a display label. Use the supplied HSSM 0.5.0 environment, no regressions or lapse mixture, 200 prior-predictive draws, and two MCMC chains with 1,000 tuning and 1,000 retained draws each, using one process and a fixed reported seed. Sampling and predictive generation are authorized for this scenario, but please use the supplied observations rather than generate a replacement dataset. Inspect the prior predictions before fitting. Save the analysis code, artifacts, and a Bayesian report with the evidence, uncertainty, and any unresolved concerns. Do not increase the sampling budget or change the seed to improve diagnostic results without asking.",
+  "assertions": [
+    "Uses the supplied frozen CSV without regenerating, selectively removing or silently recoding observations; verifies its declared seconds units, -1/+1 response meaning, row count and the constant display-only condition",
+    "Constructs the supported HSSM 0.5.0 flat analytical DDM with no lapse mixture and records the actual dependency versions, fixed seed and requested inference budget",
+    "Specifies and inspects effective priors for v, a, z and t on their natural scales; explains the boundary convention and an explicit t support policy below the minimum retained RT, identifying any observed-data dependence",
+    "Executes the authorized native prior-predictive and sampling workflow, makes a substantive prior assessment and saves the returned posterior before downstream calculations; a plan alone does not satisfy this runtime scenario",
+    "Uses native HSSM posterior prediction and joint-trial log likelihood with supported arguments; preserves the original sample and trial coordinates and does not claim that the MCMC seed alone makes HSSM 0.5.0 posterior predictions reproducible",
+    "Verifies complete, correctly parameterized scalar prior densities before sensitivity, including sample-coordinate compatibility with the pinned HSSM/PyMC APIs; retains failed checks rather than silently relabeling or bypassing them",
+    "Retains the authoritative RT/choice pair and one joint likelihood value per original trial; any scalar RT and response==+1 calibration views keep the component mapping and sample/trial axes, omit joint likelihood and use fitted-data marginal PPC-PIT",
+    "Assesses choice proportions and RT distributions conditional on each response, including sparse or absent-choice replicates; does not infer joint, conditional or held-out calibration from two marginal assessments",
+    "Uses the shared Bayesian assessment implementation for available convergence, LOO, sensitivity and calibration evidence, preserving poor or unavailable results and translating next steps into actions appropriate to this DDM",
+    "Writes the canonical report with actual saved figures and numerical evidence, records unresolved software or statistical failures, and does not require every interval to contain generating truth or present a single synthetic dataset as parameter recovery"
+  ]
+}

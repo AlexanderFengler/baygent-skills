@@ -1,0 +1,22 @@
+{
+  "fixture_kind": "Literal, hand-authored synthetic summaries; no simulation, sampling or numerical diagnostics were run to create these values",
+  "model_context": {
+    "package": "HSSM",
+    "release": "0.5.0",
+    "model": "ddm",
+    "likelihood": "analytical",
+    "parameter_scope": "Flat scalar v, a, z and t; no regressions or lapse mixture",
+    "rt_units": "seconds",
+    "response_meaning": {"-1": "lower boundary", "1": "upper boundary"},
+    "n_observations": 100
+  },
+  "files": {
+    "diagnostics.json": "Joint-model convergence and LOO-status schema consumed by bayesian-workflow/scripts/check_diagnostics.py",
+    "psense.json": "Parameter-to-fields sensitivity schema; the source density arrays are not supplied",
+    "rt_calibration.json": "Fitted-data marginal RT PPC-PIT summary",
+    "choice_calibration.json": "Fitted-data marginal response==+1 PPC-PIT summary",
+    "domain_checks.csv": "Observed statistics and central 94% intervals of literal replicated statistics; RT quantiles are conditional on response"
+  },
+  "not_supplied": ["raw observations", "posterior draws", "log_prior", "log_likelihood", "prior-predictive output", "figures"],
+  "interval_meaning": "lower_94 and upper_94 summarize replicated statistics, not parameter HDIs; replicates_with_quantity omits absent-choice replicates only for conditional RT quantiles"
+}

@@ -1,0 +1,14 @@
+{
+  "convergence": {
+    "all_ok": false,
+    "method": "literal fixture",
+    "rhat": {"ok": false, "max": 1.18, "problematic_params": ["v", "a"]},
+    "ess_bulk": {"ok": false, "min": 43, "problematic_params": ["v", "a"]},
+    "ess_tail": {"ok": false, "min": 28, "problematic_params": ["v", "z"]},
+    "divergences": {"ok": false, "count": 32, "pct": 1.6},
+    "bfmi": {"ok": false, "failed_chains": [1]},
+    "treedepth": {"ok": true, "n_max": 0, "pct": 0.0}
+  },
+  "loo": {"computed": false, "error": "Joint-trial LOO was not computed for this review fixture; no pointwise likelihood arrays are supplied."},
+  "posterior_predictive": {"available": true, "variables": ["rt,response"], "observed_variables": ["rt,response"], "note": "Only summaries of predictive checks are included in this review extract."}
+}

@@ -1,0 +1,7 @@
+stage,choice,quantity,observed,predicted_mean,lower_94,upper_94,replicates_with_quantity,total_replicates
+posterior_predictive,-1,choice proportion,0.5,0.49,0.38,0.61,200,200
+posterior_predictive,1,choice proportion,0.5,0.51,0.39,0.62,200,200
+posterior_predictive,-1,RT q=0.5 (s),0.65,0.75,0.55,0.95,200,200
+posterior_predictive,1,RT q=0.5 (s),0.7,0.8,0.6,1.0,200,200
+posterior_predictive,-1,RT q=0.9 (s),1.0,1.8,1.45,2.2,200,200
+posterior_predictive,1,RT q=0.9 (s),1.1,1.9,1.5,2.3,200,200

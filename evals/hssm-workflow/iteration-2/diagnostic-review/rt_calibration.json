@@ -1,0 +1,12 @@
+{
+  "variable": "rt",
+  "n_observations": 100,
+  "pit_method": "ppc_pit",
+  "assessment": {
+    "pit_ecdf_inside_bands": false,
+    "coverage_ecdf_inside_bands": false,
+    "well_calibrated": false,
+    "mean_coverage_deviation": 0.12,
+    "calibration_diagnosis": "under-confident (predictions too uncertain)"
+  }
+}
