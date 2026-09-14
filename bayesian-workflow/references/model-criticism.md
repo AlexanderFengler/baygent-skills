@@ -71,41 +71,34 @@ High Pareto k observations are often outliers or observations the model fits poo
 
 ## Calibration assessment
 
-Calibration is mandatory for every model, not optional. A well-calibrated model's X% credible intervals should contain the true value about X% of the time. Run this even for binary and count data — ArviZ handles all data types correctly.
+Predictive calibration concerns probabilities and intervals for observations under the stated evaluation scheme. It is not a frequency guarantee for a fixed parameter's credible interval. Check predictive PIT and coverage when the necessary artifacts are available; record unavailable checks explicitly. Fitted-data marginal PPC-PIT is model criticism and does not establish joint, conditional or held-out calibration.
 
 ### How to run calibration
 
-Always use ArviZ for calibration plots. Don't write custom calibration code — ArviZ's `plot_ppc_pit` handles continuous, binary, and count data correctly out of the box:
+Use [the shared calibration helper](../scripts/calibration_check.py) for both numerical assessment and plots. It retains ArviZ's PIT/statistics APIs while avoiding affected plotting wrappers that transform coverage twice or rescale the ECDF grid. Other native ArviZ plots, such as `plot_ppc_dist`, remain appropriate.
 
-```python
-# ArviZ 1.0+ (arviz_plots)
-import arviz_plots as azp
+Set `BAYESIAN_SKILL_DIR` to the installed directory containing this skill's `SKILL.md`, and `RESULTS` to the analysis result directory. Replace `obs` with the observed variable's name:
 
-# PPC-PIT: compares posterior predictive to observed
-azp.plot_ppc_pit(idata)
-
-# LOO-PIT: leave-one-out calibration (more robust, preferred when LOO is available)
-azp.plot_loo_pit(idata)
+```bash
+python "$BAYESIAN_SKILL_DIR/scripts/calibration_check.py" \
+  --idata "$RESULTS/inference_data.nc" --var-name obs \
+  --output "$RESULTS/calibration.json" --save-plots \
+  --plot-dir "$RESULTS" --uniformity-method auto
 ```
 
-Refer to [this guide](https://arviz-devs.github.io/EABM/Chapters/Prior_posterior_predictive_checks.html#coverage) for detailed coverage interpretation — it's a treasure trove for the whole Bayesian workflow.
+Keep observation and prediction coordinates aligned and preserve discrete integer/boolean dtypes so binary/count PIT randomization is applied. For binary choices, state the response coding and that the PIT is randomized. Feed the resulting JSON to `scripts/check_diagnostics.py` with the convergence diagnostics, as described in the skill's utility sequence.
 
-### Coverage calibration
+`auto` selects `pot_c` when the modern ArviZ PIT and uniformity-test APIs are available; otherwise it uses legacy simulated envelopes. Report `pit_method`, `uniformity_method`, `coverage_transform` and the assessment's significance level. For `pot_c`, report the PIT and coverage p-values; the legacy band fields are null because no envelope was computed. For `envelope`, report the envelope results; p-values are null. The default `--ci-prob 0.99` corresponds to a uniformity significance level of 0.01. Do not describe a missing result as a passed check or swap methods merely to obtain a better rating.
 
-**Interpretation**:
-- If empirical coverage ≈ nominal → well-calibrated
-- If the difference is positive, the model is under-confident: the predictions have a wider spread than the data – they are too uncertain.
-- If the difference is negative, the model is over-confident: the predictions have a narrower spread than the data – they are too certain.
+For LOO-PIT, add `--loo-pit` and use a separate output JSON/plot directory. Require a matching pointwise likelihood for the same observed variable and prediction unit, and assess PSIS reliability. Do not attach a joint multi-component likelihood to a scalar marginal merely to enable LOO-PIT. ArviZ-stats 1.2.0 can raise `ValueError('No p-values below 0.5 found')` during native LOO-PIT processing. Preserve that error and report LOO-PIT as unavailable; do not silently relabel a PPC-PIT result as LOO-PIT or treat the upstream failure as evidence of poor predictive fit.
 
-### PIT histograms (probability integral transform)
+### PIT and coverage interpretation
 
-A sharper calibration check. If the model is calibrated, PIT values should be uniform. Refer to [this section](https://arviz-devs.github.io/EABM/Chapters/Prior_posterior_predictive_checks.html#pit-ecdfs) for how to do it, using the new ArviZ.
+The helper prepares one raw PIT dataset for assessment and plotting. Coverage uses `2 * abs(PIT - 0.5)` exactly once. Both figures show the unscaled difference `ΔECDF(u) = F_n(u) - u` on the probability axis, with the horizontal zero line as reference. The coverage x-axis labels nominal central predictive coverage in percent; the y-axis remains the ECDF difference. The displayed p-value or envelope refers to that plotted check.
 
-**Patterns**:
-- U-shaped → underdispersed (intervals too narrow)
-- Inverted-U → overdispersed (intervals too wide)
-- Skewed → systematic bias in location
-- Uniform → well-calibrated
+Positive coverage ΔECDF means empirical central coverage exceeds nominal coverage; negative values mean it falls short. An average can hide departures that cancel, and neither direction identifies a unique cause. Inspect the full PIT and coverage curves together with domain-specific predictive checks. A passed uniformity check means this check did not detect a departure at its stated level, not that calibration or parameter recovery has been established.
+
+For held-out claims, define the prediction unit and evaluate observations excluded from fitting, or use a valid LOO approximation with its limitations reported. Marginal PIT uniformity alone cannot establish calibration within covariate groups or of a joint response distribution.
 
 ## Simulation-based calibration (SBC)
 
@@ -155,7 +148,7 @@ Look for: trends (missed nonlinearity), fans (heteroscedasticity), clusters (mis
 
 ## Classification and ordinal model evaluation
 
-Standard PPC and calibration checks apply to classification models — **always run `plot_ppc_pit` first** (see Calibration assessment above). The metrics below supplement PPC-PIT with classification-specific numeric summaries. Note: `sklearn.metrics.brier_score_loss` exists but is binary-only; there is no standard package for multiclass ECE or categorical RPS, so we provide lightweight helpers:
+Standard PPC and calibration checks apply to classification models — **use the shared `scripts/calibration_check.py` helper** (see Calibration assessment above). The metrics below supplement PPC-PIT with classification-specific numeric summaries. Note: `sklearn.metrics.brier_score_loss` exists but is binary-only; there is no standard package for multiclass ECE or categorical RPS, so we provide lightweight helpers:
 
 ### Metrics for categorical/ordinal outcomes
 
