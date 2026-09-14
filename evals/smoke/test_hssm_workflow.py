@@ -1,7 +1,6 @@
 """HSSM adapter contracts and an explicitly gated future integration run.
 
-These tests are authored but execution is deferred. Adapter fixtures are literal
-arrays, not simulator output. Run them later with pytest in the modern analysis
+Adapter fixtures are literal arrays, not simulator output. Run them with pytest in the modern analysis
 environment. The full notebook test additionally requires BAYGENT_TEST_HSSM=1;
 that opt-in permits its simulation and declared full sampling budget. Collection
 does not import HSSM or run the notebook. Passing these tests would establish
@@ -12,6 +11,8 @@ import importlib.util
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -249,6 +250,67 @@ def test_saved_scalar_artifacts_match_values_and_document_scope(
             xr.testing.assert_equal(restored, expected[name])
             assert set(restored.children) == {"observed_data", "posterior_predictive"}
     xr.testing.assert_identical(paired, original)
+
+
+@pytest.mark.parametrize("malformed", [False, True])
+def test_installed_cli_preserves_data_and_rejects_invalid_input(
+    paired, tmp_path, malformed
+):
+    installed = tmp_path / "skills"
+    for name in ("hssm-workflow", "bayesian-workflow"):
+        shutil.copytree(REPO / name, installed / name)
+    input_path = tmp_path / "paired.nc"
+    if malformed:
+        paired["posterior_predictive"][RESPONSE].values[-1, -1, -1, 1] = 0
+    paired.to_netcdf(input_path)
+    output = tmp_path / "output"
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(installed / "hssm-workflow/scripts/prepare_rt_choice.py"),
+            "--idata",
+            str(input_path),
+            "--output-dir",
+            str(output),
+        ],
+        cwd=tmp_path,
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if malformed:
+        assert result.returncode != 0
+        assert "response labels" in result.stderr
+        assert not (output / "manifest.json").exists()
+        return
+    assert result.returncode == 0, result.stderr
+    manifest = json.loads((output / "manifest.json").read_text())
+    assert manifest["n_observations"] == 3
+    for name, expected in (("rt", [0.4, 0.8, 1.2]), ("choice", [0, 1, 0])):
+        with xr.open_datatree(output / manifest["views"][name]["artifact"]) as tree:
+            assert set(tree.children) == {"observed_data", "posterior_predictive"}
+            np.testing.assert_array_equal(tree["observed_data"][name], expected)
+            np.testing.assert_array_equal(
+                tree["posterior_predictive"][OBS], [101, 108, 113]
+            )
+    assert not (installed / "bambi-workflow").exists()
+
+
+def test_cli_entrypoint_uses_explicit_paths(adapter, paired, tmp_path, monkeypatch):
+    source = tmp_path / "source.nc"
+    paired.to_netcdf(source)
+    output = tmp_path / "views"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["prepare_rt_choice", "--idata", str(source), "--output-dir", str(output)],
+    )
+    adapter.main()
+    manifest = json.loads((output / "manifest.json").read_text())
+    assert manifest["views"]["choice"]["quantity"] == "Marginal event response == +1"
 
 
 @pytest.mark.skipif(
