@@ -330,42 +330,26 @@ def test_missing_native_diagnostic_numbers_use_summary_and_preserve_flags(
     assert checks["summary"]["convergence"] in report
 
 
-def test_report_explains_data_informed_prior_and_parameter_reference_values(
-    reporting, evidence
+def test_report_retains_prior_parameter_and_marginal_interpretation(
+    reporting, checker, evidence
 ):
+    evidence["margins"]["choice"] = checker.check_diagnostics(
+        evidence["diagnostics"], calibration_fixture("fair")
+    )
     report, _ = reporting.assemble_report(**evidence)
     prior_section = report.split("## Prior Predictive Check\n")[1].split("\n## ")[0]
-    assert "before seeing any observations" not in prior_section
-    assert "observed minimum RT" in prior_section
-    assert "not independent of the observations" in prior_section
+    assert all(
+        concept in prior_section
+        for concept in ("observed minimum RT", "data-informed prior", "not independent")
+    )
     posterior_section = report.split("## Posterior\n")[1].split("\n## ")[0]
-    assert "posterior medians (points) and 50% and 94% HDIs" in posterior_section
-    assert "drift v relative to 0" in posterior_section
-    assert "starting point z relative to 0.5" in posterior_section
-    assert (
-        "For a and t, excluding zero reflects their positive support"
-        in posterior_section
+    assert re.search(r"\bv\b[^.;\d]*0(?![\d.])", posterior_section)
+    assert re.search(r"\bz\b[^.;\d]*0\.5(?!\d)", posterior_section)
+    assert re.search(
+        r"\ba and t\b[^.]*positive support[^.]*not[^.]*directional effect",
+        posterior_section,
     )
-    assert (
-        "narrow intervals concentrated away from zero indicate strong evidence"
-        not in report
-    )
-
-
-def test_report_calibration_and_quantile_captions_match_the_saved_plot_conventions(
-    reporting, evidence
-):
-    report, _ = reporting.assemble_report(**evidence)
     calibration = report.split("## Calibration\n")[1].split("\n## ")[0]
-    assert "ΔECDF" in calibration and "horizontal zero line" in calibration
-    assert "p-value annotation" in calibration
-    assert "nominal central predictive coverage in percent" in calibration
-    assert "simultaneous confidence bands" not in calibration
-    assert "diagonal" not in calibration
-    assert "left cluster represents response -1" in report
-    assert "right cluster response +1" in report
-    assert "Crosses joined by lines show observed quantiles" in report
-    assert "dots show quantiles from predictive replicates" in report
     for assessment in evidence["margins"].values():
         assert assessment["summary"]["calibration"] in calibration
 

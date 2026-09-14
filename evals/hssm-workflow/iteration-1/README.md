@@ -9,6 +9,10 @@ historical development commits; they are not agent-performance benchmarks.
 The recorded full export and saved-artifact suite passed 171 tests (139 HSSM
 and 32 shared calibration checks), with one intentional duplicate-fit skip and
 four strict expected failures for native sample-coordinate defects.
+That broader suite is [archived on the development fork](https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/hssm-workflow/iteration-1/runtime/README.md).
+The maintained suite now focuses on our adapter, notebook, reporting and compact
+prior/likelihood integration contracts; it excludes saved-export auditing and
+broad dependency certification. Historical totals are not current suite counts.
 
 The [skill](../../../hssm-workflow/SKILL.md) depends directly on
 `bayesian-workflow`. Its adapter preserves paired RT/choice labels and creates

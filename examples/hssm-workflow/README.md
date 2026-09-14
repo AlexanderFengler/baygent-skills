@@ -10,7 +10,7 @@ independent density checks, a full notebook export and saved-artifact checks
 passed on the recorded HSSM 0.5 stack. See the [runtime evidence](../../evals/hssm-workflow/iteration-1/runtime/README.md)
 for commands, resolved dependencies, figures and actual assessments. This is
 one synthetic teaching dataset, not a parameter-recovery experiment or a
-joint-calibration guarantee. Paired agent and trigger evaluations have not run.
+joint-calibration guarantee. No paired agent or trigger evaluation has completed.
 The corrected report retains an RT marginal calibration flag; passing the
 software checks does not make every scientific diagnostic pass.
 
@@ -132,18 +132,26 @@ ruff check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm*.p
 ruff format --check hssm-workflow/scripts examples/hssm-workflow evals/smoke/test_hssm*.py
 ```
 
-[Validation status](../../evals/hssm-workflow/iteration-1/README.md) distinguishes
-the completed adapter/CLI, domain-summary, execution-gate, report-failure,
-numerical-density and full-run checks from pending paired agent and trigger
-evaluations. The numerical suite uses the separate compiled `hddm_wfpt` reference
-recorded in the runtime requirements. The ordinary adapter suite retains an
-opt-in full-fit integration test; validation instead ran the full HTML export
-once successfully and checked its saved artifacts without a duplicate fit.
+Run the maintained software checks in the HSSM environment:
 
-Four strict expected failures document two native density-coordinate defects
-across two `t`-support cases. The notebook rejects nondefault chain/draw labels
-before density recomputation; the scalar adapter still preserves arbitrary
-unique labels. HSSM's QP call also needs the documented release workaround for
-`quantile_by="response"` and explicit `ax`; a native literal-data regression
-checks the actual plotted points. See the runtime record for exact commands,
-test totals and the preserved failed export attempts.
+```bash
+python -m pytest -q evals/smoke/test_hssm*.py
+```
+
+These cover our adapter/CLI, domain summaries, execution gates, report failures,
+and the example's declared priors/support and joint-likelihood handoff. The
+numerical handoff uses the separate compiled `hddm_wfpt` reference recorded in
+the runtime requirements. Ordinary checks do not fit; `BAYGENT_TEST_HSSM=1`
+explicitly opts into a full notebook integration run.
+
+[Validation status](../../evals/hssm-workflow/iteration-1/README.md) separates
+these maintained checks from historical full-export validation and the
+behavioral evaluation planned for a follow-up PR. Broader HSSM/PyMC numerical
+certification and the saved-export audit are
+[preserved on the development fork](https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/hssm-workflow/iteration-1/runtime/README.md).
+Their historical totals are not the current suite's test count.
+
+The notebook still rejects nondefault chain/draw labels before native density
+recomputation, and the scalar adapter preserves arbitrary unique labels. The
+notebook guard and native QP plotting workaround have local regression checks;
+we do not duplicate the dependencies' coordinate-defect tests here.

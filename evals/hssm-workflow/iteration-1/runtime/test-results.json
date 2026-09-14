@@ -69,5 +69,6 @@
       "reason": "HSSM simulation and full notebook integration require explicit opt-in; execution is deferred."
     }
   ],
-  "complete_test_case_listing": "See archived_full_record; passing case details omitted from this compact summary."
+  "complete_test_case_listing": "See archived_full_record; passing case details omitted from this compact summary.",
+  "maintained_suite_note": "This historical full-suite record includes the now-archived saved-export audit and broader numerical/coordinate checks. Its test paths and hashes refer to the same archive revision as archived_full_record, not the current checkout; do not use its totals as the current suite count."
 }

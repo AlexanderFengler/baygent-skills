@@ -8,12 +8,6 @@
   "runtime_results": {
     "status": "validated",
     "evidence": "runtime/README.md",
-    "tests": {
-      "passed": 171,
-      "skipped": 1,
-      "strict_xfailed": 4,
-      "scope": "139 HSSM checks plus 32 shared calibration regressions"
-    },
     "scope": "One flat analytical DDM teaching workflow on Python 3.12.13/macOS arm64; uv-installed HSSM 0.5.0, Bambi 0.19.0, PyMC 6.1.0, ArviZ 1.2.0 and NumPy 2.4.6 with system Graphviz.",
     "checks": [
       "deterministic adapter and installed CLI contracts",
@@ -25,11 +19,18 @@
     "limitations": [
       "The conda environment recipe itself was not executed.",
       "Corrected RT calibration is fair: the coverage-transformed PIT test rejects uniformity (p=3.1641e-15); ordinary RT PIT and both choice tests pass. The flag remains in the report.",
-      "Native density recomputation is guarded to require default sample coordinates; known defects remain strict expected failures.",
+      "Native density recomputation is guarded to require default sample coordinates; historical dependency failures are archived, and the notebook guard remains tested.",
       "One teaching dataset does not establish parameter recovery or joint, conditional or held-out calibration.",
       "Posterior-predictive draws have no public HSSM random-seed argument.",
       "ArviZ-stats 1.2 can raise for sufficiently uniform LOO-PIT values; errors are propagated, and scalar HSSM views use PPC-PIT only."
-    ]
+    ],
+    "historical_tests": {
+      "passed": 171,
+      "skipped": 1,
+      "strict_xfailed": 4,
+      "scope": "139 HSSM checks plus 32 shared calibration regressions at the recorded development revision; not the current maintained suite"
+    },
+    "maintained_test_scope": "Adapter/CLI, notebook domain calculations and gates, report correctness/failure handling, and compact example prior/support and joint-likelihood checks. Broader dependency and saved-export audits are archived on the development fork."
   },
   "reason": "Runtime validation remains separate from agent performance. The authorized reduced handoff baseline hit its native token-budget guard before finishing; treatment was not started. No completed paired or trigger scores or improvement claims are available.",
   "behavior_attempt": {
