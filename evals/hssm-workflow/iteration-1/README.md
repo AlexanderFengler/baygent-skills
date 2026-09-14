@@ -5,7 +5,9 @@ The flat analytical-DDM workflow passed deterministic contracts, independent
 numerical density checks and a full synthetic notebook/report run. See the
 [runtime evidence](runtime/README.md) for exact commands, source hashes,
 resolved requirements, test results, figures and raw assessments. Paired agent
-and trigger evaluations have not executed; their benchmark fields remain null.
+and trigger evaluations have no completed results; their benchmark fields remain null.
+A later [budgeted baseline attempt](../iteration-3-handoff-pair/README.md) stopped
+before producing its review, and the treatment session was not started.
 The final combined suite recorded **171 passed, one intentionally skipped and
 four strict expected failures**. The corrected canonical HTML export succeeded
 with the original model, seed and sampling budget.

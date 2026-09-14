@@ -1,0 +1,4 @@
+observed_data: shape=(3, 2), dtype=float64, finite=True
+posterior_predictive: shape=(1, 2, 3, 2), dtype=float64, finite=True
+log_likelihood: shape=(1, 2, 3), dtype=float64, finite=True
+Expected alignment failure: AlignmentError: cannot align objects with join='exact' where index/labels/sizes are not equal along these coordinates (dimensions): '__obs__' ('__obs__',)

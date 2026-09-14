@@ -1,5 +1,10 @@
 # Paired agent pilot — transmission and runner manifest
 
+A separately authorized [reduced two-session pilot](hssm-workflow/iteration-3-handoff-pair/README.md)
+was attempted after the user requested lower token use. Its baseline stopped at
+the native token budget before producing a review; treatment did not start.
+This original 12-session manifest remains a historical proposal, not launch authorization.
+
 **Prepared only; not authorized to launch.** The executable settings and exact
 prompt/input definitions are in
 [agent-evaluation-round-1.json](agent-evaluation-round-1.json). No agent run,

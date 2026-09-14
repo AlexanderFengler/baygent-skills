@@ -31,5 +31,12 @@
       "ArviZ-stats 1.2 can raise for sufficiently uniform LOO-PIT values; errors are propagated, and scalar HSSM views use PPC-PIT only."
     ]
   },
-  "reason": "Local runtime validation is recorded separately from agent performance. Paired model-service and trigger scenarios are prepared but have not executed; no benchmark grades or improvement claims are available."
+  "reason": "Runtime validation remains separate from agent performance. The authorized reduced handoff baseline hit its native token-budget guard before finishing; treatment was not started. No completed paired or trigger scores or improvement claims are available.",
+  "behavior_attempt": {
+    "status": "incomplete_budget_exhausted",
+    "evidence": "../iteration-3-handoff-pair/README.md",
+    "sessions_started": 1,
+    "sessions_completed": 0,
+    "pair_completed": false
+  }
 }

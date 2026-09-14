@@ -1,0 +1,93 @@
+{
+  "status": "incomplete_budget_exhausted",
+  "pair_completed": false,
+  "source_commit": "90b1bab95df1d1907e39e126b905440be394f2e9",
+  "runner_sha256": "2296f8c3df326c54ec1976df09c79c36ea52d7707e372f241e9c229ef3d7e5b5",
+  "maximum_sessions_authorized": 2,
+  "sessions_started": 1,
+  "sessions_completed": 0,
+  "run_01": {
+    "arm": "baseline",
+    "seconds": 46.83238766697468,
+    "returncode": 1,
+    "native_error": "shared rollout token budget exhausted",
+    "configured_token_target": 25000,
+    "budget_guard_activated": true,
+    "exact_input_tokens": null,
+    "exact_output_tokens": null,
+    "exact_total_tokens": null,
+    "usage_event_emitted": false,
+    "task_report_produced": false,
+    "completed_local_command_groups": 6
+  },
+  "run_02": {
+    "arm": "treatment",
+    "status": "not_started",
+    "reason": "Controller stopped on first-session failure and unavailable usage."
+  },
+  "comparison_result": null,
+  "behavioral_score": null,
+  "partial_observations": [
+    "Acknowledged the fixture is hand-authored synthetic data.",
+    "Explicitly noticed differing observed and predictive trial IDs.",
+    "Reconstructed paired xarray arrays with the expected dimensions.",
+    "Saved the expected exact-alignment failure without repairing or changing the inputs."
+  ],
+  "completion_limit": "No results/review.md or final response was produced. Partial evidence cannot substitute for a finished review or a with/without-skill comparison.",
+  "usage_limit": "The native guard reported exhaustion at its configured25000-token target. The failed turn emitted no usage event; the exact cumulative input, cached, output and reasoning totals are unknown. Original controller zero was an incomplete known subtotal, not actual consumption; the runner now emits null for unknown totals.",
+  "action_audit": {
+    "recorded_commands_within_intended_scope": true,
+    "source_and_fixture_hashes_unchanged": true,
+    "observed_fitting": false,
+    "observed_simulation": false,
+    "observed_predictive_generation": false,
+    "observed_additional_model_or_agent_calls": false,
+    "observed_reads_of_other_arm_or_spine_context": false,
+    "recorded_source_lookup": "Installed HSSM package only, in the declared environment.",
+    "initial_full_catalog_verified": false,
+    "hard_host_read_isolation_verified": false
+  },
+  "artifact_hashes": {
+    "execution-manifest.json": {
+      "original_sha256": "b732111b055eee91f45098ad4dcfbb5f97bc82a52f42086483ba8f9022bf98be",
+      "published_sha256": "784cff10d4383c2627ba93289217f9777be4931ae4d700f19be3b324c231a312"
+    },
+    "original-controller-results.json": {
+      "original_sha256": "b0e963575745368770538815195a15b9a37cfdd7f9f6e202f706c32f39dde7e9",
+      "published_sha256": "2adf5f8d4b81546df25503fbdcd906d01a566293a00e36646da59190ba877d9a"
+    },
+    "run-01/events.jsonl": {
+      "original_sha256": "3ec5494d4db96df442ec5a1aeec4beb8d68695ce917bd9560b2184dac8cd8675",
+      "published_sha256": "746120d0f4b7890de81599614c1a6b2a371fd9df823cef9510bf53d105d3b7b5"
+    },
+    "run-01/stderr.txt": {
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "run-01/original-execution.json": {
+      "original_sha256": "b00a1ee600f2a93e6d528fc419d0a2b83e6e45d835013c71a515de84d6a228a4",
+      "published_sha256": "3bf726d963abe4498061b9702d570457557ad499047f00eabfdbb7cf174afb5f"
+    },
+    "run-01/validation.txt": {
+      "original_sha256": "5ee5e2d731e424c7107860ab53bec05ac7ecfce41d5318516754adeb48980a20",
+      "published_sha256": "5ee5e2d731e424c7107860ab53bec05ac7ecfce41d5318516754adeb48980a20"
+    },
+    "prompt.txt": {
+      "original_sha256": "864fd1bc6770b82c1bf449d623c169818819e132967e68bb06740c41190f9db0",
+      "published_sha256": "864fd1bc6770b82c1bf449d623c169818819e132967e68bb06740c41190f9db0"
+    },
+    "environment.json": {
+      "original_sha256": "0d4e033801a2326e6f52792ec3b7bacaa65d9b97adc69dcf6018111ae7a69b51",
+      "published_sha256": "0d4e033801a2326e6f52792ec3b7bacaa65d9b97adc69dcf6018111ae7a69b51"
+    },
+    "predictive_fixture.json": {
+      "original_sha256": "2c732811a5e0727e6212e035d4245d2c6117e0dc8716803174104123b9ffe1c7",
+      "published_sha256": "2c732811a5e0727e6212e035d4245d2c6117e0dc8716803174104123b9ffe1c7"
+    },
+    "controller-tests.xml": {
+      "original_sha256": "02e6639f8fc03a07a4b8780eefd15f28325e828c0760a5eff6201a2512d6d72a",
+      "published_sha256": "02e6639f8fc03a07a4b8780eefd15f28325e828c0760a5eff6201a2512d6d72a"
+    }
+  },
+  "portable_transform": "Workspace/user prefixes replaced in published text; original and published hashes retained. No generated response was rewritten. Literal backslash-n formatting in validation.txt remains unchanged."
+}

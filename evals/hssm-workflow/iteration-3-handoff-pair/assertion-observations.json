@@ -1,0 +1,48 @@
+{
+  "evaluation_complete": false,
+  "grading_method": "Controller inspection against the previously authored assertions; not blind and no additional model-based grading.",
+  "baseline": [
+    {
+      "assertion": "Recognizes that the supplied arrays are a literal review fixture and does not claim to have fitted a model, generated predictive samples or validated real-data inference",
+      "observation_status": "partial_observed",
+      "evidence": "Agent commentary explicitly described the fixture as hand-authored. Recorded commands perform no modeling or predictive generation; no final review exists."
+    },
+    {
+      "assertion": "Reconstructs or reads rt,response as a paired trial outcome with component labels 0 and 1 meaning RT in seconds and response, keeping the chain, draw and __obs__ roles separate",
+      "observation_status": "partial_observed",
+      "evidence": "The deterministic command reconstructs all DataArrays with supplied dimensions and coordinates; printed shapes are (3,2), (1,2,3,2), and (1,2,3)."
+    },
+    {
+      "assertion": "Detects the predictive trial-label mismatch: observed labels are 101, 103 and 108, whereas predictive labels are 103, 101 and 999; identifies both the ordering change and missing/unexpected trial labels",
+      "observation_status": "partial_observed",
+      "evidence": "Agent acknowledged different predictive observation IDs and saved exact-alignment failure; the requested missing/unexpected-label explanation was not completed."
+    },
+    {
+      "assertion": "Stops fitted-data predictive calibration or a matched-row RT/choice assessment until provenance and alignment are repaired; it does not treat equal row counts as sufficient validation",
+      "observation_status": "not_fully_demonstrated",
+      "evidence": "Exact alignment failed and no calibration was run, but the finished review explaining the gate is absent."
+    },
+    {
+      "assertion": "Does not silently sort, truncate, relabel, impute trial 108, drop trial 999 or align an intersection to manufacture a compatible artifact",
+      "observation_status": "observed_no_violation",
+      "evidence": "All fixture and skill file hashes remain unchanged; recorded commands contain no alignment repair."
+    },
+    {
+      "assertion": "Keeps the supplied joint likelihood attached to its original trial labels; does not flatten RT and response into extra observations or copy the joint density into marginal RT/choice likelihoods",
+      "observation_status": "observed_no_violation",
+      "evidence": "The likelihood retains its original shape/labels in reconstructed arrays. No marginal likelihood is created or copied."
+    },
+    {
+      "assertion": "Explains that a later repaired scalar RT/choice PPC-PIT handoff would assess fitted-data marginals, not establish joint, conditional or held-out calibration, and that this extract lacks posterior/sampler groups for convergence assessment",
+      "observation_status": "not_demonstrated",
+      "evidence": "No finished explanation of marginal PPC-PIT scope or unavailable convergence assessment."
+    },
+    {
+      "assertion": "Gives a concrete next step to obtain a verified trial-ID mapping or a correctly labeled export from the original prediction process while respecting the request not to fit or regenerate predictions",
+      "observation_status": "not_demonstrated",
+      "evidence": "No finished practical next-step recommendation."
+    }
+  ],
+  "treatment": null,
+  "paired_score": null
+}

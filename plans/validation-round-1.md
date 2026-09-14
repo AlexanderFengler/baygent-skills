@@ -273,3 +273,15 @@ change; run the upstream dual-environment harness if shared Bayesian scripts
 change. Keep commits focused on contracts, numerical verification, run evidence,
 and agent evaluation results; update the fork branch without opening an upstream
 PR as part of this test plan.
+
+
+## Reduced pilot execution — 2026-09-14
+
+After requesting economical evaluation, the user authorized two HSSM artifact-review
+sessions with medium reasoning, 25k-token targets and 10-minute timeouts. The
+[baseline attempt](../evals/hssm-workflow/iteration-3-handoff-pair/README.md)
+stopped after 46.83 seconds when Codex's native rollout-budget guard reported
+exhaustion. No usage event or finished review was returned; the second session
+was not launched. The original 12-session/ultra proposal stays on hold.
+Runtime validation remains complete, while paired behavior validation is incomplete.
+No automatic retry, budget increase or replacement pilot is authorized by this result.
