@@ -391,3 +391,81 @@ def test_sampling_requires_its_own_explicit_activation(
     assert model.sample.call_args.kwargs["draws"] == 1000
     assert model.sample.call_args.kwargs["chains"] == 2
     assert not (tmp_path / "posterior.nc").exists()
+
+
+def test_native_quantile_plot_saves_actual_replicate_points(
+    notebook, observed, predictive, tmp_path
+):
+    """Exercise notebook kwargs against HSSM's native plot, using literal draws."""
+    import hssm
+    from matplotlib.collections import PathCollection
+
+    data = observed.assign(condition="teaching")
+    predictive = predictive.copy(deep=True)
+    # Native HSSM plotting joins covariates by positional observation index;
+    # use the same zero-based observation labels as the notebook's saved fit.
+    predictive["posterior_predictive"] = (
+        predictive["posterior_predictive"]
+        .to_dataset()
+        .assign_coords(__obs__=np.arange(len(data)))
+    )
+    before = predictive.copy(deep=True)
+    # Plotting needs these public model attributes only; a populated predictive
+    # group must never cause HSSM to call either simulator or sampler.
+    model = SimpleNamespace(
+        data=data,
+        response_str=RESPONSE,
+        n_choices=2,
+        sample_posterior_predictive=_forbidden("plot-triggered sampling"),
+    )
+    prior_figure, _ = plt.subplots()
+    _, definitions = notebook.plot_posterior_evidence.run(
+        data=data,
+        hssm=hssm,
+        mo=mo,
+        model=model,
+        output_dir=tmp_path,
+        plt=plt,
+        posterior=predictive,
+        posterior_checks=pd.DataFrame(),
+        prior_figure=prior_figure,
+    )
+
+    figure = definitions["quantile_figure"]
+    assert definitions["figures_written"] is True
+    assert figure.axes[0].lines  # Observed quantile lines share the saved figure.
+    points = np.concatenate(
+        [
+            collection.get_offsets()
+            for collection in figure.axes[0].collections
+            if isinstance(collection, PathCollection)
+        ]
+    )
+    # HSSM's QP defaults already separate choices within each chain/draw.
+    # Two absent-choice replicates produce no conditional quantiles. Inserting
+    # quantile_by="response" or explicit ax into the notebook's native call
+    # breaks this test under HSSM 0.5 before any of these points can be plotted.
+    expected = [
+        (0.5, 1.2),
+        (0.5, 2.0),
+        (0.5, 2.8),
+        (0.5, 2.2),
+        (0.5, 3.0),
+        (0.5, 3.8),
+        (0.75, 6.4),
+        (0.75, 8.0),
+        (0.75, 9.6),
+        (0.25, 20.0),
+        (0.25, 20.0),
+        (0.25, 20.0),
+        (1.0, 2.6),
+        (1.0, 5.0),
+        (1.0, 7.4),
+        (1.0, 13.0),
+        (1.0, 25.0),
+        (1.0, 37.0),
+    ]
+    np.testing.assert_allclose(sorted(map(tuple, points)), sorted(expected))
+    assert (tmp_path / "quantile_probability.png").stat().st_size > 0
+    model.sample_posterior_predictive.assert_not_called()
+    xr.testing.assert_identical(predictive, before)

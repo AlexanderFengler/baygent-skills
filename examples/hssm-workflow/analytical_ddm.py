@@ -465,7 +465,7 @@ def prepare_posterior_evidence(
 
 
 @app.cell
-def _(
+def plot_posterior_evidence(
     data,
     hssm,
     mo,
@@ -489,6 +489,9 @@ def _(
         xlabel="Signed RT (seconds)",
     )
     quantile_figure, _qp_ax = plt.subplots(figsize=(8, 4))
+    # HSSM already computes quantiles separately by response sign. quantile_by
+    # adds other grouping variables; passing "response" duplicates its column.
+    # Use the current axes: HSSM 0.5 forwards an explicit ax twice to seaborn.
     hssm.plotting.plot_quantile_probability(
         model,
         cond="condition",
@@ -496,8 +499,6 @@ def _(
         dt=posterior,
         n_samples=None,
         q=[0.1, 0.5, 0.9],
-        quantile_by="response",
-        ax=_qp_ax,
     )
     prior_figure.savefig(
         output_dir / "prior_predictive.png", dpi=160, bbox_inches="tight"
@@ -519,7 +520,7 @@ def _(
         ]
     )
     figures_written = True
-    return (figures_written,)
+    return figures_written, quantile_figure
 
 
 @app.cell
