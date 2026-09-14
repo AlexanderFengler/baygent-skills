@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "gaussian-regression",
+  "prompt": "Use Bambi to demonstrate a Gaussian regression y ~ x on a small reproducible synthetic dataset, clearly labeled as synthetic. The scientific target is the expected outcome at x=0.5 minus the expected outcome at x=-0.5. Inspect resolved priors and prior predictions, fit the model, and report the contrast with a 94% HDI. Include predictive checks, diagnostics and their limitations, and save the analysis artifacts and a report. A common uncertain residual scale is appropriate; do not add a residual-scale regression without a reason. Use the available Bambi 0.21/PyMC 6 environment.",
+  "assertions": [
+    "Uses Bambi with an explicit Gaussian likelihood and identity link or verifies that default link, retaining a legitimate common uncertain residual scale",
+    "Records the synthetic data-generating process, predictor units and a reproducible seed without presenting synthetic findings as evidence about real data",
+    "Inspects resolved Bambi priors and makes a substantive prior-predictive plausibility assessment before fitting",
+    "Uses a supported Bambi fit API and saves the posterior artifact before later diagnostic or interpretation work",
+    "Uses native Bambi prediction and log-likelihood/log-prior methods while keeping original observations aligned for the shared diagnostic helpers",
+    "Uses a supported native comparison API and reports the expected-outcome difference in the stated direction with an explicit 94% HDI, distinguishing it from a future-outcome interval",
+    "Uses the shared Bayesian diagnostics and calibration helpers, retaining failed, missing or smoke-limited checks as limitations rather than inventing healthy ratings",
+    "Writes the canonical results-folder report.md with shared assessments, the formula/family/link, prior judgment, contrast target, and links to artifacts that actually exist"
+  ]
+}

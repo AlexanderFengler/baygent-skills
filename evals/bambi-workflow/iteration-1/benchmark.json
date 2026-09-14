@@ -1,0 +1,10 @@
+{
+  "skill_name": "bambi-workflow",
+  "iteration": 1,
+  "status": "pending",
+  "with_skill": null,
+  "without_skill": null,
+  "trigger_results": null,
+  "reason": "Paired with-skill/without-skill agent runs and trigger evaluation have not been executed. Local notebook and diagnostic tests do not establish agent behavior scores.",
+  "runtime_evidence": "runtime/execution.json"
+}

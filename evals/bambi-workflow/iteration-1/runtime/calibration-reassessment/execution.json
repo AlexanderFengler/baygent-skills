@@ -1,0 +1,110 @@
+{
+  "mode": "report reassessment of existing frozen draws; no fit or predictive generation",
+  "analyses": {
+    "gaussian-regression": {
+      "source_notebook_sha256": "1155f821ca6af61c3bdef76e96efceb34f6c7b3e7300b69aa56d40ccaf71d0c7",
+      "source_inputs_sha256": {
+        "data.csv": "6dcf2253a065db819603e3cc431f5eb413f96f478bf76b836872212f1316d6db",
+        "inference_data.nc": "128b99c6ef950e9b4baa9383dfe9a09101d85479a91f78c445a3805adbbccea8",
+        "prior_data.nc": "fece5a302a92f991e4b87e5e5ad84e33588a1595c10c910cbda68a2fa8e0787d",
+        "predictions.csv": "7b1d0a3086da7875e119aedf2cc2aa35cf359dfc0990c228d768c7ca4fe4f23d",
+        "analysis.json": "f91e576833321bcc55e7292a04773705eae4606643047db0973b13c302694ee9"
+      },
+      "calibration": {
+        "variable": "y",
+        "n_observations": 120,
+        "pit_method": "ppc_pit",
+        "uniformity_method": "pot_c",
+        "coverage_transform": "2 * abs(PIT - 0.5), applied once",
+        "assessment": {
+          "uniformity_method": "pot_c",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": 0.4816788539343057,
+          "coverage_p_value": 0.4563637008490267,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": true,
+          "pit_ecdf_inside_bands": null,
+          "coverage_ecdf_inside_bands": null,
+          "well_calibrated": true,
+          "mean_coverage_deviation": 0.0014,
+          "calibration_diagnosis": "well-calibrated"
+        },
+        "plots": {
+          "pit_ecdf": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/gaussian-regression/pit_ecdf.png",
+          "coverage": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/gaussian-regression/pit_coverage.png"
+        }
+      },
+      "assessments": {
+        "convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences).",
+        "loo": "LOO Pareto-k: excellent.",
+        "calibration": "Calibration is excellent \u2014 well-calibrated.",
+        "psense": "Prior sensitivity: low sensitivity (flagged: none)."
+      },
+      "archived_output_directory": "https://github.com/AlexanderFengler/baygent-skills/tree/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/gaussian-regression",
+      "archived_source_inputs": {
+        "data.csv": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/gaussian-regression/data.csv",
+        "predictions.csv": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/gaussian-regression/predictions.csv",
+        "analysis.json": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/gaussian-regression/analysis.json"
+      }
+    },
+    "hierarchical-bernoulli": {
+      "source_notebook_sha256": "f48590e5139c46e5fb7aff69e873ba2a490a40466925b2f30bd5ffb83d838e5a",
+      "source_inputs_sha256": {
+        "data.csv": "a389a6ac3a67a5e5654793e40a3032034146a7dee401b85234034e653fcfac56",
+        "inference_data.nc": "5099106c16078e23d3b5c9e29a186860be8eea1e6b9d10648b79f5937b710835",
+        "prior_data.nc": "8cd8ec5baf14faca8733f0715b20f3d0447f91e059bb0ed5b617acc00f22348e",
+        "predictions.csv": "9334e7bf5ec0f29d5358a0bde3a6cb88143ef83cc9f0bdf6fe47e3c063baddd6",
+        "analysis.json": "977e57fe40d467be7a80293d1ed5dbf99f99b8227260c56e5457f0d025044636"
+      },
+      "calibration": {
+        "variable": "support",
+        "n_observations": 440,
+        "pit_method": "ppc_pit",
+        "uniformity_method": "pot_c",
+        "coverage_transform": "2 * abs(PIT - 0.5), applied once",
+        "assessment": {
+          "uniformity_method": "pot_c",
+          "significance_level": 0.010000000000000009,
+          "pit_p_value": 0.2319716285749897,
+          "coverage_p_value": 0.3505656990791379,
+          "pit_uniformity_passed": true,
+          "coverage_uniformity_passed": true,
+          "pit_ecdf_inside_bands": null,
+          "coverage_ecdf_inside_bands": null,
+          "well_calibrated": true,
+          "mean_coverage_deviation": -0.0025,
+          "calibration_diagnosis": "well-calibrated"
+        },
+        "plots": {
+          "pit_ecdf": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/hierarchical-bernoulli/pit_ecdf.png",
+          "coverage": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/hierarchical-bernoulli/pit_coverage.png"
+        }
+      },
+      "assessments": {
+        "convergence": "All convergence diagnostics passed (R-hat \u2264 1.01, ESS adequate, no divergences).",
+        "loo": "LOO Pareto-k: excellent.",
+        "calibration": "Calibration is excellent \u2014 well-calibrated.",
+        "psense": "Prior sensitivity: strong sensitivity (flagged: 1|region_sigma)."
+      },
+      "archived_output_directory": "https://github.com/AlexanderFengler/baygent-skills/tree/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/hierarchical-bernoulli",
+      "archived_source_inputs": {
+        "data.csv": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/hierarchical-bernoulli/data.csv",
+        "predictions.csv": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/hierarchical-bernoulli/predictions.csv",
+        "analysis.json": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/hierarchical-bernoulli/analysis.json"
+      }
+    }
+  },
+  "source_sha256": {
+    "bayesian-workflow/scripts/calibration_check.py": "ec628ccc9dfaa3a31efd9ed192919862ed1b09833ba23658ef5336fd46579b9d",
+    "bayesian-workflow/scripts/check_diagnostics.py": "f413d440d08c97266ebfdaf4b0eed123fce3ded2f80306794160ab82c1c7c670",
+    "bayesian-workflow/references/reporting.md": "703ab1cf2ab4cfb1c927fcd85e8c180f0dcb6dc44bd02b6e82730a97a745cde0",
+    "examples/bambi-workflow/example_support.py": "24fff509d431c3caba37ad55a8f1b2914c747d600e0c5deea1c6aece878da41a"
+  },
+  "provenance": {
+    "evidence_kind": "historical reassessment of development outputs; not a fresh run of the extracted PR",
+    "source_hash_scope": "source_sha256 and per-analysis source hashes identify the sources and inputs used at reassessment; hashes are not updated for publication edits",
+    "archived_at_commit": "b5d6d0702f3f0d8dc73d5a6247b733dc79c60131",
+    "original_record_url": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/bambi-workflow/iteration-1/runtime/calibration-reassessment/execution.json",
+    "netcdf_availability": "NetCDF hashes identify local generated artifacts that were never committed; NetCDFs are not included in the archived output directories"
+  }
+}

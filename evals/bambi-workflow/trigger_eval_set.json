@@ -1,0 +1,66 @@
+[
+  {
+    "query": "Use Bambi to fit y ~ x with a Gaussian likelihood. Inspect the priors and compare expected y at x=-0.5 and x=0.5 with uncertainty.",
+    "should_trigger": true
+  },
+  {
+    "query": "I want a formula-based Bayesian GLMM for survey support, with age and income predictors and a varying intercept by region. Please use Bambi.",
+    "should_trigger": true
+  },
+  {
+    "query": "My bmb.Model has default priors. Help me inspect their resolved scales and judge the prior predictive distribution before fitting.",
+    "should_trigger": true
+  },
+  {
+    "query": "My Bambi logistic regression is fitted. Predict the probability for an urban respondent aged 40 with medium income in the observed north region and include an uncertainty interval.",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I use bmb.interpret.comparisons to get a response-scale contrast and save the associated report?",
+    "should_trigger": true
+  },
+  {
+    "query": "Can you help me write y ~ x + (1|school) as a formula-based Bayesian partial-pooling regression? I would prefer Bambi to manually building the PyMC graph.",
+    "should_trigger": true
+  },
+  {
+    "query": "I set my pandas income categories to low, medium, high, but my Bambi coefficient labels look like high is the reference. Check the actual design encoding.",
+    "should_trigger": true
+  },
+  {
+    "query": "I need a Bambi count regression with an offset. Tell me which parts of your Bambi workflow cover this and verify the extension's API before proceeding.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a custom likelihood and explicit latent-variable graph in raw PyMC. Do not use Bambi or formula-based model construction.",
+    "should_trigger": false
+  },
+  {
+    "query": "Use HSSM to fit a hierarchical drift-diffusion model to choice and reaction-time data. I need SSM priors, LAN checks and quantile-probability plots.",
+    "should_trigger": false
+  },
+  {
+    "query": "Train a BayesFlow amortized posterior estimator for a custom simulator and inspect held-out calibration.",
+    "should_trigger": false
+  },
+  {
+    "query": "I want to estimate whether a new policy caused an improvement. Help me draw the DAG and choose a difference-in-differences identification strategy before selecting a modeling package.",
+    "should_trigger": false
+  },
+  {
+    "query": "Use statsmodels MixedLM for a frequentist school-effects model and interpret its confidence intervals.",
+    "should_trigger": false
+  },
+  {
+    "query": "My scikit-learn LogisticRegression classifier needs cross-validation and a confusion matrix. Keep the analysis in scikit-learn.",
+    "should_trigger": false
+  },
+  {
+    "query": "Fit this generalized linear mixed model with brms in R and preserve my existing R workflow.",
+    "should_trigger": false
+  },
+  {
+    "query": "Plot a histogram and descriptive quantiles of reaction times from this CSV. I do not need a probabilistic model.",
+    "should_trigger": false
+  }
+]
