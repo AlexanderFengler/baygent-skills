@@ -1,0 +1,48 @@
+"""Deterministic diagnostic fixtures; no model construction or sampling."""
+from pathlib import Path
+import hashlib
+import json
+import numpy as np
+from scipy.special import ndtri
+import xarray as xr
+
+out = Path('<COMPAT_WORKDIR>')
+out.mkdir(exist_ok=True)
+chains, draws, observations = 4, 400, 80
+index = np.arange(draws)
+mu = np.stack([0.05 * ndtri((((index * (73 + 2*c) + 97*c) % draws) + 0.5) / draws) for c in range(chains)])
+sigma = np.stack([np.exp(0.03 * ndtri((((index * (117 + 2*c) + 47*c) % draws) + 0.5) / draws)) for c in range(chains)])
+y = ndtri((np.arange(observations) + 0.5) / observations)
+# Each observed row sees the same exact Gaussian quantile grid over replicates.
+predictive_grid = ndtri((np.arange(chains * draws) + 0.5) / (chains * draws)).reshape(chains, draws)
+ppc = np.broadcast_to(predictive_grid[:, :, None], (chains, draws, observations)).copy()
+loglik = -0.5 * ((y[None, None, :] - mu[:, :, None]) / sigma[:, :, None])**2 - np.log(sigma[:, :, None]) - 0.5 * np.log(2*np.pi)
+coords = {'chain':np.arange(chains),'draw':np.arange(draws)}
+energy = np.stack([10 + ndtri((((index * (137+2*c)+11*c)%draws)+0.5)/draws) for c in range(chains)])
+for kind in ['healthy', 'pathological']:
+    mu_values = mu.copy()
+    ppc_values = ppc.copy()
+    divergences = np.zeros((chains, draws), dtype=bool)
+    if kind == 'pathological':
+        # Explicitly inject incompatible chain locations, 100 divergences and
+        # all-positive shifted predictions. This is a diagnostic fixture, not
+        # a posterior claimed to have been fitted to these observations.
+        mu_values += np.array([-2.0,-1.0,1.0,2.0])[:,None]
+        divergences[0,:100] = True
+        ppc_values += 8.0
+    dt = xr.DataTree.from_dict({
+        'posterior':xr.Dataset({'mu':(('chain','draw'),mu_values),'sigma':(('chain','draw'),sigma)},coords=coords),
+        'sample_stats':xr.Dataset({'diverging':(('chain','draw'),divergences),'energy':(('chain','draw'),energy),'tree_depth':(('chain','draw'),np.full((chains,draws),3))},coords=coords),
+        'posterior_predictive':xr.Dataset({'y':(('chain','draw','obs'),ppc_values)},coords={**coords,'obs':np.arange(observations)}),
+        'observed_data':xr.Dataset({'y':(('obs',),y)},coords={'obs':np.arange(observations)}),
+        'log_likelihood':xr.Dataset({'y':(('chain','draw','obs'),loglik)},coords={**coords,'obs':np.arange(observations)}),
+    })
+    dt.to_netcdf(out / f'{kind}.nc')
+metadata = {
+    'method':'Deterministic Gaussian quantile grids and explicit literal pathology injections; no model construction or sampling.',
+    'counts':{'chains':chains,'draws':draws,'observations':observations},
+    'pathological':'Shifted posterior chain locations; 100 diverging flags; predictive location shifted +8. Likelihood kept common for isolated convergence/PPC comparison. Not a coherent fitted posterior.',
+    'sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.glob('*.nc')},
+}
+(out/'fixtures.json').write_text(json.dumps(metadata,indent=2)+'\n')
+print(json.dumps(metadata,indent=2))

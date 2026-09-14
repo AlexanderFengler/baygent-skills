@@ -1,0 +1,30 @@
+{
+  "method": "Deterministic Gaussian quantile grids and explicit literal pathology injections; no model construction or sampling.",
+  "counts": {
+    "chains": 4,
+    "draws": 400,
+    "observations": 80
+  },
+  "pathological": "Shifted posterior chain locations; 100 diverging flags; predictive location shifted +8. Likelihood kept common for isolated convergence/PPC comparison. Not a coherent fitted posterior.",
+  "sha256": {
+    "healthy.nc": "f55fa7832eb61bdb1f517bbdcea31c7bb534b4ee137d59ce43646bc0f4301379",
+    "pathological.nc": "faf49d325fdeb09ca1e2b64dd07f32402752903ab9bf0bde5720a28114662c6a"
+  },
+  "publication_context": {
+    "status": "Historical development evidence; no execution on the extracted contribution branch is claimed.",
+    "archive_revision": "b5d6d0702f3f0d8dc73d5a6247b733dc79c60131",
+    "original_record_url": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/calibration-method-consistency/compatibility/fixtures.json",
+    "path_policy": "Existing paths and SHA256 values identify historical source/input bytes. They are not a manifest of available local files."
+  },
+  "archived_fixtures": {
+    "healthy.nc": {
+      "url": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/calibration-method-consistency/compatibility/healthy.nc.gz",
+      "encoding": "gzip; decompress to check the original SHA256 above"
+    },
+    "pathological.nc": {
+      "url": "https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/calibration-method-consistency/compatibility/pathological.nc.gz",
+      "encoding": "gzip; decompress to check the original SHA256 above"
+    }
+  },
+  "regeneration": "Historical fixture-generator.py.txt requires output-path substitution; regenerated NetCDF byte hashes are not promised to match archived bytes."
+}

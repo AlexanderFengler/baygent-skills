@@ -8,7 +8,8 @@ signature failure of dual-version code is *runs on both, silently disagrees on
 one* (e.g. LOO quietly dropping on PyMC 6 because ``idata.groups()`` is a method
 on InferenceData but a property on DataTree).
 
-This gate closes that gap. It feeds the SAME fixture idata to both envs and asserts
+This gate closes that gap. It explicitly selects the common ``envelope`` calibration
+method on both stacks, feeds the SAME fixture idata to both envs and asserts
 the SAFETY-CRITICAL verdict — convergence and calibration ratings, the structural
 flags, `loo_computed` (LOO must not silently drop on PyMC 6), and the convergence/
 calibration summary plus the non-LOO next steps — is byte-identical. Raw floats
@@ -17,6 +18,11 @@ reported but NOT gated: arviz 0.23 and 1.x use different PSIS tail estimators, s
 a degenerate fit one stack can mark a point's k non-finite where the other smoothed
 it — a genuine upstream difference, not a bug in this skill (and LOO is untrustworthy
 on a non-converged fit anyway, which the convergence verdict — gated — already flags).
+
+The modern automatic calibration default uses ``pot_c`` when available; the legacy
+fallback uses simultaneous envelopes. Those are different methods, so this gate does
+not promise equal automatic-default ratings. Default-method correctness and agreement
+between plotted evidence and its assessment are tested separately.
 
 Modes:
   (orchestrate, default)  python cross_env_equivalence.py [--envs baygent baygent6]
@@ -44,6 +50,7 @@ SELF = Path(__file__).resolve()
 
 DEFAULT_ENVS = ["baygent", "baygent6"]
 FIXTURE_VAR = "y"
+CALIBRATION_METHOD = "envelope"
 # Generous absolute tolerance for raw diagnostic magnitudes. Observed cross-arviz
 # drift on a well-behaved fixture is < 1e-3; a genuine divergence shows up as a
 # different *rating* (compared exactly, below), not a small float wobble.
@@ -79,11 +86,17 @@ def build_fixture(path: Path, kind: str = "healthy") -> None:
             mu = pm.Deterministic("mu", a + b * x, dims="obs")
             pm.Normal(FIXTURE_VAR, mu, sigma, observed=y, dims="obs")
             idata = pm.sample(
-                draws=500, tune=500, chains=4, random_seed=seed,
-                nuts_sampler="nutpie", progressbar=False,
+                draws=500,
+                tune=500,
+                chains=4,
+                random_seed=seed,
+                nuts_sampler="nutpie",
+                progressbar=False,
                 idata_kwargs={"log_likelihood": True},
             )
-            pm.sample_posterior_predictive(idata, extend_inferencedata=True, progressbar=False)
+            pm.sample_posterior_predictive(
+                idata, extend_inferencedata=True, progressbar=False
+            )
             if "log_likelihood" not in _group_names(idata):
                 pm.compute_log_likelihood(idata)
     elif kind == "pathological":
@@ -96,11 +109,18 @@ def build_fixture(path: Path, kind: str = "healthy") -> None:
             theta = pm.Normal("theta", mu, tau, dims="school")  # centered -> funnel
             pm.Normal(FIXTURE_VAR, theta, sigma_obs, observed=y_obs, dims="school")
             idata = pm.sample(
-                draws=400, tune=300, chains=4, target_accept=0.8, random_seed=seed,
-                nuts_sampler="nutpie", progressbar=False,
+                draws=400,
+                tune=300,
+                chains=4,
+                target_accept=0.8,
+                random_seed=seed,
+                nuts_sampler="nutpie",
+                progressbar=False,
                 idata_kwargs={"log_likelihood": True},
             )
-            pm.sample_posterior_predictive(idata, extend_inferencedata=True, progressbar=False)
+            pm.sample_posterior_predictive(
+                idata, extend_inferencedata=True, progressbar=False
+            )
             if "log_likelihood" not in _group_names(idata):
                 pm.compute_log_likelihood(idata)
     else:
@@ -113,19 +133,22 @@ def emit_payload(idata_path: Path) -> dict:
     """Run the full diagnostics pipeline on one idata; return canonical + raw views."""
     sys.path.insert(0, str(SCRIPTS))
     import arviz as az
-    import pymc as pm
-
     import calibration_check
     import check_diagnostics
     import diagnose_model
+    import pymc as pm
     from arviz_base import convert_to_datatree
 
     idata = az.from_netcdf(str(idata_path))
     diag = diagnose_model.generate_report(idata)
     dt = convert_to_datatree(str(idata_path))
-    cal = calibration_check.assess_calibration(dt, FIXTURE_VAR, use_loo=False)
+    cal = calibration_check.assess_calibration(
+        dt, FIXTURE_VAR, use_loo=False, method=CALIBRATION_METHOD
+    )
     calibration = {"variable": FIXTURE_VAR, "assessment": cal}
-    checked = check_diagnostics.check_diagnostics(diagnostics=diag, calibration=calibration)
+    checked = check_diagnostics.check_diagnostics(
+        diagnostics=diag, calibration=calibration
+    )
     checked["next_steps"] = check_diagnostics.suggest_next_steps(checked)
 
     # STRICT — must match byte-for-byte across stacks. The safety-critical,
@@ -145,7 +168,9 @@ def emit_payload(idata_path: Path) -> dict:
         "calibration_diagnosis": cal["calibration_diagnosis"],
         "summary_convergence": checked.get("summary", {}).get("convergence"),
         "summary_calibration": checked.get("summary", {}).get("calibration"),
-        "next_steps_non_loo": [s for s in checked["next_steps"] if not s.startswith("LOO ")],
+        "next_steps_non_loo": [
+            s for s in checked["next_steps"] if not s.startswith("LOO ")
+        ],
     }
     # NUMERIC — compared with tolerance: arviz 0.23 vs 1.x estimate these slightly
     # differently (PSIS tail estimator, ECDF randomization), so exact equality is
@@ -162,19 +187,25 @@ def emit_payload(idata_path: Path) -> dict:
     # threshold-sensitive: when pareto_k_max sits at the 0.5/0.7 boundary, the two
     # arviz versions can land on either side. Surfaced for transparency, not gated.
     info = {
+        "calibration_method": CALIBRATION_METHOD,
         "rating_loo": checked.get("loo", {}).get("rating"),
         "pareto_k_ok": diag["loo"].get("pareto_k", {}).get("ok"),
         "pareto_k_n_bad": diag["loo"].get("pareto_k", {}).get("n_bad"),
     }
-    return {"arviz": az.__version__, "pymc": pm.__version__,
-            "strict": strict, "numeric": numeric, "info": info}
+    return {
+        "arviz": az.__version__,
+        "pymc": pm.__version__,
+        "strict": strict,
+        "numeric": numeric,
+        "info": info,
+    }
 
 
 # ──────────────────────────── orchestration ─────────────────────────────────
 def _conda_run(env: str, *args: str) -> subprocess.CompletedProcess:
     cmd = ["conda", "run", "-n", env, "python", str(SELF), *args]
     run_env = {**os.environ, "MPLBACKEND": "Agg", "PYTHONWARNINGS": "ignore"}
-    return subprocess.run(cmd, capture_output=True, text=True, env=run_env)
+    return subprocess.run(cmd, capture_output=True, text=True, env=run_env, check=False)
 
 
 def _env_usable(env: str) -> bool:
@@ -220,11 +251,15 @@ def _diff(a: dict, b: dict, env_a: str, env_b: str) -> list[str]:
     sa, sb = a["strict"], b["strict"]
     for k in sorted(set(sa) | set(sb)):
         if sa.get(k) != sb.get(k):
-            fails.append(f"strict[{k}]: {sa.get(k)!r} ({env_a}) != {sb.get(k)!r} ({env_b})")
+            fails.append(
+                f"strict[{k}]: {sa.get(k)!r} ({env_a}) != {sb.get(k)!r} ({env_b})"
+            )
     na, nb = a["numeric"], b["numeric"]
     for k in sorted(set(na) | set(nb)):
         if not _close(na.get(k), nb.get(k)):
-            fails.append(f"numeric[{k}]: {na.get(k)} ({env_a}) vs {nb.get(k)} ({env_b}) exceeds tolerance")
+            fails.append(
+                f"numeric[{k}]: {na.get(k)} ({env_a}) vs {nb.get(k)} ({env_b}) exceeds tolerance"
+            )
     return fails
 
 
@@ -237,8 +272,10 @@ def orchestrate(envs: list[str], require_both: bool) -> int:
         if require_both:
             print(f"CROSS-ENV EQUIVALENCE FAILED — {msg}")
             return 1
-        print(f"CROSS-ENV EQUIVALENCE SKIPPED — {msg}. "
-              "Create environment-pymc6.yml's baygent6 to enable this gate.")
+        print(
+            f"CROSS-ENV EQUIVALENCE SKIPPED — {msg}. "
+            "Create environment-pymc6.yml's baygent6 to enable this gate."
+        )
         return 0
 
     env_a, env_b = usable[0], usable[1]
@@ -249,29 +286,39 @@ def orchestrate(envs: list[str], require_both: bool) -> int:
         for kind in kinds:
             fixture = Path(td) / f"equiv_{kind}.nc"
             print(f"[{kind}] building shared fixture under '{env_a}' ...")
-            proc = _conda_run(env_a, "--build-fixture", "--kind", kind, "--idata", str(fixture))
+            proc = _conda_run(
+                env_a, "--build-fixture", "--kind", kind, "--idata", str(fixture)
+            )
             if proc.returncode != 0 or not fixture.exists():
-                print(f"CROSS-ENV EQUIVALENCE FAILED — [{kind}] fixture build errored:\n{proc.stderr[-400:]}")
+                print(
+                    f"CROSS-ENV EQUIVALENCE FAILED — [{kind}] fixture build errored:\n{proc.stderr[-400:]}"
+                )
                 return 1
 
             payloads: dict[str, dict] = {}
             for env in usable:
                 proc = _conda_run(env, "--emit-payload", "--idata", str(fixture))
                 if proc.returncode != 0:
-                    print(f"CROSS-ENV EQUIVALENCE FAILED — [{kind}] payload errored in '{env}':\n{proc.stderr[-400:]}")
+                    print(
+                        f"CROSS-ENV EQUIVALENCE FAILED — [{kind}] payload errored in '{env}':\n{proc.stderr[-400:]}"
+                    )
                     return 1
                 payloads[env] = _last_json(proc.stdout)
 
             pa, pb = payloads[env_a], payloads[env_b]
-            print(f"  [{kind}] {env_a} pymc{pa['pymc']}/az{pa['arviz']} vs "
-                  f"{env_b} pymc{pb['pymc']}/az{pb['arviz']} | "
-                  f"conv={pa['strict']['rating_convergence']} "
-                  f"calib={pa['strict']['rating_calibration']}")
+            print(
+                f"  [{kind}] {env_a} pymc{pa['pymc']}/az{pa['arviz']} vs "
+                f"{env_b} pymc{pb['pymc']}/az{pb['arviz']} | "
+                f"conv={pa['strict']['rating_convergence']} "
+                f"calib={pa['strict']['rating_calibration']}"
+            )
             if pa["info"] != pb["info"]:
-                print(f"     note: LOO Pareto-k rating is threshold-sensitive across stacks — "
-                      f"{env_a} loo={pa['info']['rating_loo']} (k_ok={pa['info']['pareto_k_ok']}), "
-                      f"{env_b} loo={pb['info']['rating_loo']} (k_ok={pb['info']['pareto_k_ok']}); "
-                      f"raw pareto_k_max agrees within tolerance.")
+                print(
+                    f"     note: LOO Pareto-k rating is threshold-sensitive across stacks — "
+                    f"{env_a} loo={pa['info']['rating_loo']} (k_ok={pa['info']['pareto_k_ok']}), "
+                    f"{env_b} loo={pb['info']['rating_loo']} (k_ok={pb['info']['pareto_k_ok']}); "
+                    f"raw pareto_k_max agrees within tolerance."
+                )
             all_fails += [f"[{kind}] {f}" for f in _diff(pa, pb, env_a, env_b)]
 
     print("=" * 60)
@@ -280,18 +327,29 @@ def orchestrate(envs: list[str], require_both: bool) -> int:
         for f in all_fails:
             print(f"  - {f}")
         return 1
-    print(f"CROSS-ENV EQUIVALENCE PASSED — {env_a} and {env_b} agree on the convergence "
-          f"& calibration verdict across {len(kinds)} fixtures (healthy + pathological); "
-          f"LOO Pareto-k rating is reported, not gated.")
+    print(
+        f"CROSS-ENV EQUIVALENCE PASSED — {env_a} and {env_b} agree on the convergence "
+        f"& common-envelope calibration verdict across {len(kinds)} fixtures "
+        f"(healthy + pathological); "
+        f"LOO Pareto-k rating is reported, not gated."
+    )
     return 0
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--envs", nargs="+", default=DEFAULT_ENVS,
-                        help="conda env names to compare (default: baygent baygent6)")
-    parser.add_argument("--require-both", action="store_true",
-                        help="fail (not skip) if fewer than two envs are usable")
+    parser.add_argument(
+        "--envs",
+        nargs="+",
+        default=DEFAULT_ENVS,
+        help="conda envs to compare with common envelope calibration "
+        "(default: baygent baygent6)",
+    )
+    parser.add_argument(
+        "--require-both",
+        action="store_true",
+        help="fail (not skip) if fewer than two envs are usable",
+    )
     parser.add_argument("--build-fixture", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--emit-payload", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--selfcheck", action="store_true", help=argparse.SUPPRESS)
@@ -301,12 +359,17 @@ def main() -> None:
 
     if args.selfcheck:
         import pymc  # noqa: F401  — confirms the env can import the stack
+
         return
     if args.build_fixture:
         build_fixture(Path(args.idata), kind=args.kind)
         return
     if args.emit_payload:
-        print(json.dumps(emit_payload(Path(args.idata)), indent=2, sort_keys=True, default=str))
+        print(
+            json.dumps(
+                emit_payload(Path(args.idata)), indent=2, sort_keys=True, default=str
+            )
+        )
         return
 
     sys.exit(orchestrate(args.envs, args.require_both))

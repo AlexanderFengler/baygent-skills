@@ -1,22 +1,95 @@
 # Benchmark — bayesian-workflow PyMC 5/6 dual-compatibility
 
+## Calibration contract and development evidence (2026-09-14)
+
+The cross-environment gate explicitly selects `method="envelope"` on both
+stacks. It compares convergence, calibration ratings, structural flags,
+`loo_computed`, summaries and non-LOO next steps exactly, with the existing
+numeric tolerances unchanged. Each payload records the selected method.
+
+Automatic calibration uses `pot_c` where the modern API is available and a
+simultaneous-envelope fallback otherwise. Those methods are not promised to
+produce identical ratings. The modern default and agreement between plotted
+evidence and its assessment are verified separately from common-method
+compatibility. The earlier blanket equivalence wording below describes the
+historical run, not an automatic-default guarantee across later ArviZ releases.
+
+The recorded development verification used isolated uv environments because
+conda was unavailable. These results predate extraction of this contribution;
+they are not test results for the extracted branch. Source hashes and original
+records are retained in the [calibration evidence](calibration-method-consistency/README.md).
+The legacy environment pinned PyMC 5.28.0, ArviZ 0.23.0 and ArviZ
+base/stats/plots 1.0.0; modern verification used PyMC 6.1.0 and ArviZ
+base/stats/plots 1.2.0. Both used Python 3.12.13 and NumPy 2.4.6 on macOS arm64.
+ArviZ plots 1.0 could not import against Matplotlib 3.11.2, so that
+legacy environment pinned Matplotlib 3.10.8. HDF5 serialization also required
+`h5py==3.16.0`, which `h5netcdf` did not install automatically. After adding
+that backend, a legacy InferenceData read/write roundtrip and `uv pip check`
+passed (57 packages).
+
+The recorded runs retained the unchanged 16-check reporting harness and its
+400-draw/tune, two-chain model in each environment. Common-method comparison
+used the upstream `--emit-payload` and `_diff` functions with explicit Python
+interpreters and frozen deterministic healthy/pathological fixtures, without
+running the conda orchestrator or sampling its additional fixture models.
+The pathological fixture explicitly injects incompatible chain locations,
+divergence flags and biased predictions; it is diagnostic test data, not a
+claimed fitted posterior.
+
+### Recorded development results
+
+| Check | Legacy PyMC 5 / ArviZ stats 1.0 | Modern PyMC 6 / ArviZ stats 1.2 |
+|---|---|---|
+| Unchanged reporting harness | 16/16 passed | 16/16 passed |
+| Common-envelope healthy fixture | Convergence excellent; calibration excellent | Same strict payload; numeric differences within existing tolerances |
+| Common-envelope pathological fixture | Convergence poor; calibration poor; 100 injected divergences | Same strict payload; numeric differences within existing tolerances |
+| Focused calibration regression suite | 29 passed, three modern-only tests skipped | Modern-default evidence recorded separately |
+
+All existing strict comparisons and numeric tolerances were preserved. Both
+fixtures retained `loo_computed=true`. The shared fix was committed as
+`29175ee`; payloads record source hashes and `calibration_method="envelope"`.
+The [standalone calibration record](calibration-method-consistency/README.md)
+preserves compatibility logs, resolved requirements and the separate
+modern-default findings. The retained [LOO review](calibration-method-consistency/review/summary.json)
+also records the native stats 1.2 `pot_c` error on the deterministic healthy
+LOO fixture: `Cannot compute truncated Cauchy combination test. No p-values below 0.5 found.`
+That error propagates without a passing verdict or fallback; common-envelope
+success does not remove this automatic-default limitation. This run did not
+repeat the historical taught-API sweep, conda environment resolution or its
+regression/eight-schools fixture fits.
+
+The initial legacy harness fit completed but failed on serialization because
+`h5py` was missing. That failed log is [archived](https://github.com/AlexanderFengler/baygent-skills/blob/b5d6d0702f3f0d8dc73d5a6247b733dc79c60131/evals/calibration-method-consistency/compatibility/attempt-1/harness-legacy.log.txt); the failed legacy run was
+repeated with its original seed/budget after the backend and roundtrip check
+passed. The modern harness was not repeated. Common-method modern payloads
+were reused only after asserting identical script hashes, while legacy payloads
+were rerun on the unchanged frozen fixture files. No additional cross-comparison
+MCMC was performed.
+
+## Historical baseline
+
+The following environment versions and outcomes belong to the earlier
+upstream transition benchmark. They were not re-created by the current focused
+compatibility run, and its taught-API sweep was not repeated.
+
 Goal: make the **bayesian-workflow** skill teach the latest PyMC 6 / ArviZ 1.x idioms
 while staying runnable on PyMC 5.x for the transition. Method: build both envs, run the
 harness on each, and let breakage reveal the real divergences (not a changelog).
 
-## Environments
+### Historical: Environments
 
 | Env | PyMC | ArviZ umbrella | arviz-stats/plots | nutpie | pymc-extras | sampler output |
 |-----|------|----------------|-------------------|--------|-------------|----------------|
 | `baygent`  | 5.28.1 | 0.23.4 (classic) | 1.0.0 | 0.16.7  | 0.10.0 | `InferenceData` |
 | `baygent6` | 6.0.1  | 1.1.0 (umbrella) | 1.1.0 | 0.16.10 | 0.12.0 | `DataTree` |
 
-`environment-pymc6.yml` resolves PyMC 6 + the full ArviZ 1.x stack + nutpie + pymc-extras
-cleanly. It also pins `netcdf4` + `h5netcdf`: a pip-only ArviZ-1 install pulls no
-group-aware netcdf engine, so without them `az.from_netcdf` / `convert_to_datatree(path)`
+The historical `environment-pymc6.yml` resolved PyMC 6 + the full ArviZ 1.x stack
++ nutpie + pymc-extras cleanly. That recipe has since changed; this statement is
+not a fresh resolution check. The historical recipe also pinned `netcdf4` +
+`h5netcdf`: a pip-only ArviZ-1 install pulled no group-aware netcdf engine, so without them `az.from_netcdf` / `convert_to_datatree(path)`
 can't read a `.nc` (the scripts' first step).
 
-## Divergences found by running on both stacks, and the fixes
+### Historical: Divergences found by running on both stacks, and the fixes
 
 | Divergence | Symptom on PyMC 6 / ArviZ 1.x | Fix |
 |---|---|---|
@@ -30,7 +103,7 @@ can't read a `.nc` (the scripts' first step).
 `arviz_stats.diagnose` (the primary convergence call), `az.loo`, `az.summary`,
 `az.from_netcdf`, `convert_to_datatree`, and the diagnose→check schema are unchanged.
 
-## Cross-env equivalence gate (`evals/smoke/cross_env_equivalence.py`)
+### Historical: Cross-env equivalence gate (`evals/smoke/cross_env_equivalence.py`)
 
 One shared idata is fed to **both** envs; the comparison is partitioned by who owns each
 difference: `strict` (exact) for the safety-critical verdict, `numeric` (tolerance) for
@@ -49,7 +122,7 @@ the qualitative LOO rating (excellent ↔ poor). This is upstream, not our bug; 
 convergence verdict (the "don't interpret this posterior" guidance) agrees exactly, and
 LOO is not trustworthy on a non-converged model anyway.
 
-## Taught-API resolution sweep (checkpoint: every call resolves on both)
+### Historical: Taught-API resolution sweep (checkpoint: every call resolves on both)
 
 Verified identical on both envs: `arviz_stats.diagnose`, `psense_summary`,
 `plot_psense_dist` / `plot_psense_quantities`, `pm.compute_log_likelihood` /
@@ -60,14 +133,14 @@ documented in SKILL.md → "Stack compatibility" (`az.plot_ppc` → `arviz_plots
 `plot_trace(kind="rank_vlines")` → `plot_trace`/`plot_rank`; `summary` interval kwargs;
 `sample_prior_predictive` `samples=`→`draws=`; `az.compare` `elpd_loo`→`elpd`).
 
-## Scope
+### Historical: Scope
 
 - **amortized-workflow** imports only `bayesflow` / `keras` / `numpy` — no pymc/arviz
   coupling, so it is independent of the PyMC major (its own backend env, unaffected).
 - **causal-inference** stays on PyMC 5 (`baygent`): CausalPy caps `pymc<6`. Migrate when
   CausalPy ships PyMC-6 support.
 
-## Verdict
+### Historical: Verdict
 
 The bayesian-workflow diagnostics scripts run on both PyMC 5 and PyMC 6 and agree on the
 **safety-critical verdict** (convergence + calibration ratings, structural flags, and
