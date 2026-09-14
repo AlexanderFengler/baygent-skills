@@ -295,3 +295,33 @@ def test_binary_storage_dtype_does_not_change_randomized_pit(
         converted[group]["y"] = converted[group]["y"].astype(dtype)
     actual = calibration.prepare_pit_values(converted, "y", method="envelope")
     xr.testing.assert_identical(actual, expected)
+
+
+@pytest.mark.parametrize("method", ["envelope", "auto"])
+def test_known_probability_grid_is_not_normalized_by_maximum_pit(calibration, method):
+    # At x=.25, two of four values have accumulated; at .5, all four have.
+    # The native plotting ECDF's max-rescaled axis incorrectly gives ~zero.
+    pit = xr.Dataset({"y": ("trial", [0.1, 0.2, 0.3, 0.4])})
+    evidence = calibration._evaluate_pit(
+        pit, "y", calibration._resolve_method(method), 0.99
+    )
+    np.testing.assert_allclose(evidence["x"], [0, 0.25, 0.5, 0.75, 1])
+    np.testing.assert_allclose(evidence["delta"], [0, 0.25, 0.5, 0.25, 0])
+    assert evidence["mean_delta"] == 0.2
+
+
+def test_native_uniformity_failure_is_not_replaced_with_a_passing_method(
+    calibration, pit, monkeypatch
+):
+    if not calibration._has_modern_pit():
+        pytest.skip("pot_c is unavailable on the legacy stack")
+    message = (
+        "Cannot compute truncated Cauchy combination test. No p-values below 0.5 found."
+    )
+
+    def fail_native_test(*args, **kwargs):
+        raise ValueError(message)
+
+    monkeypatch.setattr(type(pit.azstats), "uniformity_test", fail_native_test)
+    with pytest.raises(ValueError, match="Cannot compute truncated Cauchy combination"):
+        calibration.assess_calibration(None, "y", False, pit_values=pit)
